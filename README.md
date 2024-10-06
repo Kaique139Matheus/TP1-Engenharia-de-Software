@@ -1,24 +1,15 @@
 # TP1-Engenharia-de-Software
 
 ## Sistema de Reservas para Pequenos Estabelecimentos
-Esse trabalho tem como objetivo simular uma sprint SCRUM. O sistema a ser desenvolvido tem como objetivo auxiliar pequenos estabelecimentos a gerir reservar de maneira simples e intuitiva.
-
-### Features
-O sistema deverá ser capaz de:
+EasyBooking é um sistema de reservas que conecta estabelecimentos e clientes de forma simples e eficiente. Os estabelecimentos podem cadastrar horários de funcionamento e serviços oferecidos, permitindo que os clientes façam reservas com facilidade. Com a opção de filtros, os clientes podem encontrar o estabelecimento ideal de acordo com suas preferências, como localização, tipo de serviço e disponibilidade. Além disso, é possível gerenciar, cancelar ou reagendar compromissos com poucos cliques. o EasyBooking também oferece um sistema de avaliação, onde os clientes avaliam os serviços, ajudando outros a escolherem o melhor local e oferecendo feedback para que os estabelecimentos aprimorem a qualidade.
 
 ### Tecnologias
-- **Front-end:** JavaScript + React
-- **Back-end:** (Linguagem) + (BD)
--
+- **Front-end:** JavaScript + React + Node.js
+- **Back-end:** C# + SQL
 
 ### Integrantes e Papeis
-- Filipe:
-- João Pedro Carvalho:
-- Kaique Matheus Sousa:
-- Leandro Lopo:
+- **Filipe de Araújo Mendes:** Back-end.
+- **João Pedro Carvalho de Paula Resende:** Front-end.
+- **Kaique Matheus Sousa:** Integração.
+- **Leandro dos Santos Lopo Silva:** Back-end.
 
-## TODO:
-- Tornar repositório público para professor? Ou convidá-lo?
-- Definir papéis
-- Definir features
-- Ennviar URL para o link https://forms.gle/q6QCwKzmPPu8PqZa6
