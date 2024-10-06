@@ -1,7 +1,9 @@
 # TP1-Engenharia-de-Software
 
-## Sistema de Reservas para Pequenos Estabelecimentos
-EasyBooking é um sistema de reservas que conecta estabelecimentos e clientes de forma simples e eficiente. Os estabelecimentos podem cadastrar horários de funcionamento e serviços oferecidos, permitindo que os clientes façam reservas com facilidade. Com a opção de filtros, os clientes podem encontrar o estabelecimento ideal de acordo com suas preferências, como localização, tipo de serviço e disponibilidade. Além disso, é possível gerenciar, cancelar ou reagendar compromissos com poucos cliques. o EasyBooking também oferece um sistema de avaliação, onde os clientes avaliam os serviços, ajudando outros a escolherem o melhor local e oferecendo feedback para que os estabelecimentos aprimorem a qualidade.
+## Easy Booking - Sistema de Reservas para Pequenos Estabelecimentos
+EasyBooking é um sistema de reservas inovador, projetado para facilitar a conexão entre estabelecimentos e clientes de forma rápida e eficiente. Os estabelecimentos podem cadastrar seus horários de funcionamento, serviços oferecidos e detalhes sobre cada opção, permitindo que os clientes explorem uma ampla gama de possibilidades antes de realizar suas reservas. 
+Com a opção de filtros, os usuários podem buscar por localização, tipo de serviço, disponibilidade e até avaliações, garantindo uma escolha mais personalizada e alinhada às suas necessidades. Além de facilitar a marcação de horários, o EasyBooking permite que clientes e estabelecimentos gerenciem suas reservas de maneira prática e intuitiva, com a possibilidade de cancelar ou reagendar compromissos com apenas alguns cliques. 
+O sistema de avaliação também desempenha um papel fundamental, onde os clientes podem compartilhar suas experiências e avaliar os serviços prestados, ajudando outros usuários a fazerem escolhas mais informadas e incentivando os estabelecimentos a aprimorarem continuamente a qualidade do atendimento.
 
 ### Tecnologias
 - **Front-end:** JavaScript + React + Node.js
