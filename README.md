@@ -13,5 +13,5 @@ O sistema de avaliação também desempenha um papel fundamental, onde os client
 - **Filipe de Araújo Mendes:** Back-end.
 - **João Pedro Carvalho de Paula Resende:** Front-end.
 - **Kaique Matheus Sousa:** Integração.
-- **Leandro dos Santos Lopo Silva:** Back-end.
+- **Leandro dos Santos Lopo Silva:** Full Stack.
 
