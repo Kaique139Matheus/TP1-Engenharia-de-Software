@@ -15,3 +15,65 @@ O sistema de avaliação também desempenha um papel fundamental, onde os client
 - **Kaique Matheus Sousa:** Integração.
 - **Leandro dos Santos Lopo Silva:** Full Stack.
 
+- ---
+
+# Backlog do Produto
+
+1. **Como prestador de serviço**, eu gostaria de adicionar e remover serviços.
+2. **Como cliente**, eu gostaria de verificar a disponibilidade de horários e fazer uma reserva.
+3. **Como cliente**, eu gostaria de adicionar uma avaliação (comentário e nota) sobre minha experiência no estabelecimento.
+4. **Como usuário**, eu gostaria de fazer login e logout no sistema.
+5. **Como cliente**, eu gostaria de cancelar ou mudar a data da minha reserva.
+6. **Como cliente**, eu gostaria de visualizar e editar as informações do meu perfil.
+7. **Como prestador de serviço**, eu gostaria de conseguir um relatório de reservas.
+8. **Como prestador de serviço**, eu gostaria de gerenciar os preços das reservas.
+9. **Como prestador de serviço**, eu gostaria de visualizar relatórios financeiros.
+10. **Como cliente**, eu gostaria de poder compartilhar os dados de minha reserva com outras pessoas.
+11. **Como prestador de serviço**, eu gostaria de poder responder às avaliações.
+12. **Como cliente**, eu gostaria de ver uma agenda com minhas reservas.
+13. **Como prestador de serviço**, eu gostaria de poder precificar as reservas.
+14. **Como cliente**, eu gostaria de filtrar os estabelecimentos por localização, avaliação, disponibilidade ou preço.
+
+---
+
+# Backlog do Sprint
+
+## História 1: 
+**Como prestador de serviço**, eu gostaria de adicionar e remover serviços.
+
+### Tarefas e responsáveis:
+- [ ] Configurar ambiente React e Node.js [João]
+- [ ] Criar banco de dados e configurar tabelas para os serviços [Filipe]
+- [ ] Instalar ambiente .NET [Leandro]
+- [ ] Criar rota para criação e remoção de serviços [Leandro]
+- [ ] Criar tela de cadastramento de serviços no front-end [João]
+- [ ] Integrar backend e frontend [Kaique]
+
+## História 2: 
+**Como cliente**, eu gostaria de verificar a disponibilidade de horários e fazer uma reserva.
+
+### Tarefas e responsáveis:
+- [ ] Desenvolver a rota de criação de reserva [Leandro]
+- [ ] Implementar lógica no backend para verificar horários disponíveis [Leandro]
+- [ ] Criar interface de seleção de datas e horários disponíveis [João e Kaique]
+- [ ] Integrar lógica de reserva no frontend [Kaique]
+
+## História 3: 
+**Como cliente**, eu gostaria de adicionar uma avaliação (comentário e nota) sobre minha experiência no estabelecimento.
+
+### Tarefas e responsáveis:
+- [ ] Criar tabelas de comentários e adicionar ao banco de dados [Filipe]
+- [ ] Criar rotas no backend para adicionar, editar e remover comentários [Filipe]
+- [ ] Implementar modal de avaliação [João]
+- [ ] Integrar lógica de avaliações ao frontend [Kaique]
+
+## História 4: 
+**Como usuário**, eu gostaria de fazer login e logout no sistema.
+
+### Tarefas e responsáveis:
+- [ ] Criar tabelas de contas de usuários e adicionar ao banco de dados [Filipe]
+- [ ] Implementar lógica de login e logout [Filipe]
+- [ ] Criar tela de login [João e Kaique]
+- [ ] Criar botão para logout do sistema [João]
+- [ ] Integrar frontend com backend login e logout [Kaique]
+
