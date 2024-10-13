@@ -47,7 +47,7 @@ O sistema de avaliação também desempenha um papel fundamental, onde os client
 - [ ] Instalar ambiente .NET [Leandro]
 - [ ] Criar rota para criação e remoção de serviços [Leandro]
 - [ ] Criar tela de cadastramento de serviços no front-end [João]
-- [x] Integrar backend e frontend [Kaique]
+- [ ] Integrar backend e frontend [Kaique]
 
 ## História 2: 
 **Como cliente**, eu gostaria de verificar a disponibilidade de horários e fazer uma reserva.
