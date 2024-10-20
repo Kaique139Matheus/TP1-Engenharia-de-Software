@@ -1,0 +1,58 @@
+// https://dbdiagram.io/d
+
+Table providers {
+  id integer [pk]
+  email string [unique]
+  password string
+  cnpj string [unique]
+  name string [unique]
+}
+
+Table services {
+  id integer
+  provider_id integer
+  description string
+  price float
+  duration int
+
+  indexes {
+    (id, provider_id) [pk]
+  }
+}
+
+Ref: services.provider_id > providers.id [delete: cascade]
+
+Table timeslots {
+  id int
+  service_id int
+  time int
+  client_id string
+  
+  indexes {
+    (service_id, id) [pk]
+  }
+}
+
+Ref: timeslots.service_id > services.id [delete: cascade]
+Ref: timeslots.client_id > clients.id [delete: set null]
+
+Table clients {
+  id int [pk]
+  email string [unique]
+  password string
+  cpf string [unique]
+}
+
+Table reviews {
+  client_id string
+  provider_id int
+  score int
+  comment string
+
+  indexes {
+    (client_id, provider_id) [pk]
+  }
+}
+
+Ref: reviews.client_id > clients.id [delete: set null]
+Ref: reviews.provider_id > providers.id [delete: cascade]
