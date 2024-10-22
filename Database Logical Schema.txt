@@ -24,17 +24,34 @@ Ref: services.provider_id > providers.id [delete: cascade]
 
 Table timeslots {
   id int
+  provider_id int
   service_id int
   time int
-  client_id string
   
   indexes {
-    (service_id, id) [pk]
+    (provider_id, service_id, id) [pk]
   }
 }
 
+Ref: timeslots.provider_id > providers.id [delete: cascade]
 Ref: timeslots.service_id > services.id [delete: cascade]
-Ref: timeslots.client_id > clients.id [delete: set null]
+
+Table bookings {
+  provider_id int
+  service_id int
+  timeslot_id int
+  date date
+  client_id int
+
+  indexes {
+    (provider_id, service_id, timeslot_id, date) [pk]
+  }
+}
+
+Ref: bookings.provider_id > providers.id [delete: cascade]
+Ref: bookings.service_id > services.id [delete: cascade]
+Ref: bookings.timeslot_id > timeslots.id [delete: cascade]
+Ref: bookings.client_id > clients.id [delete: set null]
 
 Table clients {
   id int [pk]
