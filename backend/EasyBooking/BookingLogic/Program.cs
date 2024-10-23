@@ -14,6 +14,14 @@ public class Test
 	{
 		var db = new EasyBookingContext();
 
+		// Check if the email is already in the Providers table
+		var provider = db.Providers.FirstOrDefault(p => p.Email == email);
+		if (provider != null)
+		{
+			Console.WriteLine("Email in use!");
+			return;
+		}
+
 		var client = new ClientModel
 		{
 			FirstName = firstName,
@@ -30,6 +38,14 @@ public class Test
 	public static void CreateProvider(string name, string email, string password, string cnpj)
 	{
 		var db = new EasyBookingContext();
+
+		// Check if the email is already in the Clients table
+		var client = db.Clients.FirstOrDefault(c => c.Email == email);
+		if (client != null)
+		{
+			Console.WriteLine("Email in use!");
+			return;
+		}
 
 		var provider = new ProviderModel
 		{
