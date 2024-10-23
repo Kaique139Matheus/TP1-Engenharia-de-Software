@@ -17,7 +17,7 @@ namespace BookingDatabase.Services
 			this.context = context;
 		}
 
-		public void AddClient(string email, string password, string CPF, string firstName, string lastName)
+		public ClientModel AddClient(string email, string password, string CPF, string firstName, string lastName)
 		{
 			// Verify that the email is not already in use in the Providers table
 			if (context.Providers.Any(p => p.Email == email)) throw new Exception("Email in use");
@@ -33,15 +33,19 @@ namespace BookingDatabase.Services
 
 			context.Clients.Add(client);
 			context.SaveChanges();
+
+			return client;
 		}
 
-		public void UpdateClient(int id, string newPassword) 
+		public ClientModel UpdateClient(int id, string newPassword) 
 		{
 			var client = context.Clients.Find(id);
 			if (client == null) throw new Exception("Client not found");
 
 			client.Password = newPassword;
 			context.SaveChanges();
+
+			return client;
 		}
 
 		public void RemoveClient(int id)
