@@ -19,11 +19,12 @@ namespace BookingDatabase.Data
 
 		public string DbPath { get; private set; }
 
-		public EasyBookingContext()
+		public EasyBookingContext(bool testDatabase = false)
 		{
 			var folder = Environment.SpecialFolder.LocalApplicationData;
 			var path = Environment.GetFolderPath(folder);
-			DbPath = System.IO.Path.Join(path, "easybooking.db");
+			if (testDatabase) DbPath = System.IO.Path.Join(path, "easybooking_test.db");
+			else DbPath = System.IO.Path.Join(path, "easybooking.db");
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
