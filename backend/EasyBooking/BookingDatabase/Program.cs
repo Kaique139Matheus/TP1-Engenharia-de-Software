@@ -5,6 +5,7 @@ using BookingDatabase.Models;
 using var db = new EasyBookingContext();
 
 db.Database.EnsureDeleted();
+db.Database.EnsureCreated();
 
 Console.WriteLine($"Database path: {db.DbPath}");
 
@@ -43,11 +44,3 @@ db.SaveChanges();
 Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
 // Count services
 Console.WriteLine($"There are {db.Services.Count()} services in the database");
-
-db.RemoveRange(providers);
-db.RemoveRange(db.Services.ToList());
-db.SaveChanges();
-
-Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
-Console.WriteLine($"There are {db.Services.Count()} services in the database");
-
