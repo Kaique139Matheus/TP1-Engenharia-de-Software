@@ -62,6 +62,25 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
+		public void AddClient_ShouldThrowException_WhenCPFIsInUse()
+		{
+			// Arrange
+			var client = new ClientModel
+			{
+				Email = "test2@example.com",
+				Password = "password",
+				CPF = testClient.CPF,
+				FirstName = "Jane",
+				LastName = "Doe"
+			};
+			context.Clients.Add(client);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => clientService.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+		}
+
+		[Fact]
 		public void UpdateClient_ShouldUpdatePassword_WhenClientExists()
 		{
 			// Arrange
