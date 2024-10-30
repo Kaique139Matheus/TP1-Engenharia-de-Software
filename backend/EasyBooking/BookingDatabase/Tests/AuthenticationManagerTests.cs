@@ -11,10 +11,10 @@ using Xunit;
 namespace BookingDatabase.Tests
 {
 	[Collection("Database collection")]
-	public class AuthenticationServiceTests
+	public class AuthenticationManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly AuthenticationService authenticationService;
+		private readonly AuthenticationManager authenticationManager;
 
 		private readonly ClientModel testClient = new ClientModel
 		{
@@ -33,11 +33,11 @@ namespace BookingDatabase.Tests
 			CNPJ = "12345678901234"
 		};
 
-		public AuthenticationServiceTests()
+		public AuthenticationManagerTests()
 		{
 			bool isTesting = true;
 			context = new EasyBookingContext(isTesting);
-			authenticationService = new AuthenticationService(context);
+			authenticationManager = new AuthenticationManager(context);
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
@@ -51,10 +51,10 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			authenticationService.Login(testClient.Email, testClient.Password);
+			authenticationManager.Login(testClient.Email, testClient.Password);
 
 			// Assert
-			Assert.True(authenticationService.IsLoggedIn);
+			Assert.True(authenticationManager.IsLoggedIn);
 		}
 
 		[Fact]
@@ -65,17 +65,17 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			authenticationService.Login(testProvider.Email, testProvider.Password);
+			authenticationManager.Login(testProvider.Email, testProvider.Password);
 
 			// Assert
-			Assert.True(authenticationService.IsLoggedIn);
+			Assert.True(authenticationManager.IsLoggedIn);
 		}
 
 		[Fact]
 		public void Login_ShouldThrowException_WhenEmailNotFound()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => authenticationService.Login(testClient.Email, testClient.Password));
+			Assert.Throws<Exception>(() => authenticationManager.Login(testClient.Email, testClient.Password));
 		}
 
 		[Fact]
@@ -86,7 +86,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => authenticationService.Login(testClient.Email, "wrongpassword"));
+			Assert.Throws<Exception>(() => authenticationManager.Login(testClient.Email, "wrongpassword"));
 		}
 
 		[Fact]
@@ -95,13 +95,13 @@ namespace BookingDatabase.Tests
 			// Arrange
 			context.Clients.Add(testClient);
 			context.SaveChanges();
-			authenticationService.Login(testClient.Email, testClient.Password);
+			authenticationManager.Login(testClient.Email, testClient.Password);
 
 			// Act
-			authenticationService.Logout();
+			authenticationManager.Logout();
 
 			// Assert
-			Assert.False(authenticationService.IsLoggedIn);
+			Assert.False(authenticationManager.IsLoggedIn);
 		}
 
 	}

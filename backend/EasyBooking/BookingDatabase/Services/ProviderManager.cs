@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Services
 {
-	public class ProviderService
+	public class ProviderManager
 	{
 		private readonly EasyBookingContext context;
 
-		public ProviderService(EasyBookingContext context)
+		public ProviderManager(EasyBookingContext context)
 		{
 			this.context = context;
 		}

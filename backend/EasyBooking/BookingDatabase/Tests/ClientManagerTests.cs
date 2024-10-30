@@ -9,10 +9,10 @@ using Xunit;
 namespace BookingDatabase.Tests
 {
 	[Collection("Database collection")]
-	public class ClientServiceTests
+	public class ClientManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly ClientService clientService;
+		private readonly ClientManager clientManager;
 
 		private readonly ClientModel testClient = new ClientModel
 		{
@@ -23,11 +23,11 @@ namespace BookingDatabase.Tests
 			LastName = "Doe"
 		};
 
-		public ClientServiceTests()
+		public ClientManagerTests()
 		{
 			bool isTesting = true;
 			context = new EasyBookingContext(isTesting);
-			clientService = new ClientService(context);
+			clientManager = new ClientManager(context);
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
@@ -37,7 +37,7 @@ namespace BookingDatabase.Tests
 		public void AddClient_ShouldAddClient()
 		{
 			// Act
-			var client = clientService.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
+			var client = clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
 
 			// Assert
 			Assert.NotNull(testClient);
@@ -59,7 +59,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => clientService.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+			Assert.Throws<Exception>(() => clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
 		}
 
 		[Fact]
@@ -78,7 +78,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act & Assert
-			Assert.Throws<DbUpdateException>(() => clientService.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+			Assert.Throws<DbUpdateException>(() => clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
 		}
 
 		[Fact]
@@ -91,7 +91,7 @@ namespace BookingDatabase.Tests
 			var newPassword = "newpassword";
 
 			// Act
-			var updatedClient = clientService.UpdateClient(testClient.ID, newPassword);
+			var updatedClient = clientManager.UpdateClient(testClient.ID, newPassword);
 			Assert.NotNull(updatedClient);
 
 			// Assert
@@ -105,7 +105,7 @@ namespace BookingDatabase.Tests
 			var newPassword = "newpassword";
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => clientService.UpdateClient(testClient.ID, newPassword));
+			Assert.Throws<Exception>(() => clientManager.UpdateClient(testClient.ID, newPassword));
 		}
 
 		[Fact]
@@ -116,7 +116,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			clientService.RemoveClient(testClient.ID);
+			clientManager.RemoveClient(testClient.ID);
 
 			// Assert
 			Assert.Empty(context.Clients);
@@ -126,7 +126,7 @@ namespace BookingDatabase.Tests
 		public void RemoveClient_ShouldThrowException_WhenClientDoesNotExist()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => clientService.RemoveClient(testClient.ID));
+			Assert.Throws<Exception>(() => clientManager.RemoveClient(testClient.ID));
 		}
 	}
 	}

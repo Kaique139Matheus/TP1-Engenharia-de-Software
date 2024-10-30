@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Services
 {
-	public class AuthenticationService
+	public class AuthenticationManager
 	{
 		private readonly EasyBookingContext context;
 
@@ -17,7 +17,7 @@ namespace BookingDatabase.Services
 		public bool IsProvider { get; private set; }
 		public bool IsLoggedIn => currentUser != null;
 
-		public AuthenticationService(EasyBookingContext context)
+		public AuthenticationManager(EasyBookingContext context)
 		{
 			this.context = context;
 			this.currentUser = null;
