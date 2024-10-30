@@ -8,6 +8,7 @@ using Xunit;
 
 namespace BookingDatabase.Tests
 {
+	[Collection("Database collection")]
 	public class ClientServiceTests
 	{
 		private readonly EasyBookingContext context;
