@@ -33,7 +33,7 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void AddClient_ShouldAddClient_WhenEmailIsNotInUse()
+		public void AddClient_ShouldAddClient()
 		{
 			// Act
 			var client = clientService.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
