@@ -21,17 +21,20 @@ export default function LoginPage ({setUserInfo}){
         setCarregando(true);
         
         const body = {email: form.email, password: form.senha }
-        axios.post(`${BASE_URL}`, body)
-        .then((res) => {
-            setUserInfo(res.data);
-            localStorage.setItem("TOKEN", res.data.token);
-            navigate("/hoje");
-        })
-        .catch((err) => {
-            console.log(err);
-            alert(err.response.data.message);
-            window.location.reload();
-        })
+        navigate("/home");
+
+        // faz requisicao pra api e navega pra home em caso de sucesso
+        // axios.post(`${BASE_URL}`, body)
+        // .then((res) => {
+        //     setUserInfo(res.data);
+        //     localStorage.setItem("TOKEN", res.data.token);
+        //     navigate("/home");
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        //     alert(err.response.data.message);
+        //     window.location.reload();
+        // })
     }
     
     return (

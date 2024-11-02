@@ -24,16 +24,19 @@ export default function CadastroPage(){
             email: form.email,
             name: form.nome,
             image: fotoCadastro,
-            password: form.senha
+            password: form
+            .senha
         }
+        
+        navigate("/")
 
-        // faz a requisicao pro cadastro
-        axios.post(`${BASE_URL}`, body)
-        .then((res) => navigate("/"))
-        .catch((err) => {
-            alert(err.response.data.message);
-            window.location.reload();
-        })
+        // faz a requisicao pro cadastro e navega para login em caso de sucesso
+        // axios.post(`${BASE_URL}`, body)
+        // .then((res) => navigate("/"))
+        // .catch((err) => {
+        //     alert(err.response.data.message);
+        //     window.location.reload();
+        // })
 
     }
 
