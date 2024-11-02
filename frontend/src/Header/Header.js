@@ -13,7 +13,7 @@ export default function Header() {
                 alt="Logo"
             ></LogoImg>
             <Text>Nunca foi tão fácil reservar!</Text>
-            {usuarioLogado ? 
+            {!usuarioLogado ? 
             <PerfilImg src={fotoCadastro}></PerfilImg> : 
             <LogoutContainer>Logout</LogoutContainer>
             }
