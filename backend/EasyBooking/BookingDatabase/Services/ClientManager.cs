@@ -19,9 +19,6 @@ namespace BookingDatabase.Services
 
 		public ClientModel AddClient(string email, string password, string CPF, string firstName, string lastName)
 		{
-			// Verify that the email is not already in use in the Providers table
-			if (context.Providers.Any(p => p.Email == email)) throw new Exception("Email in use");
-
 			var client = new ClientModel
 			{
 				Email = email,
@@ -39,6 +36,8 @@ namespace BookingDatabase.Services
 
 		public ClientModel UpdateClient(int id, string newPassword) 
 		{
+			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
+
 			var client = context.Clients.Find(id);
 			if (client == null) throw new Exception("Client not found");
 

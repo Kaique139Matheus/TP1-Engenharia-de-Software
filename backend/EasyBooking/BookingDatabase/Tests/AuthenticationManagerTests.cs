@@ -1,6 +1,7 @@
 ﻿using BookingDatabase.Data;
 using BookingDatabase.Models;
 using BookingDatabase.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace BookingDatabase.Tests
 	public class AuthenticationManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly AuthenticationManager authenticationManager;
 
 		private readonly ClientModel testClient = new ClientModel
 		{
@@ -35,12 +35,13 @@ namespace BookingDatabase.Tests
 
 		public AuthenticationManagerTests()
 		{
-			bool isTesting = true;
-			context = new EasyBookingContext(isTesting);
-			authenticationManager = new AuthenticationManager(context);
+			EasyBookingContext.TestDatabase = true;
+			context = new EasyBookingContext();
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
+
+			AuthenticationManager.Instance.Logout();
 		}
 
 		[Fact]
@@ -51,10 +52,10 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			authenticationManager.Login(testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
 
 			// Assert
-			Assert.True(authenticationManager.IsLoggedIn);
+			Assert.True(AuthenticationManager.Instance.IsUserLoggedIn(testClient.ID));
 		}
 
 		[Fact]
@@ -65,17 +66,17 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			authenticationManager.Login(testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
 
 			// Assert
-			Assert.True(authenticationManager.IsLoggedIn);
+			Assert.True(AuthenticationManager.Instance.IsUserLoggedIn(testProvider.ID));
 		}
 
 		[Fact]
 		public void Login_ShouldThrowException_WhenEmailNotFound()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => authenticationManager.Login(testClient.Email, testClient.Password));
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password));
 		}
 
 		[Fact]
@@ -86,7 +87,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => authenticationManager.Login(testClient.Email, "wrongpassword"));
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, testClient.Email, "wrongpassword"));
 		}
 
 		[Fact]
@@ -95,14 +96,76 @@ namespace BookingDatabase.Tests
 			// Arrange
 			context.Clients.Add(testClient);
 			context.SaveChanges();
-			authenticationManager.Login(testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
 
 			// Act
-			authenticationManager.Logout();
+			AuthenticationManager.Instance.Logout();
 
 			// Assert
-			Assert.False(authenticationManager.IsLoggedIn);
+			Assert.False(AuthenticationManager.Instance.IsUserLoggedIn(testClient.ID));
 		}
 
+		[Fact]
+		public void CreateClient_ShouldLogInClient()
+		{
+			Assert.True(context.Clients.Count() == 0);
+
+			// Act
+			AuthenticationManager.Instance.CreateClientAccount(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
+
+			// Assert
+			Assert.True(AuthenticationManager.Instance.IsLoggedIn);
+		}
+
+		[Fact]
+		public void CreateClient_ShouldThrowException_WhenEmailInUse()
+		{
+			// Arrange
+			context.Providers.Add(testProvider);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.CreateClientAccount(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+		}
+
+		[Fact]
+		public void AddClient_ShouldThrowException_WhenCPFIsInUse()
+		{
+			// Arrange
+			var client = new ClientModel
+			{
+				Email = "test2@example.com",
+				Password = "password",
+				CPF = testClient.CPF,
+				FirstName = "Jane",
+				LastName = "Doe"
+			};
+			context.Clients.Add(client);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => AuthenticationManager.Instance.CreateClientAccount(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+		}
+
+		[Fact]
+		public void CreateProvider_ShouldLogInProvider()
+		{
+			// Act
+			AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ);
+
+			// Assert
+			Assert.True(AuthenticationManager.Instance.IsLoggedIn);
+		}
+
+		[Fact]
+		public void CreateProvider_ShouldThrowException_WhenEmailInUse()
+		{
+			// Arrange
+			context.Clients.Add(testClient);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
+		}
 	}
 }

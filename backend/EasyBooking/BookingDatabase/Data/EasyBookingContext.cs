@@ -10,6 +10,8 @@ namespace BookingDatabase.Data
 {
 	public class EasyBookingContext : DbContext
 	{
+		public static bool TestDatabase { get; set; } = false;
+
 		public DbSet<ProviderModel> Providers { get; set; }
 		public DbSet<ServiceModel> Services { get; set; }
 		public DbSet<TimeslotModel> Timeslots { get; set; }
@@ -19,11 +21,11 @@ namespace BookingDatabase.Data
 
 		public string DbPath { get; private set; }
 
-		public EasyBookingContext(bool testDatabase = false)
+		public EasyBookingContext()
 		{
 			var folder = Environment.SpecialFolder.LocalApplicationData;
 			var path = Environment.GetFolderPath(folder);
-			if (testDatabase) DbPath = System.IO.Path.Join(path, "easybooking_test.db");
+			if (TestDatabase) DbPath = System.IO.Path.Join(path, "easybooking_test.db");
 			else DbPath = System.IO.Path.Join(path, "easybooking.db");
 		}
 

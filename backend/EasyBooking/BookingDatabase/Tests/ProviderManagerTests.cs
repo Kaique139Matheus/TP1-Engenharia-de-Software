@@ -35,8 +35,8 @@ namespace BookingDatabase.Tests
 
 		public ProviderManagerTests()
 		{
-			bool isTesting = true;
-			context = new EasyBookingContext(isTesting);
+			EasyBookingContext.TestDatabase = true;
+			context = new EasyBookingContext();
 			providerManager = new ProviderManager(context);
 
 			context.Database.EnsureDeleted();
