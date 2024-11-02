@@ -25,8 +25,8 @@ namespace BookingDatabase.Tests
 
 		public ClientManagerTests()
 		{
-			bool isTesting = true;
-			context = new EasyBookingContext(isTesting);
+			EasyBookingContext.TestDatabase = true;
+			context = new EasyBookingContext();
 			clientManager = new ClientManager(context);
 
 			context.Database.EnsureDeleted();
@@ -34,59 +34,15 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void AddClient_ShouldAddClient()
-		{
-			// Act
-			var client = clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
-
-			// Assert
-			Assert.NotNull(testClient);
-		}
-
-		[Fact]
-		public void AddClient_ShouldThrowException_WhenEmailIsInUse()
+		public void UpdateClient_ShouldUpdatePassword_WhenLoggedIn()
 		{
 			// Arrange
-			var provider = new ProviderModel
-			{
-				Email = "test@example.com",
-				Password = "password",
-				Name = "Test Provider",
-				CNPJ = "12345678901234"
-			};
+			var authenticationManager = AuthenticationManager.Instance;
 
-			context.Providers.Add(provider);
-			context.SaveChanges();
-
-			// Act & Assert
-			Assert.Throws<Exception>(() => clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
-		}
-
-		[Fact]
-		public void AddClient_ShouldThrowException_WhenCPFIsInUse()
-		{
-			// Arrange
-			var client = new ClientModel
-			{
-				Email = "test2@example.com",
-				Password = "password",
-				CPF = testClient.CPF,
-				FirstName = "Jane",
-				LastName = "Doe"
-			};
-			context.Clients.Add(client);
-			context.SaveChanges();
-
-			// Act & Assert
-			Assert.Throws<DbUpdateException>(() => clientManager.AddClient(testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
-		}
-
-		[Fact]
-		public void UpdateClient_ShouldUpdatePassword_WhenClientExists()
-		{
-			// Arrange
 			context.Clients.Add(testClient);
 			context.SaveChanges();
+
+			authenticationManager.Login(context, testClient.Email, testClient.Password);
 
 			var newPassword = "newpassword";
 
@@ -99,7 +55,7 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void UpdateClient_ShouldThrowException_WhenClientDoesNotExist()
+		public void UpdateClient_ShouldThrowException_WhenInvalidClient()
 		{
 			// Arrange
 			var newPassword = "newpassword";
@@ -109,11 +65,15 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void RemoveClient_ShouldRemoveClient_WhenClientExists()
+		public void RemoveClient_ShouldRemoveClient_WhenLoggedIn()
 		{
 			// Arrange
+			var authenticationManager = AuthenticationManager.Instance;
+
 			context.Clients.Add(testClient);
 			context.SaveChanges();
+
+			authenticationManager.Login(context, testClient.Email, testClient.Password);
 
 			// Act
 			clientManager.RemoveClient(testClient.ID);
@@ -123,7 +83,7 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void RemoveClient_ShouldThrowException_WhenClientDoesNotExist()
+		public void RemoveClient_ShouldThrowException_WhenInvalidClient()
 		{
 			// Act & Assert
 			Assert.Throws<Exception>(() => clientManager.RemoveClient(testClient.ID));

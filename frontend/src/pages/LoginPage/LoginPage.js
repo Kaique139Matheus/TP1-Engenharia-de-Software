@@ -3,8 +3,6 @@ import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { BASE_URL } from "../url/BaseUrl";
-import axios from "axios";
 
 
 export default function LoginPage ({setUserInfo}){
@@ -21,7 +19,7 @@ export default function LoginPage ({setUserInfo}){
         setCarregando(true);
         
         const body = {email: form.email, password: form.senha }
-        navigate("/home");
+        navigate("/servicos");
 
         // faz requisicao pra api e navega pra home em caso de sucesso
         // axios.post(`${BASE_URL}`, body)

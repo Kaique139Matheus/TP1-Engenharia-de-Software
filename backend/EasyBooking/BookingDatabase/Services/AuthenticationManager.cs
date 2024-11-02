@@ -10,20 +10,31 @@ namespace BookingDatabase.Services
 {
 	public class AuthenticationManager
 	{
-		private readonly EasyBookingContext context;
+		private static AuthenticationManager? instance;
 
-		private UserModel? currentUser;
+		public static AuthenticationManager Instance 
+		{ 
+			get
+			{
+				if (instance == null) instance = new AuthenticationManager();
+				return instance;
+			}
 
-		public bool IsProvider { get; private set; }
-		public bool IsLoggedIn => currentUser != null;
-
-		public AuthenticationManager(EasyBookingContext context)
-		{
-			this.context = context;
-			this.currentUser = null;
+			private set { Instance = value; }
 		}
 
-		public void Login(string email, string password)
+		public UserModel? CurrentUser {  get; private set; }
+
+		public bool IsProvider { get; private set; }
+		public bool IsLoggedIn=> CurrentUser != null;
+		public bool IsUserLoggedIn(int id) => CurrentUser != null && CurrentUser.ID == id;
+
+		private AuthenticationManager()
+		{
+			this.CurrentUser = null;
+		}
+
+		public void Login(EasyBookingContext context, string email, string password)
 		{
 			var client = context.Clients.SingleOrDefault(c => c.Email == email);
 			var provider = context.Providers.SingleOrDefault(p => p.Email == email);
@@ -32,20 +43,42 @@ namespace BookingDatabase.Services
 			else if (client != null)
 			{
 				if (client.Password != password) throw new Exception("Incorrect password");
-				currentUser = client;
+				CurrentUser = client;
 				IsProvider = false;
 			}
 			else if (provider != null)
 			{
 				if (provider.Password != password) throw new Exception("Incorrect password");
-				currentUser = provider;
+				CurrentUser = provider;
 				IsProvider = true;
 			}
 		}
 
 		public void Logout()
 		{
-			currentUser = null;
+			CurrentUser = null;
+		}
+
+		public void CreateClientAccount(EasyBookingContext context, string email, string password, string CPF, string firstName, string lastName)
+		{
+			if (context.Providers.Any(p => p.Email == email)) throw new Exception("Email in use");
+
+			var clientManager = new ClientManager(context);
+			var user = clientManager.AddClient(email, password, CPF, firstName, lastName);
+
+			CurrentUser = user;
+			IsProvider = false;
+		}
+
+		public void CreateProviderAccount(EasyBookingContext context, string email, string password, string name, string CNPJ)
+		{
+			if (context.Clients.Any(c => c.Email == email)) throw new Exception("Email in use");
+
+			var providerManager = new ProviderManager(context);
+			var user = providerManager.AddProvider(email, password, name, CNPJ);
+
+			CurrentUser = user;
+			IsProvider = true;
 		}
 	}
 }
