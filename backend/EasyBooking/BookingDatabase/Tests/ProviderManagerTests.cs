@@ -26,6 +26,22 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
+		public void AddProvider_ShouldAddProvider()
+		{
+			// Arrange
+			var testProvider = TestObjects.TestProvider;
+
+			// Act
+			var provider = ProviderManager.AddProvider(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ);
+
+			// Assert
+			Assert.Equal(testProvider.Email, provider.Email);
+			Assert.Equal(testProvider.Password, provider.Password);
+			Assert.Equal(testProvider.CNPJ, provider.CNPJ);
+			Assert.Equal(testProvider.Name, provider.Name);
+		}
+
+		[Fact]
 		public void UpdateProvider_ShouldUpdatePassword()
 		{
 			// Arrange

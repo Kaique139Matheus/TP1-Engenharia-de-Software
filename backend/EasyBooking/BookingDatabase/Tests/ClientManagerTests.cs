@@ -23,6 +23,23 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
+		public void AddClient_ShouldAddClient()
+		{
+			// Arrange
+			var testClient = TestObjects.TestClient;
+
+			// Act
+			var client = ClientManager.AddClient(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
+
+			// Assert
+			Assert.Equal(testClient.Email, client.Email);
+			Assert.Equal(testClient.Password, client.Password);
+			Assert.Equal(testClient.CPF, client.CPF);
+			Assert.Equal(testClient.FirstName, client.FirstName);
+			Assert.Equal(testClient.LastName, client.LastName);
+		}
+
+		[Fact]
 		public void UpdateClient_ShouldUpdatePassword()
 		{
 			// Arrange
