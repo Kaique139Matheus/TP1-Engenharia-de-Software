@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Models
 {
-	//[PrimaryKey("ID", "ProviderID", "ServiceID")]
 	public class TimeslotModel
 	{
         public int ID { get; set; }
-        public int ProviderID { get; set; }
         public int ServiceID { get; set; }
         public int Time { get; set; }
 
 		public ServiceModel Service { get; set; } = null!;
-		public ProviderModel Provider { get; set; } = null!;
+		public List<BookingModel> Bookings { get; set; } = new List<BookingModel>();
 	}
 }

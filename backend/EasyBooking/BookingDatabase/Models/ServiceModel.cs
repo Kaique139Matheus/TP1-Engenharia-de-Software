@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Models
 {
-	//[PrimaryKey("ID", "ProviderID")]
 	[Index(nameof(ProviderID), nameof(Name), IsUnique = true)]
 	public class ServiceModel
 	{
@@ -20,5 +19,6 @@ namespace BookingDatabase.Models
 		public int DurationInMinutes { get; set; }
 
 		public ProviderModel Provider { get; set; } = null!;
-    }
+		public List<TimeslotModel> Timeslots { get; set; } = new List<TimeslotModel>();
+	}
 }

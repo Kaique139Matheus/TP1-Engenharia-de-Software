@@ -63,5 +63,17 @@ namespace BookingDatabase.Tests
 			DurationInMinutes = 60,
 			ProviderID = 1
 		};
+
+		public static TimeslotModel TestTimeslot => new TimeslotModel
+		{
+			Time = 1200,
+			ServiceID = 1
+		};
+
+		public static TimeslotModel TestTimeslot2 => new TimeslotModel
+		{
+			Time = 1300,
+			ServiceID = 1
+		};
 	}
 }

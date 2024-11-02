@@ -3,6 +3,7 @@ using System;
 using BookingDatabase.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingDatabase.Migrations
 {
     [DbContext(typeof(EasyBookingContext))]
-    partial class EasyBookingContextModelSnapshot : ModelSnapshot
+    [Migration("20241102214751_TimeslotOnlyReferencesService")]
+    partial class TimeslotOnlyReferencesService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -208,7 +211,7 @@ namespace BookingDatabase.Migrations
                         .IsRequired();
 
                     b.HasOne("BookingDatabase.Models.TimeslotModel", "Timeslot")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("TimeslotID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -255,7 +258,7 @@ namespace BookingDatabase.Migrations
             modelBuilder.Entity("BookingDatabase.Models.TimeslotModel", b =>
                 {
                     b.HasOne("BookingDatabase.Models.ServiceModel", "Service")
-                        .WithMany("Timeslots")
+                        .WithMany()
                         .HasForeignKey("ServiceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -275,16 +278,6 @@ namespace BookingDatabase.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("BookingDatabase.Models.ServiceModel", b =>
-                {
-                    b.Navigation("Timeslots");
-                });
-
-            modelBuilder.Entity("BookingDatabase.Models.TimeslotModel", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

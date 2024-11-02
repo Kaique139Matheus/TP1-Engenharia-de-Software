@@ -56,6 +56,26 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
+		public void ValidateAndGetProviderService_ShouldReturnService()
+		{
+			// Arrange
+			var testProvider = TestObjects.TestProvider;
+			var testService = TestObjects.TestService;
+			context.Providers.Add(testProvider);
+			context.Services.Add(testService);
+			context.SaveChanges();
+
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+
+			// Act
+			var service = ServiceManager.ValidateAndGetProviderService(context, testProvider.ID, testService.ID);
+
+			// Assert
+			Assert.NotNull(service);
+			Assert.Equal(testService.ID, service.ID);
+		}
+
+		[Fact]
 		public void ValidateAndGetProviderService_ShouldThrowException_WhenInvalidProvider()
 		{
 			// Act & Assert
