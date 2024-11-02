@@ -13,15 +13,6 @@ namespace BookingDatabase.Tests
 	{
 		private readonly EasyBookingContext context;
 
-		private readonly ClientModel testClient = new ClientModel
-		{
-			Email = "test@example.com",
-			Password = "password",
-			CPF = "12345678900",
-			FirstName = "John",
-			LastName = "Doe"
-		};
-
 		public ClientManagerTests()
 		{
 			EasyBookingContext.TestDatabase = true;
@@ -35,6 +26,7 @@ namespace BookingDatabase.Tests
 		public void UpdateClient_ShouldUpdatePassword()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
@@ -53,17 +45,15 @@ namespace BookingDatabase.Tests
 		[Fact]
 		public void UpdateClient_ShouldThrowException_WhenInvalidClient()
 		{
-			// Arrange
-			var newPassword = "newpassword";
-
 			// Act & Assert
-			Assert.Throws<Exception>(() => ClientManager.UpdateClient(context, testClient.ID, newPassword));
+			Assert.Throws<Exception>(() => ClientManager.UpdateClient(context, 0, "newpassword"));
 		}
 
 		[Fact]
 		public void RemoveClient_ShouldRemoveClient()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
@@ -80,7 +70,7 @@ namespace BookingDatabase.Tests
 		public void RemoveClient_ShouldThrowException_WhenInvalidClient()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => ClientManager.RemoveClient(context, testClient.ID));
+			Assert.Throws<Exception>(() => ClientManager.RemoveClient(context, 0));
 		}
 	}
 	}

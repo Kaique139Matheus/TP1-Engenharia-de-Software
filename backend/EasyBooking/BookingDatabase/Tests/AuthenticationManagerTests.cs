@@ -16,23 +16,6 @@ namespace BookingDatabase.Tests
 	{
 		private readonly EasyBookingContext context;
 
-		private readonly ClientModel testClient = new ClientModel
-		{
-			Email = "test@example.com",
-			Password = "password",
-			CPF = "12345678900",
-			FirstName = "John",
-			LastName = "Doe"
-		};
-
-		private readonly ProviderModel testProvider = new ProviderModel
-		{
-			Email = "test@example.com",
-			Password = "password",
-			Name = "Test Provider",
-			CNPJ = "12345678901234"
-		};
-
 		public AuthenticationManagerTests()
 		{
 			EasyBookingContext.TestDatabase = true;
@@ -48,6 +31,7 @@ namespace BookingDatabase.Tests
 		public void Login_ShouldLoginClient()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
@@ -62,6 +46,7 @@ namespace BookingDatabase.Tests
 		public void Login_ShouldLoginProvider()
 		{
 			// Arrange
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
@@ -76,13 +61,14 @@ namespace BookingDatabase.Tests
 		public void Login_ShouldThrowException_WhenEmailNotFound()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password));
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, "email", "password"));
 		}
 
 		[Fact]
 		public void Login_ShouldThrowException_WhenIncorrectPassword()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
@@ -94,6 +80,7 @@ namespace BookingDatabase.Tests
 		public void Logout_ShouldLogout()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
@@ -106,9 +93,10 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateClient_ShouldLogInClient()
+		public void CreateClientAccount_ShouldLogInClient()
 		{
-			Assert.True(context.Clients.Count() == 0);
+			// Arrange
+			var testClient = TestObjects.TestClient;
 
 			// Act
 			AuthenticationManager.Instance.CreateClientAccount(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName);
@@ -118,9 +106,11 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateClient_ShouldThrowException_WhenEmailInUse()
+		public void CreateClientAccount_ShouldThrowException_WhenEmailInUseByProvider()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
@@ -129,17 +119,12 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void AddClient_ShouldThrowException_WhenCPFIsInUse()
+		public void CreateClientAccount_ShouldThrowException_WhenEmailInUseByClient()
 		{
 			// Arrange
-			var client = new ClientModel
-			{
-				Email = "test2@example.com",
-				Password = "password",
-				CPF = testClient.CPF,
-				FirstName = "Jane",
-				LastName = "Doe"
-			};
+			var testClient = TestObjects.TestClient;
+			var client = TestObjects.TestClient2;
+			client.Email = testClient.Email;
 			context.Clients.Add(client);
 			context.SaveChanges();
 
@@ -148,8 +133,25 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateProvider_ShouldLogInProvider()
+		public void CreateClientAccount_ShouldThrowException_WhenCPFIsInUse()
 		{
+			// Arrange
+			var testClient = TestObjects.TestClient;
+			var client = TestObjects.TestClient2;
+			client.CPF = testClient.CPF;
+			context.Clients.Add(client);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => AuthenticationManager.Instance.CreateClientAccount(context, testClient.Email, testClient.Password, testClient.CPF, testClient.FirstName, testClient.LastName));
+		}
+
+		[Fact]
+		public void CreateProviderAccount_ShouldLogInProvider()
+		{
+			// Arrange
+			var testProvider = TestObjects.TestProvider;
+
 			// Act
 			AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ);
 
@@ -158,9 +160,11 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateProvider_ShouldThrowException_WhenEmailInUse()
+		public void CreateProviderAccount_ShouldThrowException_WhenEmailInUseByClient()
 		{
 			// Arrange
+			var testClient = TestObjects.TestClient;
+			var testProvider = TestObjects.TestProvider;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
@@ -169,16 +173,12 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateProvider_ShouldThrowException_WhenCNPJInUse()
+		public void CreateProviderAccount_ShouldThrowException_WhenEmailInUseByProvider()
 		{
 			// Arrange
-			var provider = new ProviderModel
-			{
-				Email = "test2@example.com",
-				Password = "password",
-				Name = "Test Provider 2",
-				CNPJ = testProvider.CNPJ
-			};
+			var testProvider = TestObjects.TestProvider;
+			var provider = TestObjects.TestProvider2;
+			provider.Email = testProvider.Email;
 			context.Providers.Add(provider);
 			context.SaveChanges();
 
@@ -187,16 +187,26 @@ namespace BookingDatabase.Tests
 		}
 
 		[Fact]
-		public void CreateProvider_ShouldThrowException_WhenNameInUse()
+		public void CreateProviderAccount_ShouldThrowException_WhenCNPJInUse()
 		{
 			// Arrange
-			var provider = new ProviderModel
-			{
-				Email = "test2@example.com",
-				Password = "password",
-				Name = testProvider.Name,
-				CNPJ = "12345678901235"
-			};
+			var testProvider = TestObjects.TestProvider;
+			var provider = TestObjects.TestProvider2;
+			provider.CNPJ = testProvider.CNPJ;
+			context.Providers.Add(provider);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
+		}
+
+		[Fact]
+		public void CreateProviderAccount_ShouldThrowException_WhenNameInUse()
+		{
+			// Arrange
+			var testProvider = TestObjects.TestProvider;
+			var provider = TestObjects.TestProvider2;
+			provider.Name = testProvider.Name;
 			context.Providers.Add(provider);
 			context.SaveChanges();
 

@@ -16,22 +16,6 @@ namespace BookingDatabase.Tests
 	{
 		private readonly EasyBookingContext context;
 
-		private readonly ProviderModel testProvider = new ProviderModel
-		{
-			Email = "test@example.com",
-			Password = "password",
-			Name = "Test Provider",
-			CNPJ = "12345678901234"
-		};
-
-		private readonly ProviderModel testProvider2 = new ProviderModel
-		{
-			Email = "test2@example.com",
-			Password = "password",
-			Name = "Test Provider 2",
-			CNPJ = "12345678901235"
-		};
-
 		public ProviderManagerTests()
 		{
 			EasyBookingContext.TestDatabase = true;
@@ -45,6 +29,7 @@ namespace BookingDatabase.Tests
 		public void UpdateProvider_ShouldUpdatePassword()
 		{
 			// Arrange
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
@@ -70,6 +55,7 @@ namespace BookingDatabase.Tests
 		public void DeleteProvider_ShouldDeleteProvider()
 		{
 			// Arrange
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 

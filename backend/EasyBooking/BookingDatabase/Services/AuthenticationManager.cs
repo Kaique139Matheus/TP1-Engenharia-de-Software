@@ -26,7 +26,7 @@ namespace BookingDatabase.Services
 		public UserModel? CurrentUser {  get; private set; }
 
 		public bool IsProvider { get; private set; }
-		public bool IsLoggedIn=> CurrentUser != null;
+		public bool IsLoggedIn => CurrentUser != null;
 		public bool IsUserLoggedIn(int id) => CurrentUser != null && CurrentUser.ID == id;
 
 		private AuthenticationManager()
