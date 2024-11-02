@@ -21,7 +21,7 @@ export default function LoginPage ({setUserInfo}){
         setCarregando(true);
         
         const body = {email: form.email, password: form.senha }
-        axios.post(`${BASE_URL}/auth/login`, body)
+        axios.post(`${BASE_URL}`, body)
         .then((res) => {
             setUserInfo(res.data);
             localStorage.setItem("TOKEN", res.data.token);
@@ -41,8 +41,7 @@ export default function LoginPage ({setUserInfo}){
             ></img>
             <FormContainer onSubmit={efetuarLogin}>
                 <input 
-                    data-test="email-input"
-                    placeholder="email"
+                    placeholder="Email"
                     type="text"
                     name="email"
                     value={form.email}
@@ -51,8 +50,7 @@ export default function LoginPage ({setUserInfo}){
                     required    
                 ></input>
                 <input 
-                    data-test="password-input"
-                    placeholder="senha"
+                    placeholder="Senha"
                     type="password"
                     name="senha"
                     disabled={carregando}
@@ -60,7 +58,7 @@ export default function LoginPage ({setUserInfo}){
                     onChange={(e) => atualizaForm(e)}
                     required    
                 ></input>              
-                <button data-test="login-btn" disabled={carregando} type="submit">{carregando ? <ThreeDots 
+                <button disabled={carregando} type="submit">{carregando ? <ThreeDots 
                         height="40" 
                         width="40" 
                         radius="9"
@@ -72,7 +70,7 @@ export default function LoginPage ({setUserInfo}){
                     /> : "Entrar"}</button>
                
             </FormContainer>
-            <Link data-test="signup-link" to={`/cadastro`}>
+            <Link to={`/cadastro`}>
                 <FraseCadastro>Não tem uma conta? Cadastre-se</FraseCadastro>
             </Link>
         </Login>
@@ -113,11 +111,11 @@ const FormContainer = styled.form`
     }
     button{
         margin: 10px 0px;
-        width: 303px;
+        width: 170px;
         height: 45px;
         border: 1px solid #D4D4D4;
         border-radius: 5px;
-        background-color: #52B6FF;
+        background-color: #00274D;
         color: white;
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -133,5 +131,5 @@ const FormContainer = styled.form`
 
 const FraseCadastro = styled.p`
     text-decoration: underline;
-    color: #52B6FF;
+    color: #00274D;
 `

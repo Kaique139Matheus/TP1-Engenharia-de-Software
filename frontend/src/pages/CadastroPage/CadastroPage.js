@@ -128,7 +128,7 @@ const FormContainer = styled.form`
     }
     button{
         margin: 10px 0px;
-        width: 303px;
+        width: 170px;
         height: 45px;
         border: 1px solid #D4D4D4;
         border-radius: 5px;

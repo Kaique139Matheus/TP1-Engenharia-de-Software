@@ -6,10 +6,10 @@ import UserContext from "./contexts/UserContext";
 
 export default function App() {
   
-  const [userInfo, setUserInfo] = React.useState({});z
+  const [userInfo, setUserInfo] = React.useState({});
 
   return (
-    <UserContext.Provider value={{userInfo, habitosAPI, porcentagem}}>
+    <UserContext.Provider value={{userInfo}}>
       <BrowserRouter>
         <Routes>
           <Route path={`/`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
