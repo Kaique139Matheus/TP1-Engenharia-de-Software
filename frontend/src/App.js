@@ -6,6 +6,7 @@ import UserContext from "./contexts/UserContext";
 import HomePage from "./pages/HomePage/HomePage";
 import HomeServicosPage from "./pages/HomeServicosPage/HomeServicosPage";
 import AvaliarPage from "./pages/AvaliarPage/AvaliarPage"
+import SelecionarDataPage from "./pages/SelecionarDataPage/SelecionarDataPage";
 
 export default function App() {
   
@@ -20,6 +21,7 @@ export default function App() {
           <Route path={`/`} element={<HomePage></HomePage>}></Route>
           <Route path={`/avaliar`} element={<AvaliarPage></AvaliarPage>}></Route>
           <Route path={`/servicos`} element={<HomeServicosPage></HomeServicosPage>}></Route>
+          <Route path={`/selecionar-data`} element={<SelecionarDataPage></SelecionarDataPage>}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
