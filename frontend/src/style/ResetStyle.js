@@ -1,4 +1,5 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
+import backgroundImage from "./kellen-riggin-edspQmByrTk-unsplash.jpg"
 
 const ResetStyle = createGlobalStyle`
     html, body, div, span, applet, object, iframe,
@@ -21,13 +22,15 @@ const ResetStyle = createGlobalStyle`
 		font: inherit;
 		vertical-align: baseline;
 	}
-	/* HTML5 display-role reset for older browsers */
 	article, aside, details, figcaption, figure, 
 	footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
 	body {
 		line-height: 1;
+		background-image: url(${backgroundImage});
+		background-size: cover;
+		background-position: center;
 	}
 	ol, ul {
 		list-style: none;
@@ -46,9 +49,6 @@ const ResetStyle = createGlobalStyle`
 	}
 	* {
 		box-sizing: border-box;
-	}
-	body {
-		background-color: #E5E5E5;
 	}
 `
 
