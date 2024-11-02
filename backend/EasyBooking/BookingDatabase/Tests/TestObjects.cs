@@ -45,5 +45,23 @@ namespace BookingDatabase.Tests
 			Name = "Test Provider 2",
 			CNPJ = "12345678901235"
 		};
+
+		public static ServiceModel TestService => new ServiceModel
+		{
+			Name = "Test Service",
+			Description = "Just a test",
+			Price = 100,
+			DurationInMinutes = 60,
+			ProviderID = 1
+		};
+
+		public static ServiceModel TestService2 => new ServiceModel
+		{
+			Name = "Test Service 2",
+			Description = "Just a test",
+			Price = 100,
+			DurationInMinutes = 60,
+			ProviderID = 1
+		};
 	}
 }
