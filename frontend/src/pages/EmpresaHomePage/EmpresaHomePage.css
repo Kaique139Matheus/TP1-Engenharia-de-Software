@@ -3,11 +3,11 @@
 
     margin-right: 20px;
     margin-left: 20px;
-    margin-top: 15vh;
+    margin-top: calc(15vh + 70px);
     margin-bottom: 10px;
 
     height: 210px;
-    background-color: white;
+    background-color: rgba(255,255,255,0.1);
     border-radius: 15px;
     border: 4px solid #01193f;
 
@@ -35,7 +35,7 @@
     margin-left: 20px;
     margin-top: 10px;
 
-    background-color: white;
+    background-color: rgba(255,255,255,0.1);
     border-radius: 15px;
     border: 4px solid #01193f;
 }
@@ -48,7 +48,7 @@
 
     height: 50px;
 
-    background-color: white;
+    background-color: rgba(255,255,255,0.1);
     border-radius: 15px;
     border: 3px solid #01193f;
 

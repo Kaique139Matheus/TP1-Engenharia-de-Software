@@ -3,6 +3,8 @@ import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../url/BaseUrl";
+import Header from "../../Header/Header";
+
 
 import foto_empresa from "./foto_empresa.jpg"
 import Servico from "./Servico";
@@ -17,6 +19,8 @@ export default function EmpresaHomePage (){
 
     return (
         <>
+        <Header></Header>
+
 
             <div id="page-frame">
                 <img id="foto-empresa" src={foto_empresa} width='220px' height='220px'></img>
