@@ -7,11 +7,10 @@ import Header from "../../Header/Header";
 export default function HomeServicosPage(){
     const navigate = useNavigate();
     // substituir pelo array de servicos
-    const quantidadeProvisoriaDeServicos = 5;
+
     return (
-        <>
+        <HomeServicoContainer>
             <Header></Header>
-            <HomeServicoContainer>
                 <NavContainer >
                     <p>Serviços</p> 
                 </NavContainer>
@@ -30,8 +29,7 @@ export default function HomeServicosPage(){
                         <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
                     </ServicoContainer>
                 </EmpresaContainer>
-            </HomeServicoContainer>
-        </>
+        </HomeServicoContainer>
         
     )
 }

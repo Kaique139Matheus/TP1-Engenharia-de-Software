@@ -4,7 +4,8 @@ import Logo from "../assets/image-removebg-preview.png"
 import fotoCadastro from "../pages/CadastroPage/cadastro_foto.jpg"
 
 export default function Header() {
-    const [usuarioLogado, setUsuarioLogado] = useState(false)
+    // mudar condicao booleana para aparecer logout
+    const [usuarioLogado, setUsuarioLogado] = useState(true)
     
     return (
         <NavContainer>
@@ -16,13 +17,14 @@ export default function Header() {
             <PerfilImg src={fotoCadastro}></PerfilImg> : 
             <LogoutContainer>Logout</LogoutContainer>
             }
-            </NavContainer>
+        </NavContainer>
     );
 }
 
 const PerfilImg = styled.img`
     width: 50px;
     height: 50px;
+    border-radius: 5px;
 `
 const LogoImg = styled.img`
     width: 65px;

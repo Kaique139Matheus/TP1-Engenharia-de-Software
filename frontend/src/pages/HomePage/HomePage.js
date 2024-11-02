@@ -143,8 +143,3 @@ const Text = styled.div`
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
 `
-
-const FraseLogin = styled.p`
-    text-decoration: underline;
-    color: #00274D;
-`
