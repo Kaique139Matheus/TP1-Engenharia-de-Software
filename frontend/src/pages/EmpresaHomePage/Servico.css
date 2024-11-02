@@ -1,0 +1,35 @@
+.Servico{
+    position: relative;
+    background-color: white;
+    margin: 10px 20px;
+    height: 80px;
+
+    border-radius: 15px;
+    border: 4px solid #01193f;
+}
+
+.NomeServico{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.BotaoApagarServico{
+    height: 50px;
+    width: 50px;
+
+    background-color: red;
+    font-size: 24px;
+    font-weight: bold;
+
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    border-radius: 15px;
+}
