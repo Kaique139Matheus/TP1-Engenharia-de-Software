@@ -2,33 +2,36 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { AvaliacaoEmpresa } from "./AvaliacaoEmpresa";
+import Header from "../../Header/Header";
 
 export default function HomeServicosPage(){
     const navigate = useNavigate();
     // substituir pelo array de servicos
     const quantidadeProvisoriaDeServicos = 5;
     return (
-        <HomeServicoContainer>
-            <NavContainer >
-                <p>Serviços</p> 
-            </NavContainer>
-            <EmpresaContainer>
-            <ServicoContainer>
-                    <NomeAvaliacao>
-                        <TextoEmpresa>
-                            Empresa1
-                        </TextoEmpresa>
-                        <AvaliacaoEmpresa avaliacaoInicial={3}></AvaliacaoEmpresa>    
-                    </NomeAvaliacao>
-                    <ServicoAvaliar>
-                    <TextoEmpresa>Serviço 1</TextoEmpresa>
-                    <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
-                    </ServicoAvaliar>
-                    <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
-                </ServicoContainer>
-            </EmpresaContainer>
-
-        </HomeServicoContainer>
+        <>
+            <Header></Header>
+            <HomeServicoContainer>
+                <NavContainer >
+                    <p>Serviços</p> 
+                </NavContainer>
+                <EmpresaContainer>
+                <ServicoContainer>
+                        <NomeAvaliacao>
+                            <TextoEmpresa>
+                                Empresa1
+                            </TextoEmpresa>
+                            <AvaliacaoEmpresa avaliacaoInicial={3}></AvaliacaoEmpresa>    
+                        </NomeAvaliacao>
+                        <ServicoAvaliar>
+                        <TextoEmpresa>Serviço 1</TextoEmpresa>
+                        <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
+                        </ServicoAvaliar>
+                        <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
+                    </ServicoContainer>
+                </EmpresaContainer>
+            </HomeServicoContainer>
+        </>
         
     )
 }
@@ -115,7 +118,7 @@ const HomeServicoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 150px;
 `
 const NavContainer = styled.div`
     width: 100%;

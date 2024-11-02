@@ -3,8 +3,6 @@ import Logo from "../../assets/image-removebg-preview.png"
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { ThreeDots } from "react-loader-spinner";
-import axios from "axios";
-import { BASE_URL } from "../url/BaseUrl";
 import fotoCadastro from "./cadastro_foto.jpg"
 
 export default function CadastroPage(){

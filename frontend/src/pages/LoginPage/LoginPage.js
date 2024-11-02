@@ -3,8 +3,6 @@ import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { BASE_URL } from "../url/BaseUrl";
-import axios from "axios";
 
 
 export default function LoginPage ({setUserInfo}){
