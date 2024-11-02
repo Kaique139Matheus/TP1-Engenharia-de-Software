@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import { AvaliacaoEstrelas } from "./AvaliacaoEstrelas";
+import { useNavigate } from "react-router-dom";
 
 export default function AvaliarPage() {
+    const navigate = useNavigate();
     const [descricaoText, setDescricao] = useState("")
 
     function onDescricaoChanged(event) {
@@ -26,7 +28,7 @@ export default function AvaliarPage() {
                     </DescricaoTextArea>
             }
             </DescricaoContainer>
-            <AvaliarBotao onClick={() => {}}>Avaliar</AvaliarBotao>
+            <AvaliarBotao onClick={() => navigate("/servicos")}>Avaliar</AvaliarBotao>
         </AvaliarPageContainer>
     );
 }
