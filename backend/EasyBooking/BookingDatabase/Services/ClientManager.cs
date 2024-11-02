@@ -8,16 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Services
 {
-	public class ClientManager
+	public static class ClientManager
 	{
-		private readonly EasyBookingContext context;
-
-		public ClientManager(EasyBookingContext context)
-		{
-			this.context = context;
-		}
-
-		public ClientModel AddClient(string email, string password, string CPF, string firstName, string lastName)
+		public static ClientModel AddClient(EasyBookingContext context, string email, string password, string CPF, string firstName, string lastName)
 		{
 			var client = new ClientModel
 			{
@@ -34,7 +27,7 @@ namespace BookingDatabase.Services
 			return client;
 		}
 
-		public ClientModel UpdateClient(int id, string newPassword) 
+		public static ClientModel UpdateClient(EasyBookingContext context, int id, string newPassword) 
 		{
 			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
 
@@ -47,7 +40,7 @@ namespace BookingDatabase.Services
 			return client;
 		}
 
-		public void RemoveClient(int id)
+		public static void RemoveClient(EasyBookingContext context, int id)
 		{
 			var client = context.Clients.Find(id);
 			if (client == null) throw new Exception("Client not found");

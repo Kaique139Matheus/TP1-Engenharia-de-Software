@@ -15,7 +15,6 @@ namespace BookingDatabase.Tests
 	public class ProviderManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly ProviderManager providerManager;
 
 		private readonly ProviderModel testProvider = new ProviderModel
 		{
@@ -37,14 +36,13 @@ namespace BookingDatabase.Tests
 		{
 			EasyBookingContext.TestDatabase = true;
 			context = new EasyBookingContext();
-			providerManager = new ProviderManager(context);
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
 		}
 
 		[Fact]
-		public void UpdateProvider_ShouldUpdatePassword_WhenLoggedIn()
+		public void UpdateProvider_ShouldUpdatePassword()
 		{
 			// Arrange
 			context.Providers.Add(testProvider);
@@ -55,7 +53,7 @@ namespace BookingDatabase.Tests
 			var newPassword = "newpassword";
 
 			// Act
-			var provider = providerManager.UpdateProvider(testProvider.ID, newPassword);
+			var provider = ProviderManager.UpdateProvider(context, testProvider.ID, newPassword);
 
 			// Assert
 			Assert.Equal(newPassword, provider.Password);
@@ -65,11 +63,11 @@ namespace BookingDatabase.Tests
 		public void UpdateProvider_ShouldThrowException_WhenInvalidProvider()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => providerManager.UpdateProvider(0, "newpassword"));
+			Assert.Throws<Exception>(() => ProviderManager.UpdateProvider(context, 0, "newpassword"));
 		}
 
 		[Fact]
-		public void DeleteProvider_ShouldDeleteProvider_WhenLoggedIn()
+		public void DeleteProvider_ShouldDeleteProvider()
 		{
 			// Arrange
 			context.Providers.Add(testProvider);
@@ -78,7 +76,7 @@ namespace BookingDatabase.Tests
 			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
 
 			// Act
-			providerManager.DeleteProvider(testProvider.ID);
+			ProviderManager.DeleteProvider(context, testProvider.ID);
 
 			// Assert
 			Assert.Empty(context.Providers);
@@ -88,7 +86,7 @@ namespace BookingDatabase.Tests
 		public void DeleteProvider_ShouldThrowException_WhenInvalidProvider()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => providerManager.DeleteProvider(0));
+			Assert.Throws<Exception>(() => ProviderManager.DeleteProvider(context, 0));
 		}
 	}
 }

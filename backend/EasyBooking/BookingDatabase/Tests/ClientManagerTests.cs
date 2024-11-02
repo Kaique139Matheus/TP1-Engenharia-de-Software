@@ -12,7 +12,6 @@ namespace BookingDatabase.Tests
 	public class ClientManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly ClientManager clientManager;
 
 		private readonly ClientModel testClient = new ClientModel
 		{
@@ -27,14 +26,13 @@ namespace BookingDatabase.Tests
 		{
 			EasyBookingContext.TestDatabase = true;
 			context = new EasyBookingContext();
-			clientManager = new ClientManager(context);
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
 		}
 
 		[Fact]
-		public void UpdateClient_ShouldUpdatePassword_WhenLoggedIn()
+		public void UpdateClient_ShouldUpdatePassword()
 		{
 			// Arrange
 			context.Clients.Add(testClient);
@@ -45,7 +43,7 @@ namespace BookingDatabase.Tests
 			var newPassword = "newpassword";
 
 			// Act
-			var updatedClient = clientManager.UpdateClient(testClient.ID, newPassword);
+			var updatedClient = ClientManager.UpdateClient(context, testClient.ID, newPassword);
 			Assert.NotNull(updatedClient);
 
 			// Assert
@@ -59,11 +57,11 @@ namespace BookingDatabase.Tests
 			var newPassword = "newpassword";
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => clientManager.UpdateClient(testClient.ID, newPassword));
+			Assert.Throws<Exception>(() => ClientManager.UpdateClient(context, testClient.ID, newPassword));
 		}
 
 		[Fact]
-		public void RemoveClient_ShouldRemoveClient_WhenLoggedIn()
+		public void RemoveClient_ShouldRemoveClient()
 		{
 			// Arrange
 			context.Clients.Add(testClient);
@@ -72,7 +70,7 @@ namespace BookingDatabase.Tests
 			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
 
 			// Act
-			clientManager.RemoveClient(testClient.ID);
+			ClientManager.RemoveClient(context, testClient.ID);
 
 			// Assert
 			Assert.Empty(context.Clients);
@@ -82,7 +80,7 @@ namespace BookingDatabase.Tests
 		public void RemoveClient_ShouldThrowException_WhenInvalidClient()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => clientManager.RemoveClient(testClient.ID));
+			Assert.Throws<Exception>(() => ClientManager.RemoveClient(context, testClient.ID));
 		}
 	}
 	}
