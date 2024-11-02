@@ -2,10 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage"
 import CadastroPage from "./pages/CadastroPage/CadastroPage";
-import HojePage from "./pages/HojePage/HojePage";
-import HabitosPage from "./pages/HabitosPage/HabitosPage";
 import UserContext from "./contexts/UserContext";
-import HistoricoPage from "./pages/HistoricoPage/HistoricoPage";
 
 export default function App() {
   
