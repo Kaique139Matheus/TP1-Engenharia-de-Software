@@ -21,7 +21,7 @@ export default function LoginPage ({setUserInfo}){
         setCarregando(true);
         
         const body = {email: form.email, password: form.senha }
-        navigate("/home");
+        navigate("/servicos");
 
         // faz requisicao pra api e navega pra home em caso de sucesso
         // axios.post(`${BASE_URL}`, body)

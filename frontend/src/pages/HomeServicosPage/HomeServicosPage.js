@@ -24,7 +24,7 @@ export default function HomeServicosPage(){
                     <TextoEmpresa>Serviço 1</TextoEmpresa>
                     <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
                     </ServicoAvaliar>
-                    <button>Reservar</button>
+                    <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
                 </ServicoContainer>
             </EmpresaContainer>
 
@@ -108,13 +108,6 @@ const ServicoContainer = styled.div`
     padding: 5px 15px;
 `
 
-const Divider = styled.div`
-    margin-top: 15px;
-    height: .5px;
-    background-color: #333;
-    width: 40%;
-`;
-
 const HomeServicoContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -136,15 +129,4 @@ const NavContainer = styled.div`
         text-decoration: none;
         color: #00274D;
     }
-`
-
-const Text = styled.div`
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #00274D;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
 `

@@ -5,6 +5,7 @@ import CadastroPage from "./pages/CadastroPage/CadastroPage";
 import UserContext from "./contexts/UserContext";
 import HomePage from "./pages/HomePage/HomePage";
 import HomeServicosPage from "./pages/HomeServicosPage/HomeServicosPage";
+import AvaliarPage from "./pages/AvaliarPage/AvaliarPage"
 
 export default function App() {
   
@@ -17,6 +18,7 @@ export default function App() {
           <Route path={`/login`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
           <Route path={`/cadastro`} element={<CadastroPage></CadastroPage>}></Route>
           <Route path={`/`} element={<HomePage></HomePage>}></Route>
+          <Route path={`/avaliar`} element={<AvaliarPage></AvaliarPage>}></Route>
           <Route path={`/servicos`} element={<HomeServicosPage></HomeServicosPage>}></Route>
         </Routes>
       </BrowserRouter>
