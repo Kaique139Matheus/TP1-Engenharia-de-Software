@@ -29,7 +29,7 @@ export default function HomePage(){
                     </OptionButton>      
                     ou
                     <LastButtonOption onClick={() => navigate("/cadastro-empresa")}>
-                            Comece a divulgar seus serviços
+                            Divulgue seus Serviços
                         </LastButtonOption>          
                 </Options>
             </HomeOptionsContainer>
@@ -78,7 +78,7 @@ const OptionButton = styled.button`
 
 const LastButtonOption = styled.button`
     margin: 10px 0px;
-    width: 300px;
+    width: 220px;
     height: 45px;
     border: 1px solid #D4D4D4;
     border-radius: 5px;
