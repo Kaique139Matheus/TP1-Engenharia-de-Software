@@ -38,6 +38,8 @@ namespace BookingDatabase.Services
 
 		public ProviderModel UpdateProvider(int id, string newPassword)
 		{
+			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
+
 			var provider = context.Providers.Find(id);
 			if (provider == null) throw new Exception("Provider not found");
 
@@ -49,6 +51,8 @@ namespace BookingDatabase.Services
 
 		public void DeleteProvider(int id) 
 		{
+			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
+
 			var provider = context.Providers.Find(id);
 			if (provider == null) throw new Exception("Provider not found");
 

@@ -167,5 +167,41 @@ namespace BookingDatabase.Tests
 			// Act & Assert
 			Assert.Throws<Exception>(() => AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
 		}
+
+		[Fact]
+		public void CreateProvider_ShouldThrowException_WhenCNPJInUse()
+		{
+			// Arrange
+			var provider = new ProviderModel
+			{
+				Email = "test2@example.com",
+				Password = "password",
+				Name = "Test Provider 2",
+				CNPJ = testProvider.CNPJ
+			};
+			context.Providers.Add(provider);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
+		}
+
+		[Fact]
+		public void CreateProvider_ShouldThrowException_WhenNameInUse()
+		{
+			// Arrange
+			var provider = new ProviderModel
+			{
+				Email = "test2@example.com",
+				Password = "password",
+				Name = testProvider.Name,
+				CNPJ = "12345678901235"
+			};
+			context.Providers.Add(provider);
+			context.SaveChanges();
+
+			// Act & Assert
+			Assert.Throws<DbUpdateException>(() => AuthenticationManager.Instance.CreateProviderAccount(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
+		}
 	}
 }

@@ -37,12 +37,10 @@ namespace BookingDatabase.Tests
 		public void UpdateClient_ShouldUpdatePassword_WhenLoggedIn()
 		{
 			// Arrange
-			var authenticationManager = AuthenticationManager.Instance;
-
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
-			authenticationManager.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
 
 			var newPassword = "newpassword";
 
@@ -68,12 +66,10 @@ namespace BookingDatabase.Tests
 		public void RemoveClient_ShouldRemoveClient_WhenLoggedIn()
 		{
 			// Arrange
-			var authenticationManager = AuthenticationManager.Instance;
-
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
-			authenticationManager.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
 
 			// Act
 			clientManager.RemoveClient(testClient.ID);
