@@ -3,8 +3,6 @@ import Logo from "../../assets/image-removebg-preview.png"
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { ThreeDots } from "react-loader-spinner";
-import axios from "axios";
-import { BASE_URL } from "../url/BaseUrl";
 import fotoCadastro from "./cadastro_foto.jpg"
 
 export default function CadastroPage(){
@@ -27,8 +25,8 @@ export default function CadastroPage(){
             password: form
             .senha
         }
-        
-        navigate("/")
+
+        navigate("/home-servicos")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
@@ -88,7 +86,7 @@ export default function CadastroPage(){
                     "Cadastrar"}
                 </button>
             </FormContainer>
-            <Link to={`/`}>
+            <Link to={`/login`}>
                 <FraseLogin>Já tem uma conta? Faça login! </FraseLogin>
             </Link>
         </Cadastro>

@@ -3,6 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage"
 import CadastroPage from "./pages/CadastroPage/CadastroPage";
 import UserContext from "./contexts/UserContext";
+import HomePage from "./pages/HomePage/HomePage";
+import HomeServicosPage from "./pages/HomeServicosPage/HomeServicosPage";
+import AvaliarPage from "./pages/AvaliarPage/AvaliarPage"
+import SelecionarDataPage from "./pages/SelecionarDataPage/SelecionarDataPage";
+import SelecionarHorarioPage from "./pages/SelecionarHorarioPage/SelecionarHorarioPage";
 
 export default function App() {
   
@@ -12,8 +17,13 @@ export default function App() {
     <UserContext.Provider value={{userInfo}}>
       <BrowserRouter>
         <Routes>
-          <Route path={`/`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
+          <Route path={`/login`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
           <Route path={`/cadastro`} element={<CadastroPage></CadastroPage>}></Route>
+          <Route path={`/`} element={<HomePage></HomePage>}></Route>
+          <Route path={`/avaliar`} element={<AvaliarPage></AvaliarPage>}></Route>
+          <Route path={`/servicos`} element={<HomeServicosPage></HomeServicosPage>}></Route>
+          <Route path={`/selecionar-data`} element={<SelecionarDataPage></SelecionarDataPage>}></Route>
+          <Route path={`/selecionar-horario`} element={<SelecionarHorarioPage></SelecionarHorarioPage>}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
