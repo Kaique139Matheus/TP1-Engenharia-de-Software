@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage"
 import CadastroPage from "./pages/CadastroPage/CadastroPage";
 import UserContext from "./contexts/UserContext";
+import HomePage from "./pages/HomePage/HomePage";
 
 export default function App() {
   
@@ -12,8 +13,9 @@ export default function App() {
     <UserContext.Provider value={{userInfo}}>
       <BrowserRouter>
         <Routes>
-          <Route path={`/`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
+          <Route path={`/login`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
           <Route path={`/cadastro`} element={<CadastroPage></CadastroPage>}></Route>
+          <Route path={`/`} element={<HomePage></HomePage>}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

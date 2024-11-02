@@ -27,8 +27,8 @@ export default function CadastroPage(){
             password: form
             .senha
         }
-        
-        navigate("/")
+
+        navigate("/home-servicos")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
@@ -88,7 +88,7 @@ export default function CadastroPage(){
                     "Cadastrar"}
                 </button>
             </FormContainer>
-            <Link to={`/`}>
+            <Link to={`/login`}>
                 <FraseLogin>Já tem uma conta? Faça login! </FraseLogin>
             </Link>
         </Cadastro>
