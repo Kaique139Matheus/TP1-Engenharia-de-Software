@@ -4,16 +4,19 @@ import Logo from "../assets/image-removebg-preview.png"
 import fotoCadastro from "../pages/CadastroPage/cadastro_foto.jpg"
 
 export default function Header() {
-    const [descricaoText, setDescricao] = useState("")
-
+    const [usuarioLogado, setUsuarioLogado] = useState(false)
+    
     return (
         <NavContainer>
             <LogoImg src={Logo}
                 alt="Logo"
             ></LogoImg>
             <Text>Nunca foi tão fácil reservar!</Text>
-            <PerfilImg src={fotoCadastro}></PerfilImg>
-        </NavContainer>
+            {usuarioLogado ? 
+            <PerfilImg src={fotoCadastro}></PerfilImg> : 
+            <LogoutContainer>Logout</LogoutContainer>
+            }
+            </NavContainer>
     );
 }
 
@@ -22,8 +25,8 @@ const PerfilImg = styled.img`
     height: 50px;
 `
 const LogoImg = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
 `
 
 const Text = styled.div`
@@ -44,10 +47,21 @@ const NavContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     background-color: #ADD8E6;
-    color: #ccc;
+    color: ##00274D;
     font-family: 'Roboto', sans-serif;
-    font-size: 34px;
+    font-size: 10px;
     position: fixed;
     top: 0;
     padding: 5px 25px;
+`
+
+const LogoutContainer = styled.div`
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #00274D;
+    border-radius: 5px;
+    padding: 10px;
 `
