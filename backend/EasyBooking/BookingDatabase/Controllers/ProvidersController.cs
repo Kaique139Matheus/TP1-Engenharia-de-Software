@@ -2,6 +2,7 @@ using BookingDatabase.Data;
 using BookingDatabase.Models;
 using BookingDatabase.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 [Route("[controller]")]
@@ -43,11 +44,20 @@ public class ProvidersController : ControllerBase
             var newProvider = ProviderManager.AddProvider(_context, provider.Email, provider.Password, provider.Name, provider.CNPJ);
             return CreatedAtAction(nameof(GetProvider), new { id = newProvider.ID }, newProvider);
         }
+        catch (DbUpdateException ex)
+        {
+            // Captura e exibe detalhes da exceção interna
+            var innerException = ex.InnerException?.Message;
+            Console.WriteLine($"Error: {innerException}");
+            return BadRequest(innerException);
+        }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
+
+
 
     // PUT: api/providers/5
     [HttpPut("{id}")]
