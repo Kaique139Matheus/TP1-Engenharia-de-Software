@@ -26,7 +26,7 @@ export default function CadastroPage(){
             .senha
         }
 
-        navigate("/home-servicos")
+        navigate("/servicos")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
