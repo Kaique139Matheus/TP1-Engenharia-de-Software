@@ -5,9 +5,9 @@ import React from "react";
 import { ThreeDots } from "react-loader-spinner";
 import fotoCadastro from "./cadastro_foto.jpg"
 
-export default function CadastroPage(){
+export default function CadastroEmpresarialPage(){
     const [carregando, setCarregando] = React.useState(false);
-    const [form, setForm] = React.useState({nome: "", email: "", senha: "", foto: ""})
+    const [form, setForm] = React.useState({nome: "", cnpj: "", email: "", senha: "", foto: ""})
     const navigate = useNavigate();
 
     function atualizaForm(event){
@@ -21,12 +21,13 @@ export default function CadastroPage(){
         const body = {
             email: form.email,
             name: form.nome,
+            cnpj: form.cnpj,
             image: fotoCadastro,
             password: form
             .senha
         }
 
-        navigate("/servicos")
+        navigate("/empresa-home")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
@@ -39,20 +40,29 @@ export default function CadastroPage(){
     }
 
     return (
-        <Cadastro>
+        <CadastroEmpresarial>
             <img src={Logo}
                 alt="Logo"
             ></img>
             <FormContainer onSubmit={efetuarCadastro}>
-            <input 
+                <input
                     disabled={carregando}
-                    placeholder="Nome de Usuario"
+                    placeholder="Nome da Empresa"
                     type="text"
                     name="nome"
                     value={form.nome}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>
+                <input
+                    disabled={carregando}
+                    placeholder="CNPJ"
+                    type="text"
+                    name="cnpj"
+                    value={form.cnpj}
+                    onChange={(event) => atualizaForm(event)}
+                    required
+                    ></input>
                 <input
                     placeholder="Email"
                     type="email"
@@ -89,11 +99,11 @@ export default function CadastroPage(){
             <Link to={`/login`}>
                 <FraseLogin>Já tem uma conta? Faça login! </FraseLogin>
             </Link>
-        </Cadastro>
+        </CadastroEmpresarial>
     )
 }
 
-const Cadastro = styled.div`z
+const CadastroEmpresarial = styled.div`z
     width: 100%;
     height: 100%;
     display: flex;

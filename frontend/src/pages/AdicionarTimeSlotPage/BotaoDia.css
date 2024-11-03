@@ -1,0 +1,34 @@
+.BotaoDiaSelecionado{
+    position: relative;
+    width: 70px;
+    height: 70px;
+
+    border-radius: 10px;
+    border: 2px solid #01193f;
+
+    background-color: rgba(255,255,255,0.2);
+}
+
+.BotaoDiaNaoSelecionado{
+    position: relative;
+    width: 70px;
+    height: 70px;
+
+    border-radius: 10px;
+    border: 2px solid rgba(1,25,18,0.3);
+
+    background-color: rgba(0,0,0,0.3);
+}
+
+.NomeDia{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16pt;
+    font-weight: bold;
+
+    text-decoration: none;
+}

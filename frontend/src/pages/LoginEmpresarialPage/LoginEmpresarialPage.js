@@ -1,79 +1,65 @@
 import styled from "styled-components";
 import Logo from "../../assets/image-removebg-preview.png"
-import { Link, useNavigate } from "react-router-dom";
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import fotoCadastro from "./cadastro_foto.jpg"
 
-export default function CadastroPage(){
+
+export default function LoginEmpresarialPage ({setUserInfo}){
+    const [form, setForm] = React.useState({ email: "", senha: "" })
     const [carregando, setCarregando] = React.useState(false);
-    const [form, setForm] = React.useState({nome: "", email: "", senha: "", foto: ""})
     const navigate = useNavigate();
-
-    function atualizaForm(event){
-        setForm({...form, [event.target.name]: event.target.value})
+    
+    function atualizaForm (event){
+        setForm({ ...form, [event.target.name]: event.target.value})
     }
 
-    function efetuarCadastro(event){
+    function efetuarLogin(event){
         event.preventDefault();
         setCarregando(true);
+        
+        const body = {email: form.email, password: form.senha }
+        navigate("/empresa-home");
 
-        const body = {
-            email: form.email,
-            name: form.nome,
-            image: fotoCadastro,
-            password: form
-            .senha
-        }
-
-        navigate("/servicos")
-
-        // faz a requisicao pro cadastro e navega para login em caso de sucesso
+        // faz requisicao pra api e navega pra home em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
-        // .then((res) => navigate("/"))
+        // .then((res) => {
+        //     setUserInfo(res.data);
+        //     localStorage.setItem("TOKEN", res.data.token);
+        //     navigate("/home");
+        // })
         // .catch((err) => {
+        //     console.log(err);
         //     alert(err.response.data.message);
         //     window.location.reload();
         // })
-
     }
-
+    
     return (
-        <Cadastro>
+        <LoginEmpresarial>
             <img src={Logo}
                 alt="Logo"
             ></img>
-            <FormContainer onSubmit={efetuarCadastro}>
-            <input 
-                    disabled={carregando}
-                    placeholder="Nome de Usuario"
-                    type="text"
-                    name="nome"
-                    value={form.nome}
-                    onChange={(event) => atualizaForm(event)}
-                    required    
-                ></input>
-                <input
+            <FormContainer onSubmit={efetuarLogin}>
+                <input 
                     placeholder="Email"
-                    type="email"
+                    type="text"
                     name="email"
                     value={form.email}
                     disabled={carregando}
-                    onChange={(event) => atualizaForm(event)}
+                    onChange={event => atualizaForm(event)}
                     required    
                 ></input>
-                <input
+                <input 
                     placeholder="Senha"
                     type="password"
                     name="senha"
                     disabled={carregando}
                     value={form.senha}
-                    onChange={(event) => atualizaForm(event)}
+                    onChange={(e) => atualizaForm(e)}
                     required    
-                ></input>
-
-                <button disabled={carregando} type="submit">{carregando ? 
-                    <ThreeDots 
+                ></input>              
+                <button disabled={carregando} type="submit">{carregando ? <ThreeDots 
                         height="40" 
                         width="40" 
                         radius="9"
@@ -82,18 +68,17 @@ export default function CadastroPage(){
                         wrapperStyle={{}}
                         wrapperClassName=""
                         visible={true}
-                    /> : 
-                    "Cadastrar"}
-                </button>
+                    /> : "Entrar"}</button>
+               
             </FormContainer>
-            <Link to={`/login`}>
-                <FraseLogin>Já tem uma conta? Faça login! </FraseLogin>
+            <Link to={`/cadastro`}>
+                <FraseCadastro>Não tem uma conta? Cadastre-se</FraseCadastro>
             </Link>
-        </Cadastro>
+        </LoginEmpresarial>
     )
-}
+}   
 
-const Cadastro = styled.div`z
+const LoginEmpresarial = styled.div`z
     width: 100%;
     height: 100%;
     display: flex;
@@ -115,8 +100,6 @@ const FormContainer = styled.form`
     align-items: center;
     input{
         margin: 10px 0px;
-        display: flex;
-        align-items: center;
         width: 303px;
         height: 45px;
         border: 1px solid #D4D4D4;
@@ -147,7 +130,7 @@ const FormContainer = styled.form`
     }
 `
 
-const FraseLogin = styled.p`
+const FraseCadastro = styled.p`
     text-decoration: underline;
     color: #00274D;
 `

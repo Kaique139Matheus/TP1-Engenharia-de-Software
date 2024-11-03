@@ -7,27 +7,26 @@ import Header from "../../Header/Header";
 import './AdicionarServicoPage.css'
 import TimeSlot from "./TimeSlot";
 
-const timeSlot1 = {
-    inicio:"10:30" ,
-    fim : "11:30",
-    dias: [["Dom", true],["Seg", true],["Ter", true],["Qua", true],
-            ["Qui", true], ["Sex", true], ["Sab", true]]
-}
-const timeSlot2 = {
-    inicio:"11:45" ,
-    fim : "21:30",
-    dias: [["Dom", true],["Seg", true],["Ter", true],["Qua", true],
-            ["Qui", false], ["Sex", false], ["Sab", true]]
-}
-const timeSlot3 = {
-    inicio:"22:30" ,
-    fim : "23:59",
-    dias: [["Dom", true],["Seg", false],["Ter", false],["Qua", false],
-        ["Qui", false], ["Sex", false], ["Sab", true]]}
-
 export default function AdicionarServicoPage (){
-    const navigate = useNavigate;
+    const navigate = useNavigate();
+
+    const timeSlot1 = {
+        inicio:"10:30" ,
+        fim : "11:30",
+        diasSelecionados: [true, true, true, true, true, true, true]
+    }
+    const timeSlot2 = {
+        inicio:"11:45" ,
+        fim : "21:30",
+        diasSelecionados: [true, false, true, false, true, false, true]
+    }
+    const timeSlot3 = {
+        inicio:"22:30" ,
+        fim : "23:59",
+        diasSelecionados: [true, false, false, false, false, false, true]
+    }
     const timeSlots = [timeSlot1, timeSlot2, timeSlot3]
+
 
     return (
         <>
@@ -49,7 +48,7 @@ export default function AdicionarServicoPage (){
 
             }
 
-            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-servico")}> Adicione um Time Slot</button>
+            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-timeslot")}> Adicione um Time Slot</button>
         </div>
 
 
