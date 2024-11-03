@@ -2,11 +2,14 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import Logo from "../assets/image-removebg-preview.png"
 import fotoCadastro from "../pages/CadastroPage/cadastro_foto.jpg"
+import { useNavigate } from "react-router-dom";
+
 
 export default function Header() {
     // mudar condicao booleana para aparecer logout
     const [usuarioLogado, setUsuarioLogado] = useState(true)
-    
+    const navigate = useNavigate();
+
     return (
         <NavContainer>
             <LogoImg src={Logo}
@@ -15,7 +18,7 @@ export default function Header() {
             <Text>Nunca foi tão fácil reservar!</Text>
             {!usuarioLogado ? 
             <PerfilImg src={fotoCadastro}></PerfilImg> : 
-            <LogoutContainer>Logout</LogoutContainer>
+            <LogoutContainer onClick={() => navigate("/")}>Logout</LogoutContainer>
             }
         </NavContainer>
     );
