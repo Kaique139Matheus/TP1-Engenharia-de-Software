@@ -7,7 +7,7 @@ import fotoCadastro from "./cadastro_foto.jpg"
 
 export default function CadastroEmpresarialPage(){
     const [carregando, setCarregando] = React.useState(false);
-    const [form, setForm] = React.useState({nome: "", email: "", senha: "", foto: ""})
+    const [form, setForm] = React.useState({nome: "", cnpj: "", email: "", senha: "", foto: ""})
     const navigate = useNavigate();
 
     function atualizaForm(event){
@@ -21,6 +21,7 @@ export default function CadastroEmpresarialPage(){
         const body = {
             email: form.email,
             name: form.nome,
+            cnpj: form.cnpj,
             image: fotoCadastro,
             password: form
             .senha
@@ -44,15 +45,24 @@ export default function CadastroEmpresarialPage(){
                 alt="Logo"
             ></img>
             <FormContainer onSubmit={efetuarCadastro}>
-            <input 
+                <input
                     disabled={carregando}
-                    placeholder="Nome de Usuario"
+                    placeholder="Nome da Empresa"
                     type="text"
                     name="nome"
                     value={form.nome}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>
+                <input
+                    disabled={carregando}
+                    placeholder="CNPJ"
+                    type="text"
+                    name="cnpj"
+                    value={form.cnpj}
+                    onChange={(event) => atualizaForm(event)}
+                    required
+                    ></input>
                 <input
                     placeholder="Email"
                     type="email"
