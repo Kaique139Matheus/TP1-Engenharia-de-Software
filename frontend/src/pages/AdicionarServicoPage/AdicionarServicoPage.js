@@ -8,7 +8,7 @@ import './AdicionarServicoPage.css'
 import TimeSlot from "./TimeSlot";
 
 export default function AdicionarServicoPage (){
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     const timeSlot1 = {
         inicio:"10:30" ,
@@ -48,7 +48,7 @@ export default function AdicionarServicoPage (){
 
             }
 
-            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-servico")}> Adicione um Time Slot</button>
+            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-timeslot")}> Adicione um Time Slot</button>
         </div>
 
 
