@@ -24,11 +24,11 @@ export default function HomePage(){
                 <Divider></Divider>
                 <Text>É uma empresa?</Text>
                 <Options>
-                    <OptionButton onClick={() => navigate("/empresa-home")}>
+                    <OptionButton onClick={() => navigate("/login-empresarial")}>
                         Faça o Login
                     </OptionButton>      
                     ou
-                    <LastButtonOption onClick={() => navigate("/cadastro-empresa")}>
+                    <LastButtonOption onClick={() => navigate("/cadastro-empresarial")}>
                             Divulgue seus Serviços
                         </LastButtonOption>          
                 </Options>
