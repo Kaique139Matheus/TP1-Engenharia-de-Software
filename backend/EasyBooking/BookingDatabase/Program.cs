@@ -13,9 +13,9 @@ class Program
 		Console.WriteLine($"Database path: {db.DbPath}");
 
 		// Create new provider  
-		Console.WriteLine("Creating new provider");
+		Console.WriteLine("Creating new providers");
 
-		var testProvider = new ProviderModel
+		var provider1 = new ProviderModel
 		{
 			Name = "Provider 1",
 			Email = "provider1@db.com",
@@ -23,12 +23,12 @@ class Program
 			CNPJ = "12345678901234",
 		};
 
-		db.Add(testProvider);
+		db.Add(provider1);
 		db.SaveChanges();
 
-		Console.WriteLine($"Provider {testProvider.ID} created");
+		Console.WriteLine($"{provider1.Name} created");
 
-		var testProvider2 = new ProviderModel
+		var provider2 = new ProviderModel
 		{
 			Name = "Provider 2",
 			Email = "provider2@db.com",
@@ -36,10 +36,10 @@ class Program
 			CNPJ = "12345678901235",
 		};
 
-		db.Add(testProvider2);
+		db.Add(provider2);
 		db.SaveChanges();
 
-		Console.WriteLine($"Provider {testProvider2.ID} created");
+		Console.WriteLine($"{provider2.Name} created");
 
 		// Query all providers  
 		Console.WriteLine("Querying all providers");
@@ -50,20 +50,45 @@ class Program
 		}
 
 		// Create new service  
-		Console.WriteLine("Creating new service");
-		db.Add(new ServiceModel
+		var service1 = new ServiceModel
 		{
 			Name = "Service 1",
 			Description = "Service 1 description",
 			Price = 100,
 			DurationInMinutes = 60,
 			ProviderID = 1,
-		});
+		};
+		db.Add(service1);
+
+		Console.WriteLine($"Created {service1.Name} for {db.Providers.Find(service1.ProviderID)?.Name}");
+
+		var timeslot1 = new TimeslotModel
+		{
+			Time = 1200,
+			ServiceID = 1,
+		};
+		db.Add(timeslot1);
+
+		Console.WriteLine($"Created new timeslot at time {timeslot1.Time} for service {timeslot1.ServiceID}");
+
 		db.SaveChanges();
 
 		// Count providers  
 		Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
 		// Count services  
 		Console.WriteLine($"There are {db.Services.Count()} services in the database");
+		// Count timeslots
+		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
+
+		Console.WriteLine($"Deleting {provider1.Name}");
+		db.Remove(provider1);
+		db.SaveChanges();
+
+		// Count providers  
+		Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
+		// Count services  
+		Console.WriteLine($"There are {db.Services.Count()} services in the database");
+		// Count timeslots
+		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
 	}
 }
