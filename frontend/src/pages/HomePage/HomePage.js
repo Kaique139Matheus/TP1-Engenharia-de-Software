@@ -24,7 +24,7 @@ export default function HomePage(){
                 <Divider></Divider>
                 <Text>É uma empresa?</Text>
                 <Options>
-                    <OptionButton onClick={() => navigate("/login-empresa")}>
+                    <OptionButton onClick={() => navigate("/empresa-home")}>
                         Faça o Login
                     </OptionButton>      
                     ou

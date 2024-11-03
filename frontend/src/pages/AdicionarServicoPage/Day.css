@@ -1,0 +1,32 @@
+.DayBlockSelecionado{
+    position: relative;
+    height: 60px;
+    width: 60px;
+
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    border: 2px solid #01193f;
+
+}
+
+.DayBlockNaoSelecionado{
+    position: relative;
+    height: 60px;
+    width: 60px;
+
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 2px solid #01193f;
+
+}
+
+.DayText{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    font-size: 20px;
+    font-weight: bold;
+
+}

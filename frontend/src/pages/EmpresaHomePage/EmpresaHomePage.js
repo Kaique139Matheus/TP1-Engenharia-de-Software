@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../url/BaseUrl";
 import Header from "../../Header/Header";
+import { Link, useNavigate } from "react-router-dom";
+
 
 
 import foto_empresa from "./foto_empresa.jpg"
@@ -19,9 +20,7 @@ export default function EmpresaHomePage (){
 
     return (
         <>
-        <Header></Header>
-
-
+            <Header></Header>
             <div id="page-frame">
                 <img id="foto-empresa" src={foto_empresa} width='220px' height='220px'></img>
                 <h1 id="nome-empresa">Nome da Empresa</h1>
@@ -34,7 +33,7 @@ export default function EmpresaHomePage (){
                     })
                 }
 
-                <button id="BotaoAdicionarServico"> Adicionar Serviço </button>
+                <button id="BotaoAdicionarServico" /*onClick={() => navigate("/selecionar-data")}*/> Adicionar Serviço </button>
             </div>
 
         </>

@@ -9,6 +9,7 @@ import HomeServicosPage from "./pages/HomeServicosPage/HomeServicosPage";
 import AvaliarPage from "./pages/AvaliarPage/AvaliarPage"
 import SelecionarDataPage from "./pages/SelecionarDataPage/SelecionarDataPage";
 import SelecionarHorarioPage from "./pages/SelecionarHorarioPage/SelecionarHorarioPage";
+import AdicionarServicoPage from "./pages/AdicionarServicoPage/AdicionarServicoPage";
 
 export default function App() {
   
@@ -26,6 +27,7 @@ export default function App() {
           <Route path={`/servicos`} element={<HomeServicosPage></HomeServicosPage>}></Route>
           <Route path={`/selecionar-data`} element={<SelecionarDataPage></SelecionarDataPage>}></Route>
           <Route path={`/selecionar-horario`} element={<SelecionarHorarioPage></SelecionarHorarioPage>}></Route>
+          <Route path={`/adicionar-servico`} element={<AdicionarServicoPage></AdicionarServicoPage>}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
