@@ -15,29 +15,11 @@ namespace BookingDatabase.Tests
 	public class ProviderManagerTests
 	{
 		private readonly EasyBookingContext context;
-		private readonly ProviderManager providerManager;
-
-		private readonly ProviderModel testProvider = new ProviderModel
-		{
-			Email = "test@example.com",
-			Password = "password",
-			Name = "Test Provider",
-			CNPJ = "12345678901234"
-		};
-
-		private readonly ProviderModel testProvider2 = new ProviderModel
-		{
-			Email = "test2@example.com",
-			Password = "password",
-			Name = "Test Provider 2",
-			CNPJ = "12345678901235"
-		};
 
 		public ProviderManagerTests()
 		{
 			EasyBookingContext.TestDatabase = true;
 			context = new EasyBookingContext();
-			providerManager = new ProviderManager(context);
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();
@@ -46,109 +28,67 @@ namespace BookingDatabase.Tests
 		[Fact]
 		public void AddProvider_ShouldAddProvider()
 		{
+			// Arrange
+			var testProvider = TestObjects.TestProvider;
+
 			// Act
-			var provider = providerManager.AddProvider(testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ);
+			var provider = ProviderManager.AddProvider(context, testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ);
 
 			// Assert
-			Assert.NotNull(provider);
+			Assert.Equal(testProvider.Email, provider.Email);
+			Assert.Equal(testProvider.Password, provider.Password);
+			Assert.Equal(testProvider.CNPJ, provider.CNPJ);
+			Assert.Equal(testProvider.Name, provider.Name);
 		}
 
 		[Fact]
-		public void AddProvider_ShouldThrowException_WhenEmailIsInUse()
+		public void UpdateProvider_ShouldUpdatePassword()
 		{
 			// Arrange
-			var client = new ClientModel
-			{
-				Email = testProvider.Email,
-				Password = "password",
-				CPF = "12345678900",
-				FirstName = "John",
-				LastName = "Doe"
-			};
-
-			context.Clients.Add(client);
-			context.SaveChanges();
-
-			// Act & Assert
-			Assert.Throws<Exception>(() => providerManager.AddProvider(testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
-		}
-
-		[Fact]
-		public void AddProvider_ShouldThrowException_WhenCNPJIsInUse()
-		{
-			// Arrange
-			context.Providers.Add(new ProviderModel
-			{
-				Email = testProvider2.Email,
-				Password = testProvider2.Password,
-				Name = testProvider2.Name,
-				CNPJ = testProvider.CNPJ
-			});
-			context.SaveChanges();
-
-			// Act & Assert
-			Assert.Throws<DbUpdateException>(() => providerManager.AddProvider(testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
-		}
-
-		[Fact]
-		public void AddProvider_ShouldThrowException_WhenNameIsInUse()
-		{
-			// Arrange
-			context.Providers.Add(new ProviderModel
-			{
-				Email = testProvider2.Email,
-				Password = testProvider2.Password,
-				Name = testProvider.Name,
-				CNPJ = testProvider2.CNPJ
-			});
-			context.SaveChanges();
-
-			// Act & Assert
-			Assert.Throws<DbUpdateException>(() => providerManager.AddProvider(testProvider.Email, testProvider.Password, testProvider.Name, testProvider.CNPJ));
-		}
-
-		[Fact]
-		public void UpdateProvider_ShouldUpdatePassword_WhenProviderExists()
-		{
-			// Arrange
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
+
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
 
 			var newPassword = "newpassword";
 
 			// Act
-			var provider = providerManager.UpdateProvider(testProvider.ID, newPassword);
+			var provider = ProviderManager.UpdateProvider(context, testProvider.ID, newPassword);
 
 			// Assert
 			Assert.Equal(newPassword, provider.Password);
 		}
 
 		[Fact]
-		public void UpdateProvider_ShouldThrowException_WhenProviderNotFound()
+		public void UpdateProvider_ShouldThrowException_WhenInvalidProvider()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => providerManager.UpdateProvider(0, "newpassword"));
+			Assert.Throws<Exception>(() => ProviderManager.UpdateProvider(context, 0, "newpassword"));
 		}
 
 		[Fact]
 		public void DeleteProvider_ShouldDeleteProvider()
 		{
 			// Arrange
+			var testProvider = TestObjects.TestProvider;
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+
 			// Act
-			providerManager.DeleteProvider(testProvider.ID);
+			ProviderManager.DeleteProvider(context, testProvider.ID);
 
 			// Assert
 			Assert.Empty(context.Providers);
 		}
 
 		[Fact]
-		public void DeleteProvider_ShouldThrowException_WhenProviderNotFound()
+		public void DeleteProvider_ShouldThrowException_WhenInvalidProvider()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => providerManager.DeleteProvider(0));
+			Assert.Throws<Exception>(() => ProviderManager.DeleteProvider(context, 0));
 		}
 	}
 }

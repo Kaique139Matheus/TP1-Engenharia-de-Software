@@ -8,16 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Services
 {
-	public class ProviderManager
+	public static class ProviderManager
 	{
-		private readonly EasyBookingContext context;
-
-		public ProviderManager(EasyBookingContext context)
-		{
-			this.context = context;
-		}
-
-		public ProviderModel AddProvider(string email, string password, string name, string CNPJ)
+		public static ProviderModel AddProvider(EasyBookingContext context, string email, string password, string name, string CNPJ)
 		{
 			// Verify that the email is not already in use in the Clients table
 			if (context.Clients.Any(c => c.Email == email)) throw new Exception("Email in use");
@@ -36,8 +29,10 @@ namespace BookingDatabase.Services
 			return provider;
 		}
 
-		public ProviderModel UpdateProvider(int id, string newPassword)
+		public static ProviderModel UpdateProvider(EasyBookingContext context, int id, string newPassword)
 		{
+			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
+
 			var provider = context.Providers.Find(id);
 			if (provider == null) throw new Exception("Provider not found");
 
@@ -47,8 +42,10 @@ namespace BookingDatabase.Services
 			return provider;
 		}
 
-		public void DeleteProvider(int id) 
+		public static void DeleteProvider(EasyBookingContext context, int id) 
 		{
+			if (!AuthenticationManager.Instance.IsUserLoggedIn(id)) throw new Exception("User not logged in");
+
 			var provider = context.Providers.Find(id);
 			if (provider == null) throw new Exception("Provider not found");
 

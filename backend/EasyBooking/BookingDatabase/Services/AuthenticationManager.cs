@@ -26,7 +26,7 @@ namespace BookingDatabase.Services
 		public UserModel? CurrentUser {  get; private set; }
 
 		public bool IsProvider { get; private set; }
-		public bool IsLoggedIn=> CurrentUser != null;
+		public bool IsLoggedIn => CurrentUser != null;
 		public bool IsUserLoggedIn(int id) => CurrentUser != null && CurrentUser.ID == id;
 
 		private AuthenticationManager()
@@ -63,8 +63,7 @@ namespace BookingDatabase.Services
 		{
 			if (context.Providers.Any(p => p.Email == email)) throw new Exception("Email in use");
 
-			var clientManager = new ClientManager(context);
-			var user = clientManager.AddClient(email, password, CPF, firstName, lastName);
+			var user = ClientManager.AddClient(context, email, password, CPF, firstName, lastName);
 
 			CurrentUser = user;
 			IsProvider = false;
@@ -74,8 +73,7 @@ namespace BookingDatabase.Services
 		{
 			if (context.Clients.Any(c => c.Email == email)) throw new Exception("Email in use");
 
-			var providerManager = new ProviderManager(context);
-			var user = providerManager.AddProvider(email, password, name, CNPJ);
+			var user = ProviderManager.AddProvider(context, email, password, name, CNPJ);
 
 			CurrentUser = user;
 			IsProvider = true;

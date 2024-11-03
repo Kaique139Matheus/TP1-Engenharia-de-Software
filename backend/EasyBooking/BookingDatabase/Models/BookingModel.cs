@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BookingDatabase.Models
 {
-	//[PrimaryKey("ProviderID", "ServiceID", "TimeslotID", "Date")]
 	[PrimaryKey("ProviderID", "ServiceID", "TimeslotID", "Date")]
 	public class BookingModel
 	{
