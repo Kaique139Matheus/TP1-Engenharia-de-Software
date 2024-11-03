@@ -3,7 +3,8 @@ import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
 import { BASE_URL } from "../url/BaseUrl";
 import Header from "../../Header/Header";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -13,8 +14,7 @@ import Servico from "./Servico";
 import './EmpresaHomePage.css'
 
 export default function EmpresaHomePage (){
-
-
+    const navigate = useNavigate();
     const servicesArray = ['Serviço 1', 'Serviço 2', 'Serviço 3'];
 
 
@@ -33,7 +33,7 @@ export default function EmpresaHomePage (){
                     })
                 }
 
-                <button id="BotaoAdicionarServico" /*onClick={() => navigate("/selecionar-data")}*/> Adicionar Serviço </button>
+                <button id="BotaoAdicionarServico" onClick={() => navigate("/adicionar-servico")}> Adicionar Serviço </button>
             </div>
 
         </>

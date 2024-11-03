@@ -26,7 +26,7 @@ const timeSlot3 = {
         ["Qui", false], ["Sex", false], ["Sab", true]]}
 
 export default function AdicionarServicoPage (){
-
+    const navigate = useNavigate;
     const timeSlots = [timeSlot1, timeSlot2, timeSlot3]
 
     return (
@@ -49,7 +49,7 @@ export default function AdicionarServicoPage (){
 
             }
 
-            <button id="BotaoAdicionarTimeSlot"> Adicione um Time Slot</button>
+            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-servico")}> Adicione um Time Slot</button>
         </div>
 
 
