@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Logo from "../../assets/image-removebg-preview.png";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
+import "@fontsource/lexend-deca"; // Padrão para importar todas as variações da fonte
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -40,12 +41,11 @@ export default function HomePage() {
 }
 
 const Divider = styled.div`
-  margin-top: 25px; /* Aumenta a separação */
-  height: 4px; /* Aumenta a espessura */
+  margin-top: 25px; /* Espaço acima da divisória */
+  margin-bottom: 20px; /* Maior separação abaixo da divisória */
+  height: 10px; /* Aumenta a grossura da divisória */
   background-color: #333;
-  width: calc(
-    200px + 15px + 220px
-  ); /* Aumenta a largura para somar à largura dos botões com espaçamento */
+  width: 450px; /* Largura total dos botões */
 `;
 
 const Options = styled.div`
@@ -164,7 +164,7 @@ const NavContainer = styled.div`
 const Text = styled.div`
   width: 100%;
   height: 70px;
-  margin-bottom: 25px; /* Aumenta a separação */
+  margin-bottom: 10px; /* Menor separação da frase para os botões de baixo */
   display: flex;
   align-items: center;
   justify-content: center;

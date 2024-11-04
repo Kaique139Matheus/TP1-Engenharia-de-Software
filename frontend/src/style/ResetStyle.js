@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import backgroundImage from "./kellen-riggin-edspQmByrTk-unsplash.jpg";
+import "@fontsource/lexend-deca"; // Padrão para importar todas as variações da fonte
 
 const ResetStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
