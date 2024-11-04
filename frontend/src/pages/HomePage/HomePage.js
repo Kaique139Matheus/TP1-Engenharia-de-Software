@@ -8,40 +8,44 @@ export default function HomePage() {
 
   return (
     <HomeContainer>
-      <NavContainer>
-        <p>Bem vindo ao Easy Booking</p>
-      </NavContainer>
-      <HomeOptionsContainer>
-        <Options>
-          <OptionButton onClick={() => navigate("/login")}>
-            Faça o Login
-          </OptionButton>
-          ou
-          <OptionButton onClick={() => navigate("/cadastro")}>
-            Cadastre Agora
-          </OptionButton>
-        </Options>
-        <Divider></Divider>
-        <Text>É uma empresa?</Text>
-        <Options>
-          <OptionButton onClick={() => navigate("/login-empresarial")}>
-            Faça o Login
-          </OptionButton>
-          ou
-          <LastButtonOption onClick={() => navigate("/cadastro-empresarial")}>
-            Divulgue seus Serviços
-          </LastButtonOption>
-        </Options>
-      </HomeOptionsContainer>
+      <WhiteBox>
+        <NavContainer>
+          <p>Bem vindo ao Easy Booking</p>
+        </NavContainer>
+        <HomeOptionsContainer>
+          <Options>
+            <OptionButton onClick={() => navigate("/login")}>
+              Faça o Login
+            </OptionButton>
+            ou
+            <OptionButton onClick={() => navigate("/cadastro")}>
+              Cadastre Agora
+            </OptionButton>
+          </Options>
+          <Divider></Divider>
+          <Text>É uma empresa?</Text>
+          <Options>
+            <OptionButton onClick={() => navigate("/login-empresarial")}>
+              Faça o Login
+            </OptionButton>
+            ou
+            <LastButtonOption onClick={() => navigate("/cadastro-empresarial")}>
+              Divulgue seus Serviços
+            </LastButtonOption>
+          </Options>
+        </HomeOptionsContainer>
+      </WhiteBox>
     </HomeContainer>
   );
 }
 
 const Divider = styled.div`
-  margin-top: 15px;
-  height: 0.5px;
+  margin-top: 25px; /* Aumenta a separação */
+  height: 4px; /* Aumenta a espessura */
   background-color: #333;
-  width: 40%;
+  width: calc(
+    200px + 15px + 220px
+  ); /* Aumenta a largura para somar à largura dos botões com espaçamento */
 `;
 
 const Options = styled.div`
@@ -71,10 +75,11 @@ const OptionButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border 0.3s;
 
   &:hover {
-    background-color: white;
+    background-color: #d4d4d4; /* Cor de hover cinza claro */
+    border: 1px solid #00274d; /* Borda interna da mesma cor */
     color: #00274d;
   }
 `;
@@ -96,17 +101,17 @@ const LastButtonOption = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border 0.3s;
 
   &:hover {
-    background-color: white;
+    background-color: #d4d4d4; /* Cor de hover cinza claro */
+    border: 1px solid #00274d; /* Borda interna da mesma cor */
     color: #00274d;
   }
 `;
 
 const HomeOptionsContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,16 +121,29 @@ const HomeOptionsContainer = styled.div`
 
 const HomeContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
+  background-size: cover;
+  background-position: center;
+`;
 
-  img {
-    width: 180px;
-    height: 200px;
+const WhiteBox = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    width: 95%;
   }
 `;
 
@@ -146,6 +164,7 @@ const NavContainer = styled.div`
 const Text = styled.div`
   width: 100%;
   height: 70px;
+  margin-bottom: 25px; /* Aumenta a separação */
   display: flex;
   align-items: center;
   justify-content: center;
