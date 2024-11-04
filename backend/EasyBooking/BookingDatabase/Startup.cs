@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 public class Startup
 {
@@ -11,12 +12,15 @@ public class Startup
     {
         services.AddControllers();
         services.AddDbContext<EasyBookingContext>(options =>
-            options.UseSqlite("Data Source=easybooking.db"));
+            options.UseSqlite("Data Source=easybooking.db")
+                   .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information));
 
-        // Adicionando Swagger 
-        services.AddSwaggerGen();
-
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "EasyBooking", Version = "v1" });
+        });
     }
+
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -29,7 +33,7 @@ public class Startup
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json","EasyBooking");
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "EasyBooking");
             c.RoutePrefix = string.Empty; // Para acessar o Swagger na raiz da aplicação
         });
 

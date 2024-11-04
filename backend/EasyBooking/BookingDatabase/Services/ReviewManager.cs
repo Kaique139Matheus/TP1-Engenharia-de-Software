@@ -11,15 +11,28 @@ namespace BookingDatabase.Services
     {
         public static ReviewModel AddReview(EasyBookingContext context, int clientId, int providerID, int score, string? comment)
         {
-            var provider = context.Services.Find(providerID);
-            if (provider == null) throw new Exception("Service not found");
+            // Verifique se o cliente existe
+            var client = context.Clients.Find(clientId);
+            if (client == null) throw new Exception("Client not found");
+
+            // Verifique se o provedor existe
+            var provider = context.Providers.Find(providerID);
+            if (provider == null) throw new Exception("Provider not found");
+
+            // Verifique se já existe um review para esse cliente e provedor no contexto
+            if (context.Reviews.Any(r => r.ClientID == clientId && r.ProviderID == providerID))
+            {
+                throw new Exception("Review already exists for this client and provider.");
+            }
 
             var review = new ReviewModel
             {
                 ClientID = clientId,
                 ProviderID = providerID,
                 Score = score,
-                Comment = comment
+                Comment = comment,
+                Client = client, // Associando ao cliente existente
+                Provider = provider // Associando ao provedor existente
             };
 
             context.Reviews.Add(review);
@@ -27,6 +40,8 @@ namespace BookingDatabase.Services
 
             return review;
         }
+
+
 
         public static List<ReviewModel> GetProviderReviews(EasyBookingContext context, int providerID)
         {

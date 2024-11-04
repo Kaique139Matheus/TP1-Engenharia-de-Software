@@ -1,0 +1,39 @@
+"ClientModel": {
+    "type": "object",
+    "properties": {
+        "email": {
+            "type": "string",
+            "example": "example@example.com"
+        },
+        "password": {
+            "type": "string",
+            "example": "yourpassword"
+        },
+        "cpf": {
+            "type": "string",
+            "example": "123.456.789-00"
+        },
+        "firstName": {
+            "type": "string",
+            "example": "John"
+        },
+        "lastName": {
+            "type": "string",
+            "example": "Doe"
+        },
+        "reviews": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            },
+            "example": []
+        },
+        "bookings": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            },
+            "example": []
+        }
+    }
+}
