@@ -9,6 +9,18 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddCors(options =>{
+            options.AddPolicy("AllowFrontend",
+                builder =>{
+                    builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                }
+            );
+        }
+        );
+
+
         services.AddControllers();
         services.AddDbContext<EasyBookingContext>(options =>
             options.UseSqlite("Data Source=easybooking.db"));
@@ -24,6 +36,9 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
+        //Abre servidor para requisições do AllowFrontend
+        app.UseCors("AllowFrontend");
 
         // Habilitando o middleware para gerar JSON de especificações do Swagger e a UI do Swagger
         app.UseSwagger();
