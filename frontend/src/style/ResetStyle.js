@@ -35,10 +35,11 @@ const ResetStyle = createGlobalStyle`
     }
     body {
         line-height: 1;
-        background-image: url(${backgroundImage});
         background-size: cover;
         background-position: center;
         font-family: 'Lexend Deca', sans-serif;
+        background-color: #808080;
+        
     }
     ol, ul {
         list-style: none;

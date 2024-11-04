@@ -44,7 +44,7 @@ const Divider = styled.div`
   margin-top: 25px; /* Espaço acima da divisória */
   margin-bottom: 20px; /* Maior separação abaixo da divisória */
   height: 10px; /* Aumenta a grossura da divisória */
-  background-color: #333;
+  background-color: #00274d;
   width: 450px; /* Largura total dos botões */
 `;
 
@@ -69,7 +69,7 @@ const OptionButton = styled.button`
   font-family: "Lexend Deca", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 20.976px;
+  font-size: 18px;
   line-height: 26px;
   text-align: center;
   display: flex;
@@ -95,7 +95,7 @@ const LastButtonOption = styled.button`
   font-family: "Lexend Deca", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 20.976px;
+  font-size: 18px;
   line-height: 26px;
   text-align: center;
   display: flex;
@@ -128,6 +128,7 @@ const HomeContainer = styled.div`
   justify-content: center;
   background-size: cover;
   background-position: center;
+  color: rgb(0, 39, 77);
 `;
 
 const WhiteBox = styled.div`
@@ -168,6 +169,7 @@ const Text = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Lexend Deca", sans-serif;
   color: #00274d;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
