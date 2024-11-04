@@ -10,7 +10,7 @@ export default function SimularIntegracaoPage(){
     const [data, setData] = useState(null);
 
     function getRequest(){
-        axios.get('http://localhost:1080/api/data')
+        axios.get('http://localhost:5000/Providers')
         .then(response => {
             console.log(response.data);
             setData(response.data);
@@ -28,7 +28,7 @@ export default function SimularIntegracaoPage(){
         Help
         {data && (
             <div>
-            <h3>{data.message}</h3>
+            <h3>{data[0].name}</h3>
             </div>
             )
         }
