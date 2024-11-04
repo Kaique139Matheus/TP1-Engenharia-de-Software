@@ -8,6 +8,8 @@ import axios from "axios";
 
 export default function SimularIntegracaoPage(){
     const [data, setData] = useState(null);
+    const [provider, setProvider] = useState(null);
+
 
     function getRequest(){
         axios.get('http://localhost:5000/Providers')
@@ -20,19 +22,44 @@ export default function SimularIntegracaoPage(){
         });
     }
 
+    function getProvider(id){
+        axios.get(`http://localhost:5000/Providers/${id}`)
+        .then(response => {
+            console.log(response.data);
+            setProvider(response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
 
     const navigate = useNavigate();
 
     return (
-      <button onClick={ ()=> getRequest()}>
-        Help
-        {data && (
-            <div>
-            <h3>{data[0].name}</h3>
-            </div>
+        <>
+            <button onClick={ ()=> getRequest()}>
+            Help
+            {data && (
+                <div>
+                <h3>{data[1].name}</h3>
+                </div>
             )
-        }
-      </button>
+            }
+            </button>
+
+            <button onClick={ ()=> getProvider(2)}>
+            Help
+            {provider && (
+                <div>
+                <h3>{provider.name}</h3>
+                </div>
+            )
+            }
+            </button>
+        </>
+
+
 
     )
 }

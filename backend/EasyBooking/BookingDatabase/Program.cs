@@ -10,7 +10,6 @@ class Program
 
 	static void Main(string[] args)
 	{
-		CreateHostBuilder(args).Build().Run();
 		#region Creating and testing
 
 
@@ -48,6 +47,34 @@ class Program
 		db.SaveChanges();
 
 		Console.WriteLine($"{provider2.Name} created");
+
+		var provider3 = new ProviderModel
+		{
+			Name = "Provider 3",
+			Email = "provider3@db.com",
+			Password = "provider3",
+			CNPJ = "12345678908535",
+		};
+
+		db.Add(provider3);
+		db.SaveChanges();
+
+		Console.WriteLine($"{provider3.Name} created");
+
+		var provider4 = new ProviderModel
+		{
+			Name = "Provider 4",
+			Email = "provider4@db.com",
+			Password = "provider4",
+			CNPJ = "12345677801235",
+		};
+
+		db.Add(provider4);
+		db.SaveChanges();
+
+		Console.WriteLine($"{provider4.Name} created");
+
+
 
 		// Query all providers  
 		Console.WriteLine("Querying all providers");
@@ -100,6 +127,8 @@ class Program
 		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
 
 		#endregion
+		CreateHostBuilder(args).Build().Run();
+
 	}
 
 	public static IHostBuilder CreateHostBuilder(string[] args) =>
