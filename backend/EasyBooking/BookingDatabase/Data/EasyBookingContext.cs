@@ -21,6 +21,16 @@ namespace BookingDatabase.Data
 
 		public string DbPath { get; private set; }
 
+
+		// Adicionando o construtor que aceita DbContextOptions
+		public EasyBookingContext(DbContextOptions<EasyBookingContext> options) : base(options)
+		{
+			var folder = Environment.SpecialFolder.LocalApplicationData;
+			var path = Environment.GetFolderPath(folder);
+			if (TestDatabase) DbPath = System.IO.Path.Join(path, "easybooking_test.db");
+			else DbPath = System.IO.Path.Join(path, "easybooking.db");
+		}
+
 		public EasyBookingContext()
 		{
 			var folder = Environment.SpecialFolder.LocalApplicationData;

@@ -1,10 +1,18 @@
 ﻿using BookingDatabase.Data;
 using BookingDatabase.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+
 
 class Program
 {
+
 	static void Main(string[] args)
 	{
+		CreateHostBuilder(args).Build().Run();
+		#region Creating and testing
+
 
 		using var db = new EasyBookingContext();
 		db.Database.EnsureDeleted();
@@ -90,5 +98,14 @@ class Program
 		Console.WriteLine($"There are {db.Services.Count()} services in the database");
 		// Count timeslots
 		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
+
+		#endregion
 	}
+
+	public static IHostBuilder CreateHostBuilder(string[] args) =>
+		Host.CreateDefaultBuilder(args)
+			.ConfigureWebHostDefaults(webBuilder =>
+			{
+				webBuilder.UseStartup<Startup>();
+			});
 }
