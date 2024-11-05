@@ -1,25 +1,81 @@
 import styled from "styled-components";
 import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-
+import providerService from "../../services/providerService";
 
 export default function LoginEmpresarialPage ({setUserInfo}){
     const [form, setForm] = React.useState({ email: "", senha: "" })
     const [carregando, setCarregando] = React.useState(false);
+    const [empresas, setEmpresas] = React.useState([]);
+
     const navigate = useNavigate();
     
     function atualizaForm (event){
         setForm({ ...form, [event.target.name]: event.target.value})
     }
 
+
+
+    const fetchProviders = async () => {
+        try{
+            const data = await providerService.getProviders();
+            setEmpresas(data);
+        }catch(e){
+            throw(e)
+        }
+    }
+
+
+    useEffect(() => {
+        try{
+            setCarregando(true);
+            fetchProviders();
+        }catch(e){
+            alert("Erro ao conectar ao servidor. Recarregue a página e tente novamente.")
+        }
+
+    }, []);
+
+    useEffect( () => {
+        if(empresas.length > 0){
+            console.log("providers obtidos");
+            console.log(empresas); // Verificar o estado atualizado
+            setCarregando(false);
+        }
+
+    }, [empresas]);
+
+
+
+
     function efetuarLogin(event){
         event.preventDefault();
         setCarregando(true);
-        
         const body = {email: form.email, password: form.senha }
+        setCarregando(true);
+        const empresa = empresas.find((item) => item.email == body.email);
+
+        //Usuário não encontrado
+        if(!empresa){
+            alert("Email ou Senha inválidos");
+            setCarregando(false);
+            return;
+        }
+
+        //Senha incorreta
+        if(!(empresa.password == body.password)){
+            alert("Email ou Senha inválidos");
+            setCarregando(false);
+            return;
+        }
+
         navigate("/empresa-home");
+
+        
+        //navigate("/empresa-home");
 
         // faz requisicao pra api e navega pra home em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
