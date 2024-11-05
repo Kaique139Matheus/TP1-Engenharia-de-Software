@@ -4,29 +4,52 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { ThreeDots } from "react-loader-spinner";
 import fotoCadastro from "./cadastro_foto.jpg"
+import { registerClient } from "../../requests/authRequests";
 
 export default function CadastroPage(){
     const [carregando, setCarregando] = React.useState(false);
-    const [form, setForm] = React.useState({nome: "", email: "", senha: "", foto: ""})
+    const [form, setForm] = React.useState({firstName: "", lastName: "", cpf: "", email: "", password: ""})
     const navigate = useNavigate();
 
     function atualizaForm(event){
         setForm({...form, [event.target.name]: event.target.value})
     }
 
+    const enviarCliente = async (client) => {
+        try {
+            const response = await registerClient(client);
+                console.log(response);
+                //const response2 = await GetAllProviders();
+                //console.log(response2);
+                //setCarregando(false);
+                alert("Cadastro Realizado com sucesso!!!");
+                navigate("/servicos")
+            }catch (error) {
+                setCarregando(false);
+                console.log(client);
+                console.error("Error posting client", error);
+                alert(error);
+            }
+    }
+
+
+
     function efetuarCadastro(event){
         event.preventDefault();
         setCarregando(true);
 
         const body = {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            cpf: form.cpf,
             email: form.email,
-            name: form.nome,
-            image: fotoCadastro,
-            password: form
-            .senha
+            password: form.password,
+            reviews: [],
+            bookings: []
         }
-
-        navigate("/servicos")
+        
+        enviarCliente(body);
+        //navigate("/servicos");
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
@@ -43,13 +66,32 @@ export default function CadastroPage(){
             <img src={Logo}
                 alt="Logo"
             ></img>
+           
             <FormContainer onSubmit={efetuarCadastro}>
-            <input 
+                <input 
                     disabled={carregando}
-                    placeholder="Nome de Usuario"
+                    placeholder="Nome"
                     type="text"
-                    name="nome"
-                    value={form.nome}
+                    name="firstName"
+                    value={form.firstName}
+                    onChange={(event) => atualizaForm(event)}
+                    required    
+                ></input>
+                <input 
+                    disabled={carregando}
+                    placeholder="Sobrenome"
+                    type="text"
+                    name="lastName"
+                    value={form.lastName}
+                    onChange={(event) => atualizaForm(event)}
+                    required    
+                ></input>
+                <input
+                    placeholder="CPF"
+                    type="number"
+                    name="cpf"
+                    disabled={carregando}
+                    value={form.cpf}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>
@@ -65,13 +107,13 @@ export default function CadastroPage(){
                 <input
                     placeholder="Senha"
                     type="password"
-                    name="senha"
+                    name="password"
                     disabled={carregando}
-                    value={form.senha}
+                    value={form.password}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>
-
+                
                 <button disabled={carregando} type="submit">{carregando ? 
                     <ThreeDots 
                         height="40" 
