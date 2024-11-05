@@ -19,3 +19,12 @@ export const getAllServices = async () => {
         throw error.response.data;
     }
 }
+
+export const postService = async (name , description, duration, price, providerID) =>{
+    try {
+        const response = await axios.post(`${API_URL}/Services`, {name:name , description:description, durationInMinutes:duration, price:price, providerID:providerID, services:[]});
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}
