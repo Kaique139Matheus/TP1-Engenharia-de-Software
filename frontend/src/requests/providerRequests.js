@@ -11,6 +11,15 @@ export const GetAllProviders = async () => {
     }
 }
 
+export const PostProvider = async (name, cnpj, email, password) =>{
+    try {
+        const response = await axios.post(`${API_URL}/Providers`, {name:name , cnpj:cnpj, email: email, password:password, services:[], reviews:[]});
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}
+
 
 // const providerService = {
 //     getProviders: async () => {

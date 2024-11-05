@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { ThreeDots } from "react-loader-spinner";
 import fotoCadastro from "./cadastro_foto.jpg"
+import { PostProvider, GetAllProviders} from "../../requests/providerRequests";
+
 
 export default function CadastroEmpresarialPage(){
     const [carregando, setCarregando] = React.useState(false);
@@ -14,6 +16,29 @@ export default function CadastroEmpresarialPage(){
         setForm({...form, [event.target.name]: event.target.value})
     }
 
+
+
+    const enviarProvider = async (provider) => {
+                try {
+                    const response = await PostProvider(provider.name, provider.cnpj, provider.email, provider.password);
+                    console.log(response);
+                    const response2 = await GetAllProviders();
+                    console.log(response2);
+                    setCarregando(false);
+                    alert("Cadastro Realizado com sucesso!!!");
+                    navigate('/')
+                } catch (error) {
+                    setCarregando(false);
+                    console.error("Error posting provider", error);
+                    alert(error);
+                }
+            }
+
+
+
+
+
+
     function efetuarCadastro(event){
         event.preventDefault();
         setCarregando(true);
@@ -23,11 +48,11 @@ export default function CadastroEmpresarialPage(){
             name: form.nome,
             cnpj: form.cnpj,
             image: fotoCadastro,
-            password: form
-            .senha
+            password: form.senha
         }
 
-        navigate("/empresa-home")
+        enviarProvider(body);
+        //navigate("/empresa-home")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
         // axios.post(`${BASE_URL}`, body)
