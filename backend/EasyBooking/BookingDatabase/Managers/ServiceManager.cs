@@ -90,9 +90,11 @@ namespace BookingDatabase.Services
 			return serviceToUpdate;
 		}
 
-		public static void RemoveService(EasyBookingContext context, int providerID, int serviceID)
+		public static void RemoveService(EasyBookingContext context, int serviceID)
 		{
-			var serviceToRemove = ValidateAndGetProviderService(context, providerID, serviceID);
+
+			var serviceToRemove = context.Services.Find(serviceID);
+			if (serviceToRemove == null) throw new Exception("Service not found");
 
 			context.Services.Remove(serviceToRemove);
 			context.SaveChanges();

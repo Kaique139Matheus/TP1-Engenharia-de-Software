@@ -15,23 +15,23 @@ public class ServicesController : ControllerBase
         _context = context;
     }
 
-	// GET: services/getAll
-	[HttpGet("getAll")]
-	public ActionResult<IEnumerable<ServiceModel>> GetAllServicesWithProviders()
-	{
-		try
-		{
-			var servicesWithProviders = ServiceManager.GetAllServicesWithProviders(_context);
-			return Ok(servicesWithProviders);
-		}
-		catch (Exception ex)
-		{
-			return BadRequest(ex.Message);
-		}
-	}
+    // GET: services/getAll
+    [HttpGet("getAll")]
+    public ActionResult<IEnumerable<ServiceModel>> GetAllServicesWithProviders()
+    {
+        try
+        {
+            var servicesWithProviders = ServiceManager.GetAllServicesWithProviders(_context);
+            return Ok(servicesWithProviders);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
-	// GET: services/provider/{providerID}
-	[HttpGet("provider/{providerID}")]
+    // GET: services/provider/{providerID}
+    [HttpGet("provider/{providerID}")]
     public ActionResult<IEnumerable<ServiceModel>> GetProviderServices(int providerID)
     {
         try
@@ -77,11 +77,11 @@ public class ServicesController : ControllerBase
 
     // DELETE: services/{serviceID}
     [HttpDelete("{serviceID}")]
-    public IActionResult DeleteService(int serviceID, [FromBody] int providerID)
+    public IActionResult DeleteService([FromRoute] int serviceID)
     {
         try
         {
-            ServiceManager.RemoveService(_context, providerID, serviceID);
+            ServiceManager.RemoveService(_context, serviceID);
             return NoContent();
         }
         catch (Exception ex)
