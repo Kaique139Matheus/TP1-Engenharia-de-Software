@@ -57,11 +57,11 @@ namespace BookingDatabase.Managers
             return booking;
         }
 
-        public static BookingModel UpdateBooking(EasyBookingContext context, int serviceID, int providerID, int timeslotID, DateOnly date)
+        public static BookingModel UpdateBooking(EasyBookingContext context, int serviceID, int providerID, int timeslotID, int clientID)
         {
             var booking = ValidateAndGetTimeslotBooking(context, serviceID, providerID, timeslotID);
 
-            booking.Date = date;
+            booking.ClientID = clientID;
 
             context.SaveChanges();
 
