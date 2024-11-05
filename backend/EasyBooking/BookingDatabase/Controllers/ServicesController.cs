@@ -15,8 +15,23 @@ public class ServicesController : ControllerBase
         _context = context;
     }
 
-    // GET: services/provider/{providerID}
-    [HttpGet("provider/{providerID}")]
+	// GET: services/getAll
+	[HttpGet("getAll")]
+	public ActionResult<IEnumerable<ServiceModel>> GetAllServicesWithProviders()
+	{
+		try
+		{
+			var servicesWithProviders = ServiceManager.GetAllServicesWithProviders(_context);
+			return Ok(servicesWithProviders);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
+
+	// GET: services/provider/{providerID}
+	[HttpGet("provider/{providerID}")]
     public ActionResult<IEnumerable<ServiceModel>> GetProviderServices(int providerID)
     {
         try

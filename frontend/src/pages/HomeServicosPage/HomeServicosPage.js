@@ -3,9 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { AvaliacaoEmpresa } from "./AvaliacaoEmpresa";
 import Header from "../../Header/Header";
+import { getAllServices } from "../../requests/serviceRequests";
 
 export default function HomeServicosPage(){
     const navigate = useNavigate();
+    const [servicesWithProviders, setServicesWithProviders] = React.useState([]);
+
+    React.useEffect(() => {
+        getAllServices().then(servicesWithProviders => {
+            for (let i = 0; i < servicesWithProviders.length; i++) {
+                console.log(servicesWithProviders[i]);
+            }
+            setServicesWithProviders(servicesWithProviders);
+        }).catch(error => {
+            console.error("Error fetching services:", error);
+        });
+    }, []);
+
     // substituir pelo array de servicos
 
     return (
@@ -14,21 +28,31 @@ export default function HomeServicosPage(){
                 <NavContainer >
                     <p>Serviços</p> 
                 </NavContainer>
-                <EmpresaContainer>
-                <ServicoContainer>
-                        <NomeAvaliacao>
-                            <TextoEmpresa>
-                                Empresa1
-                            </TextoEmpresa>
-                            <AvaliacaoEmpresa avaliacaoInicial={3}></AvaliacaoEmpresa>    
-                        </NomeAvaliacao>
-                        <ServicoAvaliar>
-                        <TextoEmpresa>Serviço 1</TextoEmpresa>
-                        <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
-                        </ServicoAvaliar>
-                        <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
-                    </ServicoContainer>
-                </EmpresaContainer>
+                <EmpresasContainer>
+                    {servicesWithProviders.map(serviceWithProvider => (
+                        <ServicoContainer>
+                            <NomeAvaliacao>
+                                <TextoEmpresa>
+                                    {serviceWithProvider.providerName}
+                                </TextoEmpresa>
+                                <AvaliacaoEmpresa avaliacaoInicial={serviceWithProvider.avaliacao}></AvaliacaoEmpresa>
+                            </NomeAvaliacao>
+                            <ServicoInfo>
+                                <TextoEmpresa>{serviceWithProvider.serviceName}</TextoEmpresa>
+                                <TextoDescricao>{serviceWithProvider.serviceDescription}</TextoDescricao>
+                            </ServicoInfo>
+                            <ServicoPreco>
+                                <TextoEmpresa>R${serviceWithProvider.servicePrice}</TextoEmpresa>
+                            </ServicoPreco>
+                            <ServicoBotoes>
+                                <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
+                                <ServicoAvaliar>
+                                    <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
+                                </ServicoAvaliar>
+                            </ServicoBotoes>
+                        </ServicoContainer>
+                    ))}
+                </EmpresasContainer>
         </HomeServicoContainer>
         
     )
@@ -47,24 +71,53 @@ const NomeAvaliacao = styled.div`
     justify-content: center;
 `
 
+const ServicoInfo = styled.div`¨
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const ServicoPreco = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
 const ServicoAvaliar = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
 `
 
+const ServicoBotoes = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
 const TextoEmpresa = styled.div`
-    width: 100px%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     color: #00274D;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
 `
 
-const EmpresaContainer = styled.div`
-    width: 200px;
+const TextoDescricao = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00274D;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+`
+
+const EmpresasContainer = styled.div`
+    width: 80%;
     height: 80%;
     display: flex;
     justify-content: center;
@@ -92,7 +145,7 @@ const EmpresaContainer = styled.div`
 
 const ServicoContainer = styled.div`
     margin: 10px 0px;
-    width: 500px;
+    width: 1000px;
     height: 100px;
     border: 2px solid #00274D;
     border-radius: 5px;

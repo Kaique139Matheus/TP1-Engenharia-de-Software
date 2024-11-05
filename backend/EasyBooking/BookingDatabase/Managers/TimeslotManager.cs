@@ -29,10 +29,10 @@ namespace BookingDatabase.Services
 
 		public static List<TimeslotModel> GetServiceTimeslots(EasyBookingContext context, int serviceID)
 		{
-			var service = context.Services.Find(serviceID);
-			if (service == null) throw new Exception("Service not found");
+			if (context.Services.Find(serviceID) == null) throw new Exception("Service not found");
+			var timeslots = context.Timeslots.Where(t => t.ServiceID == serviceID).ToList();
 
-			return service.Timeslots;
+			return timeslots;
 		}
 
 		public static TimeslotModel ValidateAndGetServiceTimeslot(EasyBookingContext context, int id, int serviceID, int providerID)

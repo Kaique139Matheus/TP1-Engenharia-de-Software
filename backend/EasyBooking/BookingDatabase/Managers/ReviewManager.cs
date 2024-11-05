@@ -35,11 +35,10 @@ namespace BookingDatabase.Services
 
         public static List<ReviewModel> GetProviderReviews(EasyBookingContext context, int providerID)
         {
-            var provider = context.Providers.Find(providerID);
-            if (provider == null) throw new Exception("Provider does not exist");
-            var reviews = provider.Reviews;
+			if (context.Providers.Find(providerID) == null) throw new Exception("Provider not found");
+			var reviews = context.Reviews.Where(r => r.ProviderID == providerID).ToList();
 
-            return provider.Reviews;
+			return reviews;
         }
 
         public static ReviewModel ValidateAndGetServiceReview(EasyBookingContext context, int id, int serviceID, int providerID)

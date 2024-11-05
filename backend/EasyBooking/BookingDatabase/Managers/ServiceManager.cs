@@ -1,5 +1,7 @@
 ﻿using BookingDatabase.Data;
+using BookingDatabase.DTO;
 using BookingDatabase.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +34,32 @@ namespace BookingDatabase.Services
 			return service;
 		}
 
+		public static List<ServiceWithProviderDTO> GetAllServicesWithProviders(EasyBookingContext context)
+		{
+			return context.Services
+				.Join(context.Providers,
+					  service => service.ProviderID,
+					  provider => provider.ID,
+					  (service, provider) => new ServiceWithProviderDTO
+					  {
+						  ServiceID = service.ID,
+						  ServiceName = service.Name,
+						  ServiceDescription = service.Description,
+						  ServicePrice = service.Price,
+						  ServiceDurationInMinutes = service.DurationInMinutes,
+						  ProviderID = provider.ID,
+						  ProviderName = provider.Name,
+						  ProviderCNPJ = provider.CNPJ
+					  })
+				.ToList();
+		}
+
 		public static List<ServiceModel> GetProviderServices(EasyBookingContext context, int providerID)
 		{
-			if (!AuthenticationManager.Instance.IsUserLoggedIn(providerID)) throw new Exception("User not logged in");
+			if (context.Providers.Find(providerID) == null) throw new Exception("Provider not found");
+			var services = context.Services.Where(s => s.ProviderID == providerID).ToList();
 
-			var provider = context.Providers.Find(providerID);
-			if (provider == null) throw new Exception("Provider not found");
-
-			return provider.Services;
+			return services;
 		}
 
 		/// <summary>

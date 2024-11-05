@@ -3,6 +3,7 @@ import Logo from "../../assets/image-removebg-preview.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import { login } from "../../requests/authRequests";
 
 
 export default function LoginPage ({setUserInfo}){
@@ -14,26 +15,41 @@ export default function LoginPage ({setUserInfo}){
         setForm({ ...form, [event.target.name]: event.target.value})
     }
 
-    function efetuarLogin(event){
+    const efetuarLogin = async (event) => {
         event.preventDefault();
-        setCarregando(true);
-        
-        const body = {email: form.email, password: form.senha }
-        navigate("/servicos");
-
-        // faz requisicao pra api e navega pra home em caso de sucesso
-        // axios.post(`${BASE_URL}`, body)
-        // .then((res) => {
-        //     setUserInfo(res.data);
-        //     localStorage.setItem("TOKEN", res.data.token);
-        //     navigate("/home");
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        //     alert(err.response.data.message);
-        //     window.location.reload();
-        // })
+        try {
+            setCarregando(true);
+            const response = await login(form.email, form.senha);
+            console.log(response);
+            navigate("/servicos");
+        }
+        catch (error) {
+            console.error(error);
+            alert(error.message);
+            window.location.reload();
+        }
     }
+
+    // function efetuarLogin(event){
+    //     event.preventDefault();
+    //     setCarregando(true);
+        
+    //     const body = {email: form.email, password: form.senha }
+    //     navigate("/servicos");
+
+    //     // faz requisicao pra api e navega pra home em caso de sucesso
+    //     // axios.post(`${BASE_URL}`, body)
+    //     // .then((res) => {
+    //     //     setUserInfo(res.data);
+    //     //     localStorage.setItem("TOKEN", res.data.token);
+    //     //     navigate("/home");
+    //     // })
+    //     // .catch((err) => {
+    //     //     console.log(err);
+    //     //     alert(err.response.data.message);
+    //     //     window.location.reload();
+    //     // })
+    // }
     
     return (
         <Login>
