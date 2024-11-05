@@ -4,7 +4,7 @@ import React from "react";
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import providerService from "../../requests/providerService";
+import providerService from "../../requests/providerRequests";
 
 export default function LoginEmpresarialPage ({setUserInfo}){
     const [form, setForm] = React.useState({ email: "", senha: "" })
