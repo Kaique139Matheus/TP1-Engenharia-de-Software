@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { ThreeDots } from "react-loader-spinner";
 import fotoCadastro from "./cadastro_foto.jpg"
+import { registerProvider } from "../../requests/authRequests";
 import { PostProvider, GetAllProviders} from "../../requests/providerRequests";
 
 export default function CadastroEmpresarialPage(){
@@ -19,13 +20,13 @@ export default function CadastroEmpresarialPage(){
 
     const enviarProvider = async (provider) => {
                 try {
-                    const response = await PostProvider(provider.name, provider.cnpj, provider.email, provider.password);
+                    const response = await registerProvider(provider);
                     console.log(response);
                     const response2 = await GetAllProviders();
                     console.log(response2);
                     setCarregando(false);
                     alert("Cadastro Realizado com sucesso!!!");
-                    navigate('/')
+                    navigate('/empresa-home')
                 } catch (error) {
                     setCarregando(false);
                     console.error("Error posting provider", error);
@@ -44,10 +45,12 @@ export default function CadastroEmpresarialPage(){
 
         const body = {
             email: form.email,
-            name: form.nome,
+            name: form.name,
             cnpj: form.cnpj,
             image: fotoCadastro,
-            password: form.senha
+            password: form.password,
+            services: [],
+            reviews: []
         }
 
         enviarProvider(body);
@@ -74,8 +77,8 @@ export default function CadastroEmpresarialPage(){
                     disabled={carregando}
                     placeholder="Nome da Empresa"
                     type="text"
-                    name="nome"
-                    value={form.nome}
+                    name="name"
+                    value={form.name}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>
@@ -100,9 +103,9 @@ export default function CadastroEmpresarialPage(){
                 <input
                     placeholder="Senha"
                     type="password"
-                    name="senha"
+                    name="password"
                     disabled={carregando}
-                    value={form.senha}
+                    value={form.password}
                     onChange={(event) => atualizaForm(event)}
                     required    
                 ></input>

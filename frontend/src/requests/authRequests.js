@@ -37,3 +37,12 @@ export const registerClient = async (clientData) => {
         throw error.response.data;
     }
 };
+
+export const registerProvider = async (providerData) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/register/provider`, providerData);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
