@@ -67,7 +67,7 @@ public class BookingsController : ControllerBase
     {
         try
         {
-            var updatedBooking = BookingManager.UpdateBooking(_context, bookingUpdateModel.ServiceID, bookingUpdateModel.ProviderID, timeslotID, bookingUpdateModel.Date);
+            var updatedBooking = BookingManager.UpdateBooking(_context, bookingUpdateModel.ServiceID, bookingUpdateModel.ProviderID, timeslotID, bookingUpdateModel.ClientID);
             return Ok(updatedBooking);
         }
         catch (Exception ex)
@@ -96,7 +96,7 @@ public class BookingUpdateModel
 {
     public int ServiceID { get; set; }
     public int ProviderID { get; set; }
-    public DateOnly Date { get; set; }
+    public int ClientID { get; set; }
 }
 
 public class BookingDeleteModel
