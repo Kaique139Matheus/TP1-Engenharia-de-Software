@@ -5,32 +5,65 @@ import { BASE_URL } from "../url/BaseUrl";
 import Header from "../../Header/Header";
 import { useNavigate } from "react-router-dom";
 
-
-
-
 import foto_empresa from "./foto_empresa.jpg"
 import Servico from "./Servico";
 
 import './EmpresaHomePage.css'
+import { getLoggedProvider } from "../../requests/authRequests";
+import { getServicesFromProvider } from "../../requests/serviceRequests";
 
 export default function EmpresaHomePage (){
     const navigate = useNavigate();
-    const servicesArray = ['Serviço 1', 'Serviço 2', 'Serviço 3'];
+    const [provider, setProvider] = React.useState({});
+    const [services, setServices] = React.useState([]);
 
+
+    React.useEffect(() => {
+        async function fetchProvider() {
+            try {
+                const response = await getLoggedProvider();
+                console.log(response);
+                setProvider(response);
+            } catch (error) {
+                console.error("Error fetching provider data:", error);
+            }
+        }
+
+        fetchProvider();
+    }, []);
+
+    React.useEffect(() => {
+        async function fetchServices() {
+            if (provider.id) {
+                try {
+                    const response = await getServicesFromProvider(provider.id);
+                    console.log(response);
+                    setServices(response);
+                } catch (error) {
+                    console.error("Error fetching services data:", error);
+                }
+            }
+        }
+
+        fetchServices();
+    }, [provider.id]);
 
     return (
         <>
             <Header></Header>
             <div id="page-frame">
                 <img id="foto-empresa" src={foto_empresa} width='220px' height='220px'></img>
-                <h1 id="nome-empresa">Nome da Empresa</h1>
+                <h1 id="nome-empresa">{provider.name}</h1>
             </div>
 
             <div id="services-frame">
                 {
-                    servicesArray.map((elemento) => {
-                        return ( <Servico nome={elemento} />);
+                    services.map((elemento) => {
+                        return ( <Servico nome={elemento.name} descricao={elemento.description} preco={elemento.price} /> );
                     })
+                    // services.map((elemento) => {
+                    //     return ( <Servico nome={elemento} />);
+                    // })
                 }
 
                 <button id="BotaoAdicionarServico" onClick={() => navigate("/adicionar-servico")}> Adicionar Serviço </button>

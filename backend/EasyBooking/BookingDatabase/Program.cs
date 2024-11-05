@@ -68,6 +68,18 @@ class Program
 
 		Console.WriteLine($"Created {service1.Name} for {db.Providers.Find(service1.ProviderID)?.Name}");
 
+		var service2 = new ServiceModel
+		{
+			Name = "Service 2",
+			Description = "Service 2 description",
+			Price = 200,
+			DurationInMinutes = 120,
+			ProviderID = 1,
+		};
+		db.Add(service2);
+
+		Console.WriteLine($"Created {service2.Name} for {db.Providers.Find(service2.ProviderID)?.Name}");
+
 		var timeslot1 = new TimeslotModel
 		{
 			Time = 1200,

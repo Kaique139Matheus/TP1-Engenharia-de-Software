@@ -17,7 +17,7 @@ public class AuthController : ControllerBase
 
     // POST: api/auth/login
     [HttpPost("login")]
-    public IActionResult Login([FromBody] UserModel loginModel)
+    public IActionResult Login([FromBody] UserModel loginModel) 
     {
         try
         {
@@ -38,8 +38,8 @@ public class AuthController : ControllerBase
         return Ok("Logout successful");
     }
 
-    // POST: api/auth/register/client
-    [HttpPost("register/client")]
+	// POST: api/auth/register/client
+	[HttpPost("register/client")]
     public IActionResult RegisterClient([FromBody] ClientModel clientModel)
     {
         try
@@ -67,4 +67,40 @@ public class AuthController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+	// GET: api/auth/loggedProvider
+	[HttpGet("loggedProvider")]
+	public ActionResult<ProviderModel> GetLoggedProvider()
+	{
+		try
+		{
+			if (!AuthenticationManager.Instance.IsLoggedIn) return BadRequest("No user logged in");
+			if (!AuthenticationManager.Instance.IsProvider) return BadRequest("Logged in user is not a provider");
+
+			var provider = AuthenticationManager.Instance.CurrentUser as ProviderModel;
+			return Ok(provider);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
+
+	// GET: api/auth/loggedClient
+	[HttpGet("loggedClient")]
+	public ActionResult<ClientModel> GetLoggedClient()
+	{
+		try
+		{
+			if (!AuthenticationManager.Instance.IsLoggedIn) return BadRequest("No user logged in");
+			if (AuthenticationManager.Instance.IsProvider) return BadRequest("Logged in user is not a client");
+
+			var client = AuthenticationManager.Instance.CurrentUser as ClientModel;
+			return Ok(client);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
 }
