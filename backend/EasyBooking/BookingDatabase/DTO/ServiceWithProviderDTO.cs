@@ -9,12 +9,12 @@ namespace BookingDatabase.DTO
 	public class ServiceWithProviderDTO
 	{
 		public int ServiceID { get; set; }
-		public string ServiceName { get; set; }
-		public string ServiceDescription { get; set; }
+		public string? ServiceName { get; set; }
+		public string? ServiceDescription { get; set; }
 		public decimal ServicePrice { get; set; }
 		public int ServiceDurationInMinutes { get; set; }
 		public int ProviderID { get; set; }
-		public string ProviderName { get; set; } 
-		public string ProviderCNPJ { get; set; }
+		public string? ProviderName { get; set; } 
+		public string? ProviderCNPJ { get; set; }
 	}
 }
