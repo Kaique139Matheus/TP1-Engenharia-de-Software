@@ -4,6 +4,7 @@ import UserContext from "./contexts/UserContext";
 
 
 import LoginPage from "./pages/LoginPage/LoginPage"
+import CadastroEscolhaPage from "./pages/CadastroEscolhaPage/CadastroEscolhaPage";
 import CadastroPage from "./pages/CadastroPage/CadastroPage";
 import EmpresaHomePage from "./pages/EmpresaHomePage/EmpresaHomePage";
 import HomePage from "./pages/HomePage/HomePage";
@@ -26,6 +27,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path={`/login`} element={<LoginPage setUserInfo={setUserInfo}></LoginPage>}></Route>
+          <Route path={`/cadastro-escolha`} element={<CadastroEscolhaPage></CadastroEscolhaPage>}></Route>
           <Route path={`/cadastro`} element={<CadastroPage></CadastroPage>}></Route>
           <Route path={`/empresa-home`} element={<EmpresaHomePage></EmpresaHomePage>}></Route>
           <Route path={`/`} element={<HomePage></HomePage>}></Route>

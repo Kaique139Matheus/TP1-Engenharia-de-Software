@@ -19,11 +19,11 @@ export default function HomePage() {
               Faça o Login
             </OptionButton>
             ou
-            <OptionButton onClick={() => navigate("/cadastro")}>
+            <OptionButton onClick={() => navigate("/cadastro-escolha")}>
               Cadastre Agora
             </OptionButton>
           </Options>
-          <Divider></Divider>
+          {/* <Divider></Divider>
           <Text>É uma empresa?</Text>
           <Options>
             <OptionButton onClick={() => navigate("/login-empresarial")}>
@@ -33,7 +33,7 @@ export default function HomePage() {
             <LastButtonOption onClick={() => navigate("/cadastro-empresarial")}>
               Divulgue seus Serviços
             </LastButtonOption>
-          </Options>
+          </Options> */}
         </HomeOptionsContainer>
       </WhiteBox>
     </HomeContainer>
@@ -53,7 +53,7 @@ const Options = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   gap: 15px;
 `;
@@ -121,11 +121,12 @@ const HomeOptionsContainer = styled.div`
 
 const HomeContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 150px;
   background-size: cover;
   background-position: center;
   color: rgb(0, 39, 77);
@@ -138,10 +139,12 @@ const WhiteBox = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 600px;
+  height: 400px;
   margin: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 
   @media (max-width: 600px) {
     width: 95%;
