@@ -47,7 +47,7 @@ namespace BookingDatabase.Tests
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password, out var _);
 
 			var newPassword = "newpassword";
 
@@ -74,7 +74,7 @@ namespace BookingDatabase.Tests
 			context.Clients.Add(testClient);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password, out var _);
 
 			// Act
 			ClientManager.RemoveClient(context, testClient.ID);

@@ -19,9 +19,13 @@ export default function LoginPage ({setUserInfo}){
         event.preventDefault();
         try {
             setCarregando(true);
-            const response = await login(form.email, form.senha);
-            console.log(response);
-            navigate("/servicos");
+            const isProvider = await login(form.email, form.senha);
+            if (isProvider) {
+                navigate("/empresa-home");
+            }
+            else {
+                navigate("/servicos");
+            }
         }
         catch (error) {
             console.error(error);

@@ -49,7 +49,7 @@ namespace BookingDatabase.Tests
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			var newPassword = "newpassword";
 
@@ -75,7 +75,7 @@ namespace BookingDatabase.Tests
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act
 			ProviderManager.DeleteProvider(context, testProvider.ID);

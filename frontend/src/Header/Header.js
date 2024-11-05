@@ -3,12 +3,27 @@ import React, { useState } from "react";
 import Logo from "../assets/image-removebg-preview.png"
 import fotoCadastro from "../pages/CadastroPage/cadastro_foto.jpg"
 import { useNavigate } from "react-router-dom";
+import { logout } from "../requests/authRequests";
 
 
 export default function Header() {
     // mudar condicao booleana para aparecer logout
     const [usuarioLogado, setUsuarioLogado] = useState(true)
     const navigate = useNavigate();
+
+    const efetuarLogout = async (event) => {
+        event.preventDefault();
+        try {
+            const isProvider = await logout();
+            alert("Logout efetuado com sucesso!");
+            navigate("/");
+        }
+        catch (error) {
+            console.error(error);
+            alert(error.message);
+            window.location.reload();
+        }
+    }
 
     return (
         <NavContainer>
@@ -18,10 +33,11 @@ export default function Header() {
             <Text>Nunca foi tão fácil reservar!</Text>
             {!usuarioLogado ? 
             <PerfilImg src={fotoCadastro}></PerfilImg> : 
-            <LogoutContainer onClick={() => navigate("/")}>Logout</LogoutContainer>
+            <LogoutButton onClick={efetuarLogout}>Logout</LogoutButton>
             }
         </NavContainer>
     );
+
 }
 
 const PerfilImg = styled.img`
@@ -60,7 +76,7 @@ const NavContainer = styled.div`
     padding: 5px 25px;
 `
 
-const LogoutContainer = styled.div`
+const LogoutButton = styled.div`
     width: 50px;
     height: 50px;
     display: flex;

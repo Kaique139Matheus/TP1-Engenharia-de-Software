@@ -4,7 +4,16 @@ const API_URL = 'http://localhost:5000'; // ASP.NET Core backend URL
 
 export const login = async (email, password) => {
     try {
-        const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+        const isProvider = await axios.post(`${API_URL}/auth/login`, { email, password });
+        return isProvider.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const logout = async () => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/logout`);
         return response.data;
     } catch (error) {
         throw error.response.data;

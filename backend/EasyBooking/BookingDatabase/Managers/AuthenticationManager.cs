@@ -34,7 +34,7 @@ namespace BookingDatabase.Services
 			this.CurrentUser = null;
 		}
 
-		public void Login(EasyBookingContext context, string email, string password)
+		public void Login(EasyBookingContext context, string email, string password, out bool isProvider)
 		{
 			var client = context.Clients.SingleOrDefault(c => c.Email == email);
 			var provider = context.Providers.SingleOrDefault(p => p.Email == email);
@@ -52,6 +52,7 @@ namespace BookingDatabase.Services
 				CurrentUser = provider;
 				IsProvider = true;
 			}
+			isProvider = IsProvider;
 		}
 
 		public void Logout()

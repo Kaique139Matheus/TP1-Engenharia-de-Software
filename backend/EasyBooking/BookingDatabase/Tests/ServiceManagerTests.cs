@@ -33,7 +33,7 @@ namespace BookingDatabase.Tests
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act
 			var service = ServiceManager.AddService(context, testProvider.ID, testService.Name, testService.Description, testService.Price, testService.DurationInMinutes);
@@ -65,7 +65,7 @@ namespace BookingDatabase.Tests
 			context.Services.Add(testService);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act
 			var service = ServiceManager.ValidateAndGetProviderService(context, testProvider.ID, testService.ID);
@@ -91,7 +91,7 @@ namespace BookingDatabase.Tests
 			context.Providers.Add(testProvider);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act & Assert
 			Assert.Throws<Exception>(() => ServiceManager.ValidateAndGetProviderService(context, testProvider.ID, testService.ID));
@@ -109,7 +109,7 @@ namespace BookingDatabase.Tests
 			context.Services.Add(testService);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider2.Email, testProvider2.Password);
+			AuthenticationManager.Instance.Login(context, testProvider2.Email, testProvider2.Password, out var _);
 
 			// Act & Assert
 			Assert.Throws<Exception>(() => ServiceManager.ValidateAndGetProviderService(context, testProvider2.ID, testService.ID));
@@ -125,7 +125,7 @@ namespace BookingDatabase.Tests
 			context.Services.Add(testService);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			var newName = "New Name";
 			var newDescription = "New Description";
@@ -150,7 +150,7 @@ namespace BookingDatabase.Tests
 			context.Services.Add(testService);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act
 			ServiceManager.RemoveService(context, testProvider.ID, testService.ID);
@@ -171,7 +171,7 @@ namespace BookingDatabase.Tests
 			context.Services.Add(testService2);
 			context.SaveChanges();
 
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var _);
 
 			// Act
 			var services = ServiceManager.GetProviderServices(context, testProvider.ID);

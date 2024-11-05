@@ -21,8 +21,8 @@ public class AuthController : ControllerBase
     {
         try
         {
-            AuthenticationManager.Instance.Login(_context, loginModel.Email, loginModel.Password);
-            return Ok("Login successful");
+            AuthenticationManager.Instance.Login(_context, loginModel.Email, loginModel.Password, out var isProvider);
+            return Ok(isProvider);
         }
         catch (Exception ex)
         {

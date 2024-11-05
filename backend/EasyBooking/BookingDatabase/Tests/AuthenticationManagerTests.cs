@@ -36,9 +36,10 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password, out var isProvider);
 
 			// Assert
+			Assert.False(isProvider);
 			Assert.True(AuthenticationManager.Instance.IsUserLoggedIn(testClient.ID));
 		}
 
@@ -51,9 +52,10 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password);
+			AuthenticationManager.Instance.Login(context, testProvider.Email, testProvider.Password, out var isProvider);
 
 			// Assert
+			Assert.True(isProvider);
 			Assert.True(AuthenticationManager.Instance.IsUserLoggedIn(testProvider.ID));
 		}
 
@@ -61,7 +63,7 @@ namespace BookingDatabase.Tests
 		public void Login_ShouldThrowException_WhenEmailNotFound()
 		{
 			// Act & Assert
-			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, "email", "password"));
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, "email", "password", out var _));
 		}
 
 		[Fact]
@@ -73,7 +75,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act & Assert
-			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, testClient.Email, "wrongpassword"));
+			Assert.Throws<Exception>(() => AuthenticationManager.Instance.Login(context, testClient.Email, "wrongpassword", out var _));
 		}
 
 		[Fact]
@@ -83,7 +85,7 @@ namespace BookingDatabase.Tests
 			var testClient = TestObjects.TestClient;
 			context.Clients.Add(testClient);
 			context.SaveChanges();
-			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password);
+			AuthenticationManager.Instance.Login(context, testClient.Email, testClient.Password, out var _);
 
 			// Act
 			AuthenticationManager.Instance.Logout();
