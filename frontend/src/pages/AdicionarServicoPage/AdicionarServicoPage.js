@@ -13,7 +13,7 @@ import { getLoggedProvider } from "../../requests/authRequests";
 
 export default function AdicionarServicoPage (){
     const [carregando, setCarregando] = React.useState(false);
-    const [form, setForm] = React.useState({name: "", description: "", price: 0, senha: "", duration: ""})
+    const [form, setForm] = React.useState({name: "", description: "", price: "", senha: "", duration: ""})
     const [provider, setProvider] = React.useState({});
 
 

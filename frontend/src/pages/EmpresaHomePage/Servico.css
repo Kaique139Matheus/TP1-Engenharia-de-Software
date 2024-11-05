@@ -1,18 +1,60 @@
+#info{
+    position: relative;
+    height: 100px;
+}
+
 .Servico{
     position: relative;
     background-color: rgba(255,255,255,0.1);
     margin: 10px 20px;
+    //height: 80px;
+
+    border-radius: 15px;
+    border: 4px solid #01193f;
+}
+
+.TimeslotsList{
+    position: relative;
+    background-color: rgba(255,255,255,0.1);
+
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
     height: 80px;
 
     border-radius: 15px;
     border: 4px solid #01193f;
 }
 
-.NomeServico{
+.Descricao{
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.Preco{
+    position: absolute;
+    right: 100px;
+    top: 50%;
+    transform: translate(0,-50%);
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.NomeServico{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translate(0,-50%);
 
     font-size: 24px;
     font-weight: bold;

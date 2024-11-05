@@ -28,3 +28,13 @@ export const postService = async (name , description, duration, price, providerI
         throw error.response.data;
     }
 }
+
+
+export const deleteService = async (id) =>{
+    try {
+        const response = await axios.delete(`${API_URL}/Services`, {id:id});
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}

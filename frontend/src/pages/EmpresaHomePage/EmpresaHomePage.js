@@ -11,6 +11,7 @@ import Servico from "./Servico";
 import './EmpresaHomePage.css'
 import { getLoggedProvider } from "../../requests/authRequests";
 import { getServicesFromProvider } from "../../requests/serviceRequests";
+import { deleteService } from "../../requests/serviceRequests";
 
 export default function EmpresaHomePage (){
     const navigate = useNavigate();
@@ -48,6 +49,19 @@ export default function EmpresaHomePage (){
         fetchServices();
     }, [provider.id]);
 
+
+    async function deleteMeService(id){
+        try{
+            const response = await deleteService(id);
+            console.log(response);
+            console.log(`Deletar serviço ${id}`)
+            setServices(services.filter( (item)=> item.id != id));
+        }catch{
+            console.error("Error deleting services data:");
+
+        }
+    }
+
     return (
         <>
             <Header></Header>
@@ -56,10 +70,13 @@ export default function EmpresaHomePage (){
                 <h1 id="nome-empresa">{provider.name}</h1>
             </div>
 
+
+
             <div id="services-frame">
                 {
                     services.map((elemento) => {
-                        return ( <Servico nome={elemento.name} descricao={elemento.description} preco={elemento.price} /> );
+                        return ( <Servico nome={elemento.name} descricao={elemento.description} preco={elemento.price}
+                        id = {elemento.id} deleteFunction={deleteMeService}/> );
                     })
                     // services.map((elemento) => {
                     //     return ( <Servico nome={elemento} />);
