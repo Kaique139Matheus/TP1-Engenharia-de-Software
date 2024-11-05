@@ -74,6 +74,7 @@ const NavContainer = styled.div`
     position: fixed;
     top: 0;
     padding: 5px 25px;
+    z-index: 2;
 `
 
 const LogoutButton = styled.div`
