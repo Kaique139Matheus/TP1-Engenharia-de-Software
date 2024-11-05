@@ -6,7 +6,6 @@ import { ThreeDots } from "react-loader-spinner";
 import fotoCadastro from "./cadastro_foto.jpg"
 import { PostProvider, GetAllProviders} from "../../requests/providerRequests";
 
-
 export default function CadastroEmpresarialPage(){
     const [carregando, setCarregando] = React.useState(false);
     const [form, setForm] = React.useState({nome: "", cnpj: "", email: "", senha: "", foto: ""})
@@ -52,6 +51,7 @@ export default function CadastroEmpresarialPage(){
         }
 
         enviarProvider(body);
+        setCarregando(false)
         //navigate("/empresa-home")
 
         // faz a requisicao pro cadastro e navega para login em caso de sucesso
