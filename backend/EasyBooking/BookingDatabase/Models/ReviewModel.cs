@@ -14,9 +14,6 @@ namespace BookingDatabase.Models
 		public int ProviderID { get; set; }
 		public int Score { get; set; }
 		public string? Comment { get; set; }
-
-		public ClientModel? Client { get; set; } // Permitindo valor nulo
-		public ProviderModel? Provider { get; set; } // Permitindo valor nulo
 	}
 
 

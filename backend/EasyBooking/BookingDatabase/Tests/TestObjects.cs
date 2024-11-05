@@ -75,5 +75,21 @@ namespace BookingDatabase.Tests
 			Time = 1300,
 			ServiceID = 1
 		};
+
+		public static ReviewModel TestReview => new ReviewModel
+		{
+			Score = 5,
+			Comment = "Great service!",
+			ClientID = 1,
+			ProviderID = 1
+		};
+
+		public static ReviewModel TestReview2 => new ReviewModel
+		{
+			Score = 3,
+			Comment = "Could be better...",
+			ClientID = 1,
+			ProviderID = 1
+		};
 	}
 }

@@ -18,7 +18,6 @@ namespace BookingDatabase.Models
 		[Column(TypeName = "decimal(6, 2)")] public decimal Price { get; set; }
 		public int DurationInMinutes { get; set; }
 
-		public ProviderModel Provider { get; set; } = null!;
 		public List<TimeslotModel> Timeslots { get; set; } = new List<TimeslotModel>();
 	}
 }

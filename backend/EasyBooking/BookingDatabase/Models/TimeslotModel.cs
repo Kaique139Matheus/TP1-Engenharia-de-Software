@@ -13,7 +13,6 @@ namespace BookingDatabase.Models
         public int ServiceID { get; set; }
         public int Time { get; set; }
 
-		public ServiceModel Service { get; set; } = null!;
 		public List<BookingModel> Bookings { get; set; } = new List<BookingModel>();
 	}
 }

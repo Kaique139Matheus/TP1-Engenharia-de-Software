@@ -23,7 +23,7 @@ namespace BookingDatabase.Services
 				Description = description,
 				Price = price,
 				DurationInMinutes = durationInMinutes,
-				Provider = provider,
+				ProviderID = providerID,
 			};
 
 			context.Services.Add(service);

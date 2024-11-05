@@ -12,7 +12,6 @@ class Program
 	{
 		#region Creating and testing
 
-
 		using var db = new EasyBookingContext();
 		db.Database.EnsureDeleted();
 		db.Database.EnsureCreated();
@@ -48,34 +47,6 @@ class Program
 
 		Console.WriteLine($"{provider2.Name} created");
 
-		var provider3 = new ProviderModel
-		{
-			Name = "Provider 3",
-			Email = "provider3@db.com",
-			Password = "provider3",
-			CNPJ = "12345678908535",
-		};
-
-		db.Add(provider3);
-		db.SaveChanges();
-
-		Console.WriteLine($"{provider3.Name} created");
-
-		var provider4 = new ProviderModel
-		{
-			Name = "Provider 4",
-			Email = "provider4@db.com",
-			Password = "provider4",
-			CNPJ = "12345677801235",
-		};
-
-		db.Add(provider4);
-		db.SaveChanges();
-
-		Console.WriteLine($"{provider4.Name} created");
-
-
-
 		// Query all providers  
 		Console.WriteLine("Querying all providers");
 		var providers = db.Providers.ToList();
@@ -106,18 +77,30 @@ class Program
 
 		Console.WriteLine($"Created new timeslot at time {timeslot1.Time} for service {timeslot1.ServiceID}");
 
+		var client1 = new ClientModel
+		{
+			Email = "client1@db.com",
+			Password = "client1",
+			CPF = "12345678901",
+			FirstName = "Client",
+			LastName = "1",
+		};
+		db.Add(client1);
+
+		Console.WriteLine($"Created new client {client1.FirstName} {client1.LastName} ({client1.Email})");
+
 		db.SaveChanges();
 
-		// Count providers  
-		Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
-		// Count services  
-		Console.WriteLine($"There are {db.Services.Count()} services in the database");
-		// Count timeslots
-		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
+		//// Count providers  
+		//Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
+		//// Count services  
+		//Console.WriteLine($"There are {db.Services.Count()} services in the database");
+		//// Count timeslots
+		//Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
 
-		Console.WriteLine($"Deleting {provider1.Name}");
-		db.Remove(provider1);
-		db.SaveChanges();
+		//Console.WriteLine($"Deleting {provider1.Name}");
+		//db.Remove(provider1);
+		//db.SaveChanges();
 
 		// Count providers  
 		Console.WriteLine($"There are {db.Providers.Count()} providers in the database");
@@ -127,8 +110,8 @@ class Program
 		Console.WriteLine($"There are {db.Timeslots.Count()} timeslots in the database");
 
 		#endregion
-		CreateHostBuilder(args).Build().Run();
 
+		CreateHostBuilder(args).Build().Run();
 	}
 
 	public static IHostBuilder CreateHostBuilder(string[] args) =>

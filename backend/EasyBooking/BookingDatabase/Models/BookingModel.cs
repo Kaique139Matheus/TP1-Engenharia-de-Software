@@ -17,10 +17,5 @@ namespace BookingDatabase.Models
 		public int TimeslotID { get; set; }
 		public DateOnly Date { get; set; }
 		public int? ClientID { get; set; }
-
-		public TimeslotModel Timeslot { get; set; } = null!;
-		public ServiceModel Service { get; set; } = null!;
-		public ProviderModel Provider { get; set; } = null!;
-		public ClientModel? Client { get; set; }
 	}
 }

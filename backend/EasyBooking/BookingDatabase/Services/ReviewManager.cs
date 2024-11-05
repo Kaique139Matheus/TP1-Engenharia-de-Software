@@ -7,7 +7,7 @@ using BookingDatabase.Models;
 
 namespace BookingDatabase.Services
 {
-    public class ReviewManager
+    public static class ReviewManager
     {
         public static ReviewModel AddReview(EasyBookingContext context, int clientId, int providerID, int score, string? comment)
         {
@@ -19,20 +19,12 @@ namespace BookingDatabase.Services
             var provider = context.Providers.Find(providerID);
             if (provider == null) throw new Exception("Provider not found");
 
-            // Verifique se já existe um review para esse cliente e provedor no contexto
-            if (context.Reviews.Any(r => r.ClientID == clientId && r.ProviderID == providerID))
-            {
-                throw new Exception("Review already exists for this client and provider.");
-            }
-
             var review = new ReviewModel
             {
                 ClientID = clientId,
                 ProviderID = providerID,
                 Score = score,
                 Comment = comment,
-                Client = client, // Associando ao cliente existente
-                Provider = provider // Associando ao provedor existente
             };
 
             context.Reviews.Add(review);
@@ -40,8 +32,6 @@ namespace BookingDatabase.Services
 
             return review;
         }
-
-
 
         public static List<ReviewModel> GetProviderReviews(EasyBookingContext context, int providerID)
         {
@@ -62,10 +52,10 @@ namespace BookingDatabase.Services
             return review;
         }
 
-        public static ReviewModel UpdateReview(EasyBookingContext context, int id, int score, string? comment)
+        public static ReviewModel UpdateReview(EasyBookingContext context, int clientID, int providerID, int score, string? comment)
         {
-            var review = context.Reviews.Find();
-            if (review == null) throw new Exception("Review not found");
+            var review = context.Reviews.Find(clientID, providerID);
+			if (review == null) throw new Exception("Review not found");
 
             review.Score = score;
             review.Comment = comment;
@@ -75,11 +65,12 @@ namespace BookingDatabase.Services
             return review;
         }
 
-        public static void RemoveReview(EasyBookingContext context, int id, int serviceID, int providerID)
+        public static void RemoveReview(EasyBookingContext context, int clientID, int providerID)
         {
-            var review = ValidateAndGetServiceReview(context, id, serviceID, providerID);
+			var review = context.Reviews.Find(clientID, providerID);
+			if (review == null) throw new Exception("Review not found");
 
-            context.Reviews.Remove(review);
+			context.Reviews.Remove(review);
             context.SaveChanges();
         }
     }
