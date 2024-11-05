@@ -93,7 +93,7 @@ export default function CadastroPage(){
     )
 }
 
-const Cadastro = styled.div`z
+const Cadastro = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
