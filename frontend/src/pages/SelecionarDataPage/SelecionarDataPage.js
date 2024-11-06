@@ -1,24 +1,60 @@
 import styled from "styled-components";
 import React from "react";
-import ReactDatePicker from "react-datepicker"
+import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import { getBookingsUntilMaxDate, verifyBookingAvailability } from "../../requests/bookingRequests";
+import { isSameDay, max, parseISO } from "date-fns";
 
 export default function SelecionarDataPage() {
     const [date, setDate] = React.useState();
     const navigate = useNavigate();
-    
+    const [bookings, setBookings] = React.useState([]);
+    const serviceId = localStorage.getItem("selectedServiceID");
+    const maxDaysInAdvance = 30;
+
+    const handleDateChange = async (date) => {
+        console.log(date);
+        const response = await verifyBookingAvailability(serviceId, date.toJSON());
+        if (!response) {
+            alert("Data não disponível para agendamento");
+            return;
+        }
+        console.log(response);
+        setDate(date);
+        localStorage.setItem("selectedDate", date.toJSON());
+    };
+
+    const handleProssigaClick = () => {
+        if (!date) {
+            alert("Selecione uma data para prosseguir");
+            return;
+        }
+        navigate("/selecionar-horario");
+    };
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const maxDate = new Date();
+    maxDate.setDate(tomorrow.getDate() + maxDaysInAdvance);
+
     return (
         <SelecionarDataContainer>
             <BodyInfos>
-                    <DatePicker 
-                        placeholderText="Selecione uma data"
-                        selected={date}
-                        onChange={(date) => setDate(date)}
-                        required
-                    />                    
-                    <ProssigaButton onClick={() => navigate("/selecionar-horario")}>Prossiga</ProssigaButton>
-                </BodyInfos>
+                <StyledDatePicker
+                    placeholderText="Selecione uma data"
+                    selected={date}
+                    onChange={(date) => handleDateChange(date)}
+                    inline
+                    required
+                    minDate={tomorrow}
+                    maxDate={maxDate}
+                />
+                <ProssigaButton onClick={handleProssigaClick}>
+                    Prossiga
+                </ProssigaButton>
+            </BodyInfos>
         </SelecionarDataContainer>
     );
 }
@@ -40,7 +76,7 @@ const ProssigaButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
 const SelecionarDataContainer = styled.div`
     width: 100%;
@@ -49,26 +85,37 @@ const SelecionarDataContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 250px;
-`
+    margin-top: 150px;
+`;
 
-const DatePicker = styled(ReactDatePicker)`
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 1px solid grey;
-    width: 400px;
-    height: 40px;
-    padding: 10px;
-    font-weight: 400;
-    font-size: large;
-    text-align: center;
-`
-
-const BodyInfos = styled.form`
-    width: 100%;
-    height: 100%;
+const BodyInfos = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-`
+    align-items: center;
+    justify-content: center;
+`;
+
+const StyledDatePicker = styled(ReactDatePicker)`
+    .react-datepicker {
+        width: 600px; /* Increase the width of the calendar */
+        font-size: 1.2em; /* Increase the font size */
+    }
+
+    .react-datepicker__day {
+        width: 50px; /* Increase the width of the day cells */
+        height: 50px; /* Increase the height of the day cells */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .react-datepicker__day--booked {
+        background-color: red;
+        color: white;
+    }
+
+    .react-datepicker__day--available {
+        background-color: blue;
+        color: white;
+    }
+`;

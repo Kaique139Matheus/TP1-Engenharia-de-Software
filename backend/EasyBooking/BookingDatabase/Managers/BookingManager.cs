@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookingDatabase.Data;
+using BookingDatabase.DTO;
 using BookingDatabase.Models;
 using BookingDatabase.Services;
 
@@ -27,8 +28,50 @@ namespace BookingDatabase.Managers
             return booking;
         }
 
-        //Pegar os bookings de cada serviço
-        public static List<BookingModel> GetServiceBookings(EasyBookingContext context, int serviceID)
+		public static void VerifyAndAddBookingsUntilMaxDate(EasyBookingContext context, ServiceModel service, DateOnly maxDate)
+		{
+			var timeslots = context.Timeslots.Where(t => t.ServiceID == service.ID).ToList();
+
+			var bookingsToAdd = new List<BookingModel>();
+			var tomorrow = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
+			foreach (var timeslot in timeslots)
+			{
+				for (DateOnly date = tomorrow; date <= maxDate; date = date.AddDays(1))
+				{
+					var booking = context.Bookings.Where(b => b.ServiceID == service.ID && b.TimeslotID == timeslot.ID && b.Date == date).FirstOrDefault();
+					if (booking == null)
+					{
+						bookingsToAdd.Add(new BookingModel
+						{
+							ProviderID = service.ProviderID,
+							ServiceID = service.ID,
+							TimeslotID = timeslot.ID,
+							Date = date,
+							ClientID = null
+						});
+					}
+				}
+			}
+
+			context.Bookings.AddRange(bookingsToAdd);
+			context.SaveChanges();
+		}
+
+		public static bool VerifyBookingAvailability(EasyBookingContext context, int serviceID, DateOnly date)
+		{
+			var service = context.Services.Find(serviceID);
+			if (service == null) throw new Exception("Service not found");
+			var timeslots = context.Timeslots.Where(t => t.ServiceID == serviceID).ToList();
+			foreach (var timeslot in timeslots)
+			{
+				var booking = context.Bookings.Where(b => b.ServiceID == serviceID && b.TimeslotID == timeslot.ID && b.Date == date).FirstOrDefault();
+				if (booking == null || booking.ClientID == null) return true;
+			}
+			return false;
+		}
+
+		//Pegar os bookings de cada serviço
+		public static List<BookingModel> GetServiceBookings(EasyBookingContext context, int serviceID)
         {
             if (context.Services.Find(serviceID) == null) throw new Exception("Service not found");
             var bookings = context.Bookings.Where(t => t.ServiceID == serviceID).ToList();
@@ -36,9 +79,65 @@ namespace BookingDatabase.Managers
             return bookings;
         }
 
+		public static List<BookingModel> GetBookingsUntilMaxDate(EasyBookingContext context, int serviceID)
+		{
+			var service = context.Services.Find(serviceID);
+			if (service == null) throw new Exception("Service not found");
+			var today = DateOnly.FromDateTime(DateTime.Now);
+			var maxDaysInAdvance = 30;
+			var maxDate = today.AddDays(maxDaysInAdvance);
 
-        //Pegar os bookings de cada cliente --> provável caso de uso
-        public static List<BookingModel> GetClientBookings(EasyBookingContext context, int clientID)
+			VerifyAndAddBookingsUntilMaxDate(context, service, maxDate);
+
+			var bookings = context.Bookings.Where(b => b.ServiceID == serviceID && b.Date <= maxDate).ToList();
+
+			return bookings;
+		}
+
+		public static List<BookingWithTime> GetBookingsWithTimeFromServiceAndDate(EasyBookingContext context, int serviceID, DateOnly date)
+		{
+			var service = context.Services.Find(serviceID);
+			if (service == null) throw new Exception("Service not found");
+			var timeslots = context.Timeslots.Where(t => t.ServiceID == serviceID).ToList();
+			foreach (var timeslot in timeslots)
+			{
+				var booking = context.Bookings.Where(b => b.ServiceID == serviceID && b.TimeslotID == timeslot.ID && b.Date == date).FirstOrDefault();
+				if (booking == null)
+				{
+					context.Bookings.Add(new BookingModel
+					{
+						ProviderID = service.ProviderID,
+						ServiceID = service.ID,
+						TimeslotID = timeslot.ID,
+						Date = date,
+						ClientID = null
+					});
+				}
+			}
+			context.SaveChanges();
+
+			var bookingsWithTime = context.Bookings
+				.Where(b => b.ServiceID == serviceID && b.Date == date)
+				.Join(context.Timeslots,
+					  booking => booking.TimeslotID,
+					  timeslot => timeslot.ID,
+					  (booking, timeslot) => new BookingWithTime
+					  {
+						  ProviderID = booking.ProviderID,
+						  ServiceID = booking.ServiceID,
+						  TimeslotID = booking.TimeslotID,
+						  Date = booking.Date,
+						  ClientID = booking.ClientID,
+						  Time = timeslot.Time
+					  })
+				.ToList();
+
+			return bookingsWithTime;
+		}
+
+
+		//Pegar os bookings de cada cliente --> provável caso de uso
+		public static List<BookingModel> GetClientBookings(EasyBookingContext context, int clientID)
         {
             if (context.Clients.Find(clientID) == null) throw new Exception("Service not found");
             var bookings = context.Bookings.Where(t => t.ClientID == clientID).ToList();
@@ -57,11 +156,17 @@ namespace BookingDatabase.Managers
             return booking;
         }
 
-        public static BookingModel UpdateBooking(EasyBookingContext context, int serviceID, int providerID, int timeslotID, int clientID)
+        public static BookingModel UpdateBooking(EasyBookingContext context, int providerID, int serviceID, int timeslotID, DateOnly date, int? clientID)
         {
-            var booking = ValidateAndGetTimeslotBooking(context, serviceID, providerID, timeslotID);
+            //var booking = ValidateAndGetTimeslotBooking(context, serviceID, providerID, timeslotID);
+			if (context.Services.Find(serviceID) == null) throw new Exception("Service not found");
+			if (context.Providers.Find(providerID) == null) throw new Exception("Provider not found");
+			if (context.Timeslots.Find(timeslotID) == null) throw new Exception("Timeslot not found");
 
-            booking.ClientID = clientID;
+			var booking = context.Bookings.Find(providerID, serviceID, timeslotID, date);
+			if (booking == null) throw new Exception("Booking not found");
+
+			booking.ClientID = clientID;
 
             context.SaveChanges();
 

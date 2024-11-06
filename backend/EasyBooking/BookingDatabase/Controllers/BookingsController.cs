@@ -4,6 +4,7 @@ using BookingDatabase.Managers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using BookingDatabase.DTO;
 
 [Route("[controller]")]
 [ApiController]
@@ -19,20 +20,21 @@ public class BookingsController : ControllerBase
     // POST: bookings
     [HttpPost]
     public ActionResult<BookingModel> PostBooking([FromBody] BookingModel bookingModel)
-    {
-        try
-        {
-            var newBooking = BookingManager.AddBooking(_context, bookingModel.ProviderID, bookingModel.ServiceID, bookingModel.TimeslotID, bookingModel.Date, bookingModel.ClientID);
-            return CreatedAtAction(nameof(GetServiceBookings), new { serviceID = bookingModel.ServiceID }, newBooking);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
+	{
+		try
+		{
+			Console.WriteLine("BookingModel: " + bookingModel);
+			var newBooking = BookingManager.AddBooking(_context, bookingModel.ProviderID, bookingModel.ServiceID, bookingModel.TimeslotID, bookingModel.Date, bookingModel.ClientID);
+			return Ok(newBooking);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
 
-    // GET: bookings/service/{serviceID}
-    [HttpGet("service/{serviceID}")]
+	// GET: bookings/service/{serviceID}
+	[HttpGet("service/{serviceID}")]
     public ActionResult<IEnumerable<BookingModel>> GetServiceBookings(int serviceID)
     {
         try
@@ -46,8 +48,55 @@ public class BookingsController : ControllerBase
         }
     }
 
-    // GET: bookings/client/{clientID}
-    [HttpGet("client/{clientID}")]
+	// GET: bookings/service/{serviceID}
+	[HttpGet("service/{serviceID}/bookingsUntilMaxDate")]
+	public ActionResult<IEnumerable<BookingModel>> GetBookingsUntilMaxDate(int serviceID)
+	{
+		try
+		{
+			var bookings = BookingManager.GetBookingsUntilMaxDate(_context, serviceID);
+			return Ok(bookings);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
+
+	// GET: bookings/service/{serviceID}/{dateTime}
+	[HttpGet("service/{serviceID}/{dateTime}")]
+	public ActionResult<IEnumerable<BookingWithTime>> GetBookingsWithTimeFromServiceAndDate(int serviceID, DateTime dateTime)
+	{
+		try
+		{
+			var date = DateOnly.FromDateTime(dateTime);
+			var bookingsWithTime = BookingManager.GetBookingsWithTimeFromServiceAndDate(_context, serviceID, date);
+			return Ok(bookingsWithTime);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
+
+	// GET: bookings/availability/{serviceID}/{dateTime}
+	[HttpGet("availability/{serviceID}/{dateTime}")]
+	public ActionResult<bool> VerifyBookingAvailability(int serviceID, DateTime dateTime)
+	{
+		try
+		{
+			var date = DateOnly.FromDateTime(dateTime);
+			var isAvailable = BookingManager.VerifyBookingAvailability(_context, serviceID, date);
+			return Ok(isAvailable);
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
+	}
+
+	// GET: bookings/client/{clientID}
+	[HttpGet("client/{clientID}")]
     public ActionResult<IEnumerable<BookingModel>> GetClientBookings(int clientID)
     {
         try
@@ -61,14 +110,15 @@ public class BookingsController : ControllerBase
         }
     }
 
-    // PUT: bookings/{timeslotID}
-    [HttpPut("{timeslotID}")]
-    public ActionResult<BookingModel> PutBooking(int timeslotID, [FromBody] BookingUpdateModel bookingUpdateModel)
-    {
+	// PUT: bookings/update/providerID/serviceID/timeslotID/dateTime/clientID
+	[HttpPut("update/{providerID}/{serviceID}/{timeslotID}/{dateTime}/{clientID}")]
+	public ActionResult<BookingModel> PutBooking(int providerID, int serviceID, int timeslotID, DateTime dateTime, int clientID)
+	{
         try
         {
-            var updatedBooking = BookingManager.UpdateBooking(_context, bookingUpdateModel.ServiceID, bookingUpdateModel.ProviderID, timeslotID, bookingUpdateModel.ClientID);
-            return Ok(updatedBooking);
+			var date = DateOnly.FromDateTime(dateTime);
+			var updatedBooking = BookingManager.UpdateBooking(_context, providerID, serviceID, timeslotID, date, clientID);
+			return Ok(updatedBooking);
         }
         catch (Exception ex)
         {
@@ -94,9 +144,11 @@ public class BookingsController : ControllerBase
 
 public class BookingUpdateModel
 {
-    public int ServiceID { get; set; }
+	public int TimeslotID { get; set; }
+	public int ServiceID { get; set; }
     public int ProviderID { get; set; }
     public int ClientID { get; set; }
+	public DateTime Date { get; set; }
 }
 
 public class BookingDeleteModel
