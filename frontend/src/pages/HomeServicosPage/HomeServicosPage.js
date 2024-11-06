@@ -54,7 +54,7 @@ export default function HomeServicosPage() {
             </ServicoPreco>
             <ServicoBotoes>
               <button onClick={() => {
-                reservarClick("selectedServiceID" ,serviceWithProvider.providerID);
+                reservarClick("selectedServiceID" ,serviceWithProvider.serviceID);
                 navigate("/selecionar-data");
               }}>
                 Reservar
