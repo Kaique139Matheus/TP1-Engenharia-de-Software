@@ -137,13 +137,39 @@ namespace BookingDatabase.Managers
 
 
 		//Pegar os bookings de cada cliente --> provável caso de uso
-		public static List<BookingModel> GetClientBookings(EasyBookingContext context, int clientID)
-        {
-            if (context.Clients.Find(clientID) == null) throw new Exception("Service not found");
-            var bookings = context.Bookings.Where(t => t.ClientID == clientID).ToList();
+		public static List<ClientBookingDTO> GetClientBookingsDTO(EasyBookingContext context, int clientID)
+		{
+			if (context.Clients.Find(clientID) == null) throw new Exception("Client not found");
 
-            return bookings;
-        }
+			var today = DateOnly.FromDateTime(DateTime.Now);
+
+			var bookingsDTO = context.Bookings
+				.Where(b => b.ClientID == clientID)
+				.Join(context.Services,
+					  booking => booking.ServiceID,
+					  service => service.ID,
+					  (booking, service) => new { booking, service })
+				.Join(context.Providers,
+					  bs => bs.service.ProviderID,
+					  provider => provider.ID,
+					  (bs, provider) => new { bs.booking, bs.service, provider })
+				.Join(context.Timeslots,
+					  bsp => bsp.booking.TimeslotID,
+					  timeslot => timeslot.ID,
+					  (bsp, timeslot) => new ClientBookingDTO
+					  {
+						  ProviderID = bsp.booking.ProviderID,
+						  ServiceID = bsp.booking.ServiceID,
+						  TimeslotID = bsp.booking.TimeslotID,
+						  ServiceName = bsp.service.Name,
+						  ProviderName = bsp.provider.Name,
+						  Time = timeslot.Time,
+						  Date = bsp.booking.Date
+					  })
+				.ToList();
+
+			return bookingsDTO;
+		}
 
         public static BookingModel ValidateAndGetTimeslotBooking(EasyBookingContext context, int serviceID, int providerID, int timeslotID)
         {
@@ -166,7 +192,8 @@ namespace BookingDatabase.Managers
 			var booking = context.Bookings.Find(providerID, serviceID, timeslotID, date);
 			if (booking == null) throw new Exception("Booking not found");
 
-			booking.ClientID = clientID;
+			if (clientID == null || clientID < 0) booking.ClientID = null;
+			else booking.ClientID = clientID;
 
             context.SaveChanges();
 

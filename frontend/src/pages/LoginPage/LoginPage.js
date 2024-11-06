@@ -24,7 +24,7 @@ export default function LoginPage ({setUserInfo}){
                 navigate("/empresa-home");
             }
             else {
-                navigate("/servicos");
+                navigate("/cliente-home");
             }
         }
         catch (error) {

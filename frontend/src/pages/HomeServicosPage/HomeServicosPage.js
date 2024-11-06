@@ -73,9 +73,38 @@ export default function HomeServicosPage() {
           </ServicoContainer>
         ))}
       </EmpresasContainer>
+      <ClientHomePageContainer>
+        <button onClick={() => navigate("/cliente-home")}>Voltar para HomePage</button>
+      </ClientHomePageContainer>
     </HomeServicoContainer>
   );
 }
+
+const ClientHomePageContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin: 10px 0px;
+    width: 300px;
+    height: 45px;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    background-color: #00274d;
+    color: white;
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 const Avaliar = styled.p`
   color: #00274d;

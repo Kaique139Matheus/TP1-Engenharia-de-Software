@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import CadastroEscolhaPage from "./pages/CadastroEscolhaPage/CadastroEscolhaPage";
 import CadastroPage from "./pages/CadastroPage/CadastroPage";
 import EmpresaHomePage from "./pages/EmpresaHomePage/EmpresaHomePage";
+import ClientHomePage from "./pages/ClientHomePage/ClientHomePage";
 import HomePage from "./pages/HomePage/HomePage";
 import HomeServicosPage from "./pages/HomeServicosPage/HomeServicosPage";
 import AvaliarPage from "./pages/AvaliarPage/AvaliarPage"
@@ -32,6 +33,7 @@ export default function App() {
           <Route path={`/cadastro-escolha`} element={<CadastroEscolhaPage></CadastroEscolhaPage>}></Route>
           <Route path={`/cadastro`} element={<CadastroPage></CadastroPage>}></Route>
           <Route path={`/empresa-home`} element={<EmpresaHomePage></EmpresaHomePage>}></Route>
+          <Route path={`/cliente-home`} element={<ClientHomePage></ClientHomePage>}></Route>
           <Route path={`/`} element={<HomePage></HomePage>}></Route>
           <Route path={`/avaliar`} element={<AvaliarPage></AvaliarPage>}></Route>
           <Route path={`/servicos`} element={<HomeServicosPage></HomeServicosPage>}></Route>

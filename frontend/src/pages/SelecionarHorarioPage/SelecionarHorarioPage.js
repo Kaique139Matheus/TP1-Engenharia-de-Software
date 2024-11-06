@@ -58,8 +58,8 @@ export default function SelecionarHorarioPage() {
         }
         console.log(selectedBookingWithTime.providerID, selectedBookingWithTime.serviceID, selectedBookingWithTime.timeslotID, selectedDate, loggedClient.id);
         const response = await updateBooking(selectedBookingWithTime.providerID, selectedBookingWithTime.serviceID, selectedBookingWithTime.timeslotID, selectedDate, loggedClient.id);
-        alert(JSON.stringify(response));
-        navigate("/servicos");
+        alert("Reserva realizada com sucesso!");
+        navigate("/cliente-home");
     };
 
     const getTime = (time) => {

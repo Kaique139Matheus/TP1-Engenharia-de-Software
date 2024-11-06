@@ -97,11 +97,11 @@ public class BookingsController : ControllerBase
 
 	// GET: bookings/client/{clientID}
 	[HttpGet("client/{clientID}")]
-    public ActionResult<IEnumerable<BookingModel>> GetClientBookings(int clientID)
+    public ActionResult<IEnumerable<BookingModel>> GetClientBookingsDTO(int clientID)
     {
         try
         {
-            var bookings = BookingManager.GetClientBookings(_context, clientID);
+            var bookings = BookingManager.GetClientBookingsDTO(_context, clientID);
             return Ok(bookings);
         }
         catch (Exception ex)
@@ -112,7 +112,7 @@ public class BookingsController : ControllerBase
 
 	// PUT: bookings/update/providerID/serviceID/timeslotID/dateTime/clientID
 	[HttpPut("update/{providerID}/{serviceID}/{timeslotID}/{dateTime}/{clientID}")]
-	public ActionResult<BookingModel> PutBooking(int providerID, int serviceID, int timeslotID, DateTime dateTime, int clientID)
+	public ActionResult<BookingModel> PutBooking(int providerID, int serviceID, int timeslotID, DateTime dateTime, int? clientID)
 	{
         try
         {
