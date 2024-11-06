@@ -13,14 +13,15 @@ export const getReviewsFromProvider = async (providerId) => {
   }
 };
 
-export const postService = async (clientID, providerID, score, comment) => {
+export const postReview = async (clientID, providerID, score, comment) => {
   try {
-    const response = await axios.post(`${API_URL}/Services`, {
+    const response = await axios.post(`${API_URL}/reviews`, {
       clientID: clientID,
       providerID: providerID,
       score: score,
       comment: comment,
     });
+    console.log(response);
     return response.data;
   } catch (error) {
     throw error.response.data;

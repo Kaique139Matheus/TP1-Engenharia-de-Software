@@ -5,7 +5,7 @@ import { AvaliacaoEmpresa } from "./AvaliacaoEmpresa";
 import Header from "../../Header/Header";
 import { getAllServices } from "../../requests/serviceRequests";
 
-export default function HomeServicosPage() {
+export default function ReviewPage() {
   const navigate = useNavigate();
   const [servicesWithProviders, setServicesWithProviders] = React.useState([]);
 
@@ -22,8 +22,8 @@ export default function HomeServicosPage() {
       });
   }, []);
 
-  const reservarClick = (nomeVar, id) => {
-    localStorage.setItem(nomeVar, id);
+  const reservarClick = (idprovider) => {
+    localStorage.setItem("providerID", idprovider);
   };
 
   // substituir pelo array de servicos
@@ -53,16 +53,13 @@ export default function HomeServicosPage() {
               <TextoEmpresa>R${serviceWithProvider.servicePrice}</TextoEmpresa>
             </ServicoPreco>
             <ServicoBotoes>
-              <button onClick={() => {
-                reservarClick("selectedServiceID" ,serviceWithProvider.providerID);
-                navigate("/selecionar-data");
-              }}>
+              <button onClick={() => navigate("/selecionar-data")}>
                 Reservar
               </button>
               <ServicoAvaliar>
                 <h1
                   onClick={() => {
-                    reservarClick("providerID", serviceWithProvider.providerID);
+                    reservarClick(serviceWithProvider.providerID);
                     navigate("/avaliar");
                   }}
                 >
