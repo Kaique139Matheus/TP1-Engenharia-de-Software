@@ -11,7 +11,7 @@ export function AvaliacaoEmpresa({avaliacaoInicial}) {
         alt="estrela"
     ></img>
     )
-}
+  }
   return (
     <AvaliacaoEmpresaContainer>
         {
