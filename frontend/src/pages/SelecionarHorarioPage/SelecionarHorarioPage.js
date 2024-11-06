@@ -1,30 +1,91 @@
 import styled from "styled-components";
-import { React } from "react";
+import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import { getBookingsWithTimeFromServiceAndDate, setBooking } from "../../requests/bookingRequests";
+import { getLoggedClient } from "../../requests/authRequests";
+import { updateBooking } from "../../requests/bookingRequests";
+
 
 export default function SelecionarHorarioPage() {
     const navigate = useNavigate();
-    
+    const [bookingsWithTime, setBookingsWithTime] = React.useState([]);
+    const [selectedBookingWithTime, setSelectedBookingsWithTime] = React.useState(null);
+    const serviceId = localStorage.getItem("selectedServiceID");
+    const selectedDate = localStorage.getItem("selectedDate");
+    const [loggedClient, setLoggedClient] = React.useState({});
+
+    React.useEffect(() => {
+        async function fetchBookingsWithTime() {
+            try {
+                const response = await getBookingsWithTimeFromServiceAndDate(serviceId, selectedDate);
+                console.log(response);
+                setBookingsWithTime(response);
+            } catch (error) {
+                console.error("Error fetching bookings with time data:", error);
+            }
+        }
+
+        fetchBookingsWithTime();
+    }, [serviceId]);
+
+    React.useEffect(() => {
+        async function fetchLoggedClient() {
+            try {
+                const response = await getLoggedClient();
+                console.log(response);
+                setLoggedClient(response);
+            } catch (error) {
+                console.error("Error fetching logged client data:", error);
+            }
+        }
+
+        fetchLoggedClient();
+    }, []);
+
+    const handleCheckboxChange = (bookingWithTime) => {
+        if (bookingWithTime.clientID) {
+            alert("Horário já reservado");
+            return;
+        }
+        setSelectedBookingsWithTime(bookingWithTime);
+    };
+
+    const handleReservarClick = async () => {
+        if (!selectedBookingWithTime) {
+            alert("Selecione um horário para prosseguir");
+            return;
+        }
+        console.log(selectedBookingWithTime.providerID, selectedBookingWithTime.serviceID, selectedBookingWithTime.timeslotID, selectedDate, loggedClient.id);
+        const response = await updateBooking(selectedBookingWithTime.providerID, selectedBookingWithTime.serviceID, selectedBookingWithTime.timeslotID, selectedDate, loggedClient.id);
+        alert(JSON.stringify(response));
+        navigate("/servicos");
+    };
+
+    const getTime = (time) => {
+        // time is an integer like 1200, get 12:00
+        const timeString = time.toString();
+        return timeString.substring(0, timeString.length - 2) + ":" + timeString.substring(timeString.length - 2);
+    }
+
     return (
         <SelecionarHorarioContainer>
-            <NavContainer >
-                    <p>Selecionar Horario</p> 
-                </NavContainer>
-                <OptionsContainer>
-                    <OptionButton>
-                        Horario 1
-                    </OptionButton>
-
-                    <OptionButton>
-                        Horario 2
-                    </OptionButton>
-
-                    <OptionButton>
-                        Horario 3
-                    </OptionButton>
-                </OptionsContainer>
-                <ReservarButton onClick={() => navigate("/servicos")}>Reservar</ReservarButton>
+            <NavContainer>
+                <p>Selecionar Horario</p>
+            </NavContainer>
+            <OptionsContainer>
+                {bookingsWithTime.map(bookingWithTime => (
+                    <BookingWithTimeContainer key={bookingWithTime.id}>
+                        {getTime(bookingWithTime.time)}
+                        <input
+                            type="checkbox"
+                            checked={selectedBookingWithTime === bookingWithTime}
+                            onChange={() => handleCheckboxChange(bookingWithTime)}
+                        />
+                    </BookingWithTimeContainer>
+                ))}
+            </OptionsContainer>
+            <ReservarButton onClick={handleReservarClick}>Reservar</ReservarButton>
         </SelecionarHorarioContainer>
     );
 }
@@ -39,12 +100,16 @@ const OptionsContainer = styled.div`
     gap: 20px;
 `
 
-const OptionButton = styled.button`
+const BookingWithTimeContainer = styled.div`
     width: 30%;
     height: 60px;
     border: 2px solid #00274D;
     border-radius: 5px;
-`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+`;
 
 const NavContainer = styled.div`
     width: 100%;

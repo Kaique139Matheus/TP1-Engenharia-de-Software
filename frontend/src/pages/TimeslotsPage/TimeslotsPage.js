@@ -9,7 +9,7 @@ import TimeSlot from "./TimeSlot";
 import { ThreeDots } from "react-loader-spinner";
 import { postService } from "../../requests/serviceRequests";
 import { getLoggedProvider } from "../../requests/authRequests";
-import { getTimeslotsFromService } from "../../requests/timeslotRequests";
+import { getTimeslotsFromServiceAndDate } from "../../requests/timeslotRequests";
 
 //"./pages/TimeslotsPage/TimeslotsPage"
 
@@ -25,7 +25,7 @@ export default function TimeslotsPage (){
         async function fetchTimeslots() {
             try {
                 const selectedServiceID = 1// localStorage.getItem('selectedServiceID');
-                const response = await getTimeslotsFromService(selectedServiceID);
+                const response = await getTimeslotsFromServiceAndDate(selectedServiceID);
                 console.log(response);
                 setTimeslots(response);
             } catch (error) {

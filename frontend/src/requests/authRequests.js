@@ -29,6 +29,15 @@ export const getLoggedProvider = async () => {
     }
 };
 
+export const getLoggedClient = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/auth/loggedClient`);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}
+
 export const registerClient = async (clientData) => {
     try {
         const response = await axios.post(`${API_URL}/auth/register/client`, clientData);

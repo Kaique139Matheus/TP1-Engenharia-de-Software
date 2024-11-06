@@ -4,7 +4,7 @@ using BookingDatabase.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class TimeslotsController : ControllerBase
 {

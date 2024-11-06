@@ -20,6 +20,11 @@ export default function HomeServicosPage(){
         });
     }, []);
 
+    const handleReservarClick = (serviceID) => {
+        localStorage.setItem("selectedServiceID", serviceID);
+        navigate("/selecionar-data");
+    };
+
     // substituir pelo array de servicos
 
     return (
@@ -45,7 +50,7 @@ export default function HomeServicosPage(){
                                 <TextoEmpresa>R${serviceWithProvider.servicePrice}</TextoEmpresa>
                             </ServicoPreco>
                             <ServicoBotoes>
-                                <button onClick={() => navigate("/selecionar-data")}>Reservar</button>
+                                <button onClick={() => handleReservarClick(serviceWithProvider.serviceID)}>Reservar</button>
                                 <ServicoAvaliar>
                                     <Link to="/avaliar"><Avaliar>Avaliar</Avaliar></Link>
                                 </ServicoAvaliar>
