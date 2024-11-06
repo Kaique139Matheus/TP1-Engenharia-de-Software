@@ -38,8 +38,8 @@ const ResetStyle = createGlobalStyle`
         background-size: cover;
         background-position: center;
         font-family: 'Lexend Deca', sans-serif;
-        background-image: "${backgroundImage}";
-
+	background-image: url(${backgroundImage});
+    
     }
     ol, ul {
         list-style: none;
