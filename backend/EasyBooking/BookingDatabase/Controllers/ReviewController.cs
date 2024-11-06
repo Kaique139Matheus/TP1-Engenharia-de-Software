@@ -24,7 +24,7 @@ public class ReviewsController : ControllerBase
         {
             var newReview = ReviewManager.AddReview(_context, reviewModel.ClientID, reviewModel.ProviderID, reviewModel.Score, reviewModel.Comment);
             Console.WriteLine($"Review added: {newReview.ClientID} {newReview.ProviderID} {newReview.Score} {newReview.Comment}");
-            return CreatedAtAction(nameof(GetProviderReviews), new { providerID = newReview.ProviderID }, newReview);
+            return CreatedAtAction(nameof(GetProviderReviewDTOs), new { providerID = newReview.ProviderID }, newReview);
         }
         catch (DbUpdateException ex)
         {
@@ -42,11 +42,11 @@ public class ReviewsController : ControllerBase
 
     // GET: reviews/provider/{providerID}
     [HttpGet("provider/{providerID}")]
-    public ActionResult<IEnumerable<ReviewModel>> GetProviderReviews(int providerID)
+    public ActionResult<IEnumerable<ReviewModel>> GetProviderReviewDTOs(int providerID)
     {
         try
         {
-            var reviews = ReviewManager.GetProviderReviews(_context, providerID);
+            var reviews = ReviewManager.GetProviderReviewDTOs(_context, providerID);
             return Ok(reviews);
         }
         catch (Exception ex)

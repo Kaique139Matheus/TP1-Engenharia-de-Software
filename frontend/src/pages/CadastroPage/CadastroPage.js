@@ -23,7 +23,7 @@ export default function CadastroPage(){
                 //console.log(response2);
                 //setCarregando(false);
                 alert("Cadastro Realizado com sucesso!!!");
-                navigate("/servicos")
+                navigate("/cliente-home");
             }catch (error) {
                 setCarregando(false);
                 console.log(client);

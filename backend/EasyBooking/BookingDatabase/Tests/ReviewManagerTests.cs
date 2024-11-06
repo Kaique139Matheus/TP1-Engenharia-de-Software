@@ -106,7 +106,7 @@ namespace BookingDatabase.Tests
 			context.SaveChanges();
 
 			// Act
-			var reviews = ReviewManager.GetProviderReviews(context, testProvider.ID);
+			var reviews = ReviewManager.GetProviderReviewDTOs(context, testProvider.ID);
 
 			// Assert
 			Assert.True(reviews.Count == 2);

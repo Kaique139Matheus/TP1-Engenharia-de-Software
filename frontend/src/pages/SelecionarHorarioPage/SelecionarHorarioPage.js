@@ -76,12 +76,16 @@ export default function SelecionarHorarioPage() {
             <OptionsContainer>
                 {bookingsWithTime.map(bookingWithTime => (
                     <BookingWithTimeContainer key={bookingWithTime.id}>
-                        {getTime(bookingWithTime.time)}
-                        <input
-                            type="checkbox"
-                            checked={selectedBookingWithTime === bookingWithTime}
-                            onChange={() => handleCheckboxChange(bookingWithTime)}
-                        />
+                        <TimeText>
+                            {getTime(bookingWithTime.time)}
+                        </TimeText>
+                        <CheckBox>
+                            <input
+                                type="checkbox"
+                                checked={selectedBookingWithTime === bookingWithTime}
+                                onChange={() => handleCheckboxChange(bookingWithTime)}
+                            />
+                        </CheckBox>
                     </BookingWithTimeContainer>
                 ))}
             </OptionsContainer>
@@ -89,6 +93,20 @@ export default function SelecionarHorarioPage() {
         </SelecionarHorarioContainer>
     );
 }
+
+const CheckBox = styled.div`
+    input {
+        width: 20px;
+        height: 20px;
+    }
+`
+
+const TimeText = styled.p`
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #00274D;
+`
 
 const OptionsContainer = styled.div`
     width: 80%;
@@ -109,11 +127,12 @@ const BookingWithTimeContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
+    background-color: #e8e9ff;
 `;
 
 const NavContainer = styled.div`
     width: 100%;
-    height: 70px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;

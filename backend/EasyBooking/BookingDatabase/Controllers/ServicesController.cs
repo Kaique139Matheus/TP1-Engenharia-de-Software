@@ -77,11 +77,14 @@ public class ServicesController : ControllerBase
 
     // DELETE: services/{serviceID}
     [HttpDelete("{serviceID}")]
-    public IActionResult DeleteService(int serviceID, [FromBody] int providerID)
+    public IActionResult DeleteService(int serviceID)
     {
         try
         {
-            ServiceManager.RemoveService(_context, providerID, serviceID);
+			if (!AuthenticationManager.Instance.IsLoggedIn) return Unauthorized();
+			var providerID = AuthenticationManager.Instance.CurrentUser.ID;
+
+			ServiceManager.RemoveService(_context, providerID, serviceID);
             return NoContent();
         }
         catch (Exception ex)

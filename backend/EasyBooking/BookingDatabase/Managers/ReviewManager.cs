@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookingDatabase.Data;
+using BookingDatabase.DTO;
 using BookingDatabase.Models;
 
 namespace BookingDatabase.Services
@@ -33,13 +34,23 @@ namespace BookingDatabase.Services
             return review;
         }
 
-        public static List<ReviewModel> GetProviderReviews(EasyBookingContext context, int providerID)
+        public static List<ReviewDTO> GetProviderReviewDTOs(EasyBookingContext context, int providerID)
         {
 			if (context.Providers.Find(providerID) == null) throw new Exception("Provider not found");
-			var reviews = context.Reviews.Where(r => r.ProviderID == providerID).ToList();
-
-			return reviews;
-        }
+			var reviewDTOs = context.Reviews
+				.Where(r => r.ProviderID == providerID)
+				.Join(context.Clients, r => r.ClientID, c => c.ID, (r, c) => new ReviewDTO
+				{
+					ClientID = r.ClientID,
+					ProviderID = r.ProviderID,
+					ClientFirstName = c.FirstName,
+					ClientLastName = c.LastName,
+					Score = r.Score,
+					Comment = r.Comment
+				})
+				.ToList();
+			return reviewDTOs;
+		}
 
         public static ReviewModel ValidateAndGetServiceReview(EasyBookingContext context, int id, int serviceID, int providerID)
         {

@@ -46,6 +46,7 @@ export default function AvaliarPage() {
   async function handleAvaliar() {
     try {
       // Envia os dados para a API
+      console.log(client.id, providerID, score, descricaoText);
       await postReview(client.id, providerID, score, descricaoText);
       // Redireciona para a página de serviços após a avaliação
       navigate("/servicos");

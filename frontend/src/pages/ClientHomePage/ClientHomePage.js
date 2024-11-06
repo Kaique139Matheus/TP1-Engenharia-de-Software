@@ -164,20 +164,22 @@ const BookingText = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     p {
         margin: 5px;
     }
 `
 
 const BookingContainer = styled.div`
-    width: 600px;
-    height: 200px;
+    width: 800px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #00274d;
     margin: 10px 0px;
+    padding: 10px;
+    background-color: #e8e9ff;
 `
 
 const BookingsContainer = styled.div`
@@ -185,7 +187,7 @@ const BookingsContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 50px
 `
 
 const ClientHomePageContainer = styled.div`

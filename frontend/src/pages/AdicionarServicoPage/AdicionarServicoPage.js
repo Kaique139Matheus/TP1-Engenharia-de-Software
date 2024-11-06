@@ -66,9 +66,10 @@ export default function AdicionarServicoPage (){
         try {
             const response = await postService(servico.name , servico.description, servico.duration, servico.price, provider.id);
             console.log(response); 
-            localStorage.setItem('selectedServiceID', response.data.id);
-            console.log(`Salvar ${response.data.id}`)
-            navigate('/timeslots-page')
+            alert("Serviço cadastrado com sucesso!!!");
+            // localStorage.setItem('selectedServiceID', response.id);
+            // console.log(`Salvar ${response.data.id}`)
+            navigate('/empresa-home');
         } catch (error) {
             setCarregando(false);
             console.error("Error posting provider", error);

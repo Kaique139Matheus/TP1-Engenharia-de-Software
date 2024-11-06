@@ -38,19 +38,19 @@ export default function HomeServicosPage() {
         {servicesWithProviders.map((serviceWithProvider) => (
           <ServicoContainer>
             <NomeAvaliacao>
+              <TextoServico>{serviceWithProvider.serviceName}</TextoServico>
               <TextoEmpresa>{serviceWithProvider.providerName}</TextoEmpresa>
               <AvaliacaoEmpresa
                 avaliacaoInicial={serviceWithProvider.avaliacao}
               ></AvaliacaoEmpresa>
             </NomeAvaliacao>
             <ServicoInfo>
-              <TextoEmpresa>{serviceWithProvider.serviceName}</TextoEmpresa>
               <TextoDescricao>
                 {serviceWithProvider.serviceDescription}
               </TextoDescricao>
             </ServicoInfo>
             <ServicoPreco>
-              <TextoEmpresa>R${serviceWithProvider.servicePrice}</TextoEmpresa>
+              <TextoPreco>R${serviceWithProvider.servicePrice}</TextoPreco>
             </ServicoPreco>
             <ServicoBotoes>
               <button onClick={() => {
@@ -109,7 +109,7 @@ const ClientHomePageContainer = styled.div`
 const Avaliar = styled.p`
   color: #00274d;
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 20px;
   text-decoration: none;
 `;
 
@@ -135,6 +135,7 @@ const ServicoAvaliar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #00274d;
 `;
 
 const ServicoBotoes = styled.div`
@@ -144,14 +145,38 @@ const ServicoBotoes = styled.div`
   align-items: center;
 `;
 
-const TextoEmpresa = styled.div`
+const TextoPreco = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00274d;
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const TextoServico = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: left;
   color: #00274d;
   font-family: "Roboto", sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 10px 0px;
+`;
+
+const TextoEmpresa = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00274d;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
+  
 `;
 
 const TextoDescricao = styled.div`
@@ -161,7 +186,7 @@ const TextoDescricao = styled.div`
   justify-content: center;
   color: #00274d;
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 20px;
 `;
 
 const EmpresasContainer = styled.div`
@@ -208,6 +233,7 @@ const ServicoContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 5px 15px;
+  background-color: #e8e9ff;
 `;
 
 const HomeServicoContainer = styled.div`

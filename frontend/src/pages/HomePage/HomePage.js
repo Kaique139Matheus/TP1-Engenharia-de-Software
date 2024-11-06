@@ -133,7 +133,7 @@ const HomeContainer = styled.div`
 `;
 
 const WhiteBox = styled.div`
-  background-color: white;
+  background-color: #e8e9ff;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
