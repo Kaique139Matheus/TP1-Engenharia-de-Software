@@ -5,7 +5,7 @@ import { AvaliacaoEmpresa } from "./AvaliacaoEmpresa";
 import Header from "../../Header/Header";
 import { getAllServices } from "../../requests/serviceRequests";
 
-export default function HomeServicosPage() {
+export default function ReviewPage() {
   const navigate = useNavigate();
   const [servicesWithProviders, setServicesWithProviders] = React.useState([]);
 

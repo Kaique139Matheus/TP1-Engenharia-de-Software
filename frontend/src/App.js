@@ -17,6 +17,7 @@ import AdicionarTimeSlotPage from "./pages/AdicionarTimeSlotPage/AdicionarTimeSl
 import LoginEmpresarialPage from "./pages/LoginEmpresarialPage/LoginEmpresarialPage"
 import CadastroEmpresarialPage from "./pages/CadastroEmpresarialPage/CadastroEmpresarialPage";
 import SimularIntegracaoPage from "./pages/SimularIntegracao/SimularIntegracaoPage"
+import ReviewPage from "./pages/ReviewPage/ReviewPage";
 
 export default function App() {
   

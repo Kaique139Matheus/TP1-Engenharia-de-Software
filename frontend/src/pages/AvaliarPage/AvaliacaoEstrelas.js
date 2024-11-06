@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
-import { Rating } from 'react-simple-star-rating'
-import { useEffect } from "react"
+import React from "react";
+import { Rating } from "react-simple-star-rating";
 
-export function AvaliacaoEstrelas() {
-  const [rating, setRating] = useState(0)
-
+export function AvaliacaoEstrelas({ setScore }) {
   const handleRating = (rate) => {
-    setRating(rate)
-  }
+    setScore(Math.round(rate / 20)); // Ajuste a divisão conforme a escala desejada
+  };
 
   return (
     <div>
-      <Rating 
-          onClick={handleRating} initialValue={rating} 
-
-        />
+      <Rating onClick={handleRating} />
     </div>
-    
-  )
+  );
 }
