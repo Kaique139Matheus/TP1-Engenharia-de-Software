@@ -32,7 +32,7 @@ export const postService = async (name , description, duration, price, providerI
 
 export const deleteService = async (id) =>{
     try {
-        const response = await axios.delete(`${API_URL}/Services`, {id:id});
+        const response = await axios.delete(`${API_URL}/Services/${id}`);
         return response.data;
     } catch (error) {
         throw error.response.data;

@@ -1,20 +1,41 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import './Servico.css';
-import SmallTimeSlot from "./SmallTimeSlot";
 
+export default function Servico({nome, id, descricao, preco, deleteFunction, timeslots, createTSFunction}){
 
-export default function Servico({nome, id, descricao, preco, deleteFunction}){
+    if(!timeslots){
+        timeslots = [];
+    }
+
     return(
         <div className="Servico">
             <div id="info">
-            <h1 className="NomeServico">{nome}</h1>
-            <h2 className="Descricao">{descricao}</h2>
-            <h2 className="Preco">R$ {preco},00</h2>
-            <button className="BotaoApagarServico" onClick={() => deleteFunction(id)}>-</button>
+                <h1 className="NomeServico">{nome}</h1>
+                <h2 className="Descricao">{descricao}</h2>
+                <h2 className="Preco">R$ {preco},00</h2>
+                <button className="VerServico">Visualizar Serviço</button>
             </div>
+            <div>
+                <div>
+                    {  
 
-            <div className="TimeslotsList">
-                <SmallTimeSlot/>
+                            timeslots.map((elemento) => {
+                                return(
+                                    <div>
+                                        {elemento.time}
+                                    </div>
+                                );
+                            })
+                        } 
+
+                    <button onClick={() => createTSFunction(id)}>
+                        Adicione TimeSlot
+                    </button>
+                </div>
+            
+                <button className="BotaoApagarServico" onClick={() => deleteFunction(id)}>-</button>
             </div>
         </div>
     );

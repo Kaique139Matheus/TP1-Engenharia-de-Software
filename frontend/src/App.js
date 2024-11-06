@@ -17,6 +17,7 @@ import AdicionarTimeSlotPage from "./pages/AdicionarTimeSlotPage/AdicionarTimeSl
 import LoginEmpresarialPage from "./pages/LoginEmpresarialPage/LoginEmpresarialPage"
 import CadastroEmpresarialPage from "./pages/CadastroEmpresarialPage/CadastroEmpresarialPage";
 import SimularIntegracaoPage from "./pages/SimularIntegracao/SimularIntegracaoPage"
+import TimeslotsPage from "./pages/TimeslotsPage/TimeslotsPage"
 import ReviewPage from "./pages/ReviewPage/ReviewPage";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
           <Route path={`/login-empresarial`} element={<LoginEmpresarialPage setUserInfo={setUserInfo}></LoginEmpresarialPage>}></Route>
           <Route path={`/cadastro-empresarial`} element={<CadastroEmpresarialPage></CadastroEmpresarialPage>}></Route>
           <Route path={`/integracao`} element={<SimularIntegracaoPage></SimularIntegracaoPage>}></Route>
+          <Route path={`/timeslots-page`} element={<TimeslotsPage></TimeslotsPage>}></Route>
 
 
         </Routes>

@@ -91,7 +91,7 @@ export default function LoginPage ({setUserInfo}){
                     /> : "Entrar"}</button>
                
             </FormContainer>
-            <Link to={`/cadastro`}>
+            <Link to={`/cadastro-escolha`}>
                 <FraseCadastro>Não tem uma conta? Cadastre-se</FraseCadastro>
             </Link>
         </Login>

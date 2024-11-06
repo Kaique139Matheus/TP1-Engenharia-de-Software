@@ -75,3 +75,35 @@
 
     border-radius: 15px;
 }
+
+
+.VerServico{
+
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    
+    margin: 10px 0px;
+    width: 220px;
+    height: 45px;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    background-color: #00274d;
+    color: white;
+    font-family: "Lexend Deca", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, border 0.3s;
+
+  &:hover {
+    background-color: #d4d4d4; /* Cor de hover cinza claro */
+    border: 1px solid #00274d; /* Borda interna da mesma cor */
+    color: #00274d;
+  }
+}

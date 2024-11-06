@@ -6,9 +6,8 @@ import Header from "../../Header/Header";
 import { useNavigate } from "react-router-dom";
 
 import foto_empresa from "./foto_empresa.jpg"
-import Servico from "./Servico";
 
-import './EmpresaHomePage.css'
+import './InfoServicoPage.css'
 import { getLoggedProvider } from "../../requests/authRequests";
 import { getServicesFromProvider } from "../../requests/serviceRequests";
 import { deleteService } from "../../requests/serviceRequests";
@@ -17,6 +16,9 @@ export default function EmpresaHomePage (){
     const navigate = useNavigate();
     const [provider, setProvider] = React.useState({});
     const [services, setServices] = React.useState([]);
+    const [service, setService] = React.useState([]);
+
+    
 
 
     React.useEffect(() => {
@@ -49,31 +51,16 @@ export default function EmpresaHomePage (){
         fetchServices();
     }, [provider.id]);
 
+    React.useEffect(() => {
+        setService(services[0]);
+    }, [sevices]);
 
-    async function deleteMeService(id){
-        try{            
-            console.log(`Deletar serviço ${id}`)
-            const response = await deleteService(id);
-            console.log(response);
-            console.log(`Deletar serviço ${id}`)
-            setServices(services.filter( (item) => item.id != id));
-        }catch{
-            console.error("Error deleting services data:");
-
-        }
-    }
-
-    function handleCreateTimeslot(id){
-        localStorage.setItem('selectedServiceID', id);
-        navigate("/adicionar-timeslot");
-    }
 
     return (
         <>
             <Header></Header>
             <div id="page-frame">
-                <img id="foto-empresa" src={foto_empresa} width='220px' height='220px'></img>
-                <h1 id="nome-empresa">{provider.name}</h1>
+                <h1 id="nome-servico">{servico.name}</h1>
             </div>
 
 
@@ -81,7 +68,7 @@ export default function EmpresaHomePage (){
                 {
                     services.map((elemento) => {
                         return ( <Servico nome={elemento.name} descricao={elemento.description} preco={elemento.price}
-                        id = {elemento.id} deleteFunction={deleteMeService} timeslots={elemento.timeslots} createTSFunction={handleCreateTimeslot} /> );
+                        id = {elemento.id} deleteFunction={deleteMeService}/> );
                     })
                     // services.map((elemento) => {
                     //     return ( <Servico nome={elemento} />);

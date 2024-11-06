@@ -87,15 +87,55 @@ export default function AdicionarServicoPage() {
       duration: form.duration,
     };
 
+<<<<<<< HEAD
     enviarServico(body);
     setCarregando(false);
   }
+=======
+    const enviarServico = async (servico) => {
+        try {
+            const response = await postService(servico.name , servico.description, servico.duration, servico.price, provider.id);
+            console.log(response); 
+            localStorage.setItem('selectedServiceID', response.data.id);
+            console.log(`Salvar ${response.data.id}`)
+            navigate('/timeslots-page')
+        } catch (error) {
+            setCarregando(false);
+            console.error("Error posting provider", error);
+            alert(error);
+        }
+    }
+>>>>>>> bb78e3a7cb99721cc6e97c110e277ee45440a031
 
   return (
     <>
       <Header></Header>
 
+<<<<<<< HEAD
       <p id="TextoAdicione">Adicione o Serviço</p>
+=======
+        const body = {
+            name: form.name,
+            description: form.description,
+            price: form.price,
+            duration: form.duration
+        }
+
+        enviarServico(body);
+        setCarregando(false)
+    }
+
+
+
+    return (
+        <>
+        <Header></Header>
+
+        <p id="TextoAdicione">Dados do Serviço</p>
+
+
+        <FormContainer onSubmit={efetuarCadastro}>
+>>>>>>> bb78e3a7cb99721cc6e97c110e277ee45440a031
 
       <FormContainer onSubmit={efetuarCadastro}>
         <input
@@ -158,6 +198,7 @@ export default function AdicionarServicoPage() {
             "Cadastrar"
           )}
         </button>
+<<<<<<< HEAD
       </FormContainer>
 
       {/*
@@ -175,6 +216,13 @@ export default function AdicionarServicoPage() {
         */}
     </>
   );
+=======
+        </FormContainer>
+        
+
+        </>
+    );
+>>>>>>> bb78e3a7cb99721cc6e97c110e277ee45440a031
 }
 
 const FormContainer = styled.form`

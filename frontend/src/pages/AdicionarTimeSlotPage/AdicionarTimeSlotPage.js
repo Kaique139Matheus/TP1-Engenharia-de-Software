@@ -7,6 +7,7 @@ import { BASE_URL } from "../url/BaseUrl";
 import Header from "../../Header/Header";
 import './AdicionarTimeSlotPage.css'
 import BotaoDia from "./BotaoDia";
+import { postTimeslot } from "../../requests/timeslotRequests";
 
 export default function AdicionarServicoPage (){
 
@@ -14,6 +15,37 @@ export default function AdicionarServicoPage (){
     const [diasSelecionados, setDiasSelecionados] =
     React.useState([false, false, false, false, false, false, false]);
 
+    const serviceID = localStorage.getItem('selectedServiceID');
+    if(!serviceID){
+        serviceID = 1;
+    }
+
+      const sendTimeSlot = (event) => { 
+        event.preventDefault();
+        const horaInicio = document.getElementById('CampoHoraInicio').value; 
+        console.log(typeof(horaInicio));
+        const time = parseInt(horaInicio.slice(0,2),10)*100 + parseInt(horaInicio.slice(-2),10); 
+        console.log(time);
+
+    
+        enviarTimeSlot({time:time, serviceID:serviceID, bookings:[]});
+    }
+
+       const enviarTimeSlot = async (provider) => {
+                try {
+                    const response = await postTimeslot(provider);
+                    console.log(response);
+                    alert("Cadastro Realizado com sucesso!!!");
+                    navigate('/empresa-home')
+                } catch (error) {
+                    console.error("Error posting provider", error);
+                    alert(error);
+                }
+            }
+ 
+
+
+    
     const navigate = useNavigate();
 
     function setDiaSelecionadoViaIndex(index,novoValor){
@@ -34,15 +66,8 @@ export default function AdicionarServicoPage (){
 
         <div id="Frame">
 
-
-
-
-
-
-
-
-
-            <div id="TimeFlex">
+        
+            <div id="TimeFlex"> 
                 <div className="ItemHoraLegenda">
                     <input
                         className="CampoHora"
@@ -53,7 +78,7 @@ export default function AdicionarServicoPage (){
                 </div>
             </div>
 
-            <button id="BotaoFinalizar" onClick={() => navigate("/empresa-home")}> Finalizar</button>
+            <button id="BotaoFinalizar" onClick={sendTimeSlot}> Finalizar</button>
         </div>
 
 
