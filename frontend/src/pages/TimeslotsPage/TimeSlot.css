@@ -1,0 +1,50 @@
+.TimeSlot{
+    position: relative;
+    background-color: rgba(255,255,255,0.1);
+    margin: 10px 20px;
+    height: 150px;
+
+    border-radius: 15px;
+    border: 2px solid #01193f;
+}
+
+.TextoTimeSlot{
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.BotaoApagarTimeSlot{
+    height: 50px;
+    width: 50px;
+
+    background-color: rgba(255,0,0,0.5);
+    font-size: 24px;
+    font-weight: bold;
+
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    border-radius: 15px;
+}
+
+.DaysList{
+    display: flex;
+
+    position: relative;
+    top: 70%;
+    left: 50%;
+
+    justify-content: center;
+
+    /*background-color: rgba(255,0,0,0.5);*/
+    flex-direction: row;
+    gap: 10px;
+    transform: translate(-50%,-50%);
+}

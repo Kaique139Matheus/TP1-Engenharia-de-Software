@@ -65,8 +65,10 @@ export default function AdicionarServicoPage (){
     const enviarServico = async (servico) => {
         try {
             const response = await postService(servico.name , servico.description, servico.duration, servico.price, provider.id);
-            console.log(response);
-            navigate('/empresa-home')
+            console.log(response); 
+            localStorage.setItem('selectedServiceID', response.data.id);
+            console.log(`Salvar ${response.data.id}`)
+            navigate('/timeslots-page')
         } catch (error) {
             setCarregando(false);
             console.error("Error posting provider", error);
@@ -95,7 +97,7 @@ export default function AdicionarServicoPage (){
         <>
         <Header></Header>
 
-        <p id="TextoAdicione">Adicione o Serviço</p>
+        <p id="TextoAdicione">Dados do Serviço</p>
 
 
         <FormContainer onSubmit={efetuarCadastro}>
@@ -159,21 +161,7 @@ export default function AdicionarServicoPage (){
             "Cadastrar"}
         </button>
         </FormContainer>
-
-
-        {/*
-        <div id="TimeSlotsFrame">
-            {
-                timeSlots.map((elemento) => {
-                    return ( <TimeSlot timeSlot={elemento}/> );
-                })
-
-            }
-
-            <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-timeslot")}> Adicione um Time Slot</button>
-        </div>
-
-        */}
+        
 
         </>
     );

@@ -1,0 +1,58 @@
+#Formulário{
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#TextoAdicione{
+    margin-top: 100px;
+    text-align: center;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 34px;
+    text-decoration: none;
+    color: #00274D;
+}
+
+#CampoNome{
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 20pt;
+    text-decoration: none;
+    color: #00274D;
+}
+
+
+#TimeSlotsFrame{
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    border: 2px solid #01193f;
+}
+
+#BotaoAdicionarTimeSlot{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    margin-bottom: 10px;
+
+    height: 50px;
+
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    border: 2px solid #01193f;
+
+    font-size: 18px;
+    font-weight: bold;
+}
