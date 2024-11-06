@@ -65,7 +65,10 @@ export default function EmpresaHomePage (){
 
     function handleCreateTimeslot(id){
         localStorage.setItem('selectedServiceID', id);
-        navigate("/adicionar-timeslot");
+        console.log(`    DURACAO${((item) => item.id == id).durationInMinutes}`)
+        localStorage.setItem('duration', services.filter( (item) => item.id == id)[0].durationInMinutes);
+        
+        navigate("/timeslots-page");
     }
 
     return (

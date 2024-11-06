@@ -14,9 +14,10 @@ import { getTimeslotsFromService } from "../../requests/timeslotRequests";
 //"./pages/TimeslotsPage/TimeslotsPage"
 
 export default function TimeslotsPage (){
-    const [carregando, setCarregando] = React.useState(false);
+    const [carregado, setCarregado] = React.useState(false);
     const [form, setForm] = React.useState({name: "", description: "", price: "", senha: "", duration: ""})
     const [timeslots, setTimeslots] = React.useState({});
+    let duration = 0;
 
     
 
@@ -24,10 +25,14 @@ export default function TimeslotsPage (){
     React.useEffect(() => {
         async function fetchTimeslots() {
             try {
-                const selectedServiceID = 1// localStorage.getItem('selectedServiceID');
+                const selectedServiceID = localStorage.getItem('selectedServiceID');
+                 duration = localStorage.getItem('duration');
+                 console.log(`DURACAO ${duration}`)
+
                 const response = await getTimeslotsFromService(selectedServiceID);
                 console.log(response);
                 setTimeslots(response);
+                setCarregado(true);
             } catch (error) {
                 console.error("Error fetching provider data:", error);
             }
@@ -40,45 +45,12 @@ export default function TimeslotsPage (){
 
 
 
-    function atualizaForm(event){
-        setForm({...form, [event.target.name]: event.target.value})
-    }
-
-
-
     const navigate = useNavigate();
 
   
 
 
-/*
-    const enviarServico = async (servico) => {
-        try {
-            const response = await postService(servico.name , servico.description, servico.duration, servico.price, provider.id);
-            console.log(response);
-            navigate('/empresa-home')
-        } catch (error) {
-            setCarregando(false);
-            console.error("Error posting provider", error);
-            alert(error);
-        }
-    }
-*/
-    function efetuarCadastro(event){
-        event.preventDefault();
-        setCarregando(true);
-
-        const body = {
-            name: form.name,
-            description: form.description,
-            price: form.price,
-            duration: form.duration
-        }
-
-        //enviarServico(body);
-        setCarregando(false)
-    }
-
+       
 
 
     return (
@@ -88,12 +60,14 @@ export default function TimeslotsPage (){
         <p id="TextoAdicione"> TimeSlots de NOME </p>
         <div id="TimeSlotsFrame">
             {
-                timeslots.map((elemento) => {
-                    return ( <TimeSlot timeSlot={elemento}/> );
-                })
-                
+                Object.keys(timeslots).length > 0 ? (
+                    timeslots.map((elemento) => (
+                        <TimeSlot timeSlot={elemento} duration={duration}/>
+                    
+                    ))
+                )
+                 : <p>Carregannndo</p>
             }
-
             <button id="BotaoAdicionarTimeSlot" onClick={() => navigate("/adicionar-timeslot")}> Adicione um Time Slot</button>
         </div>
 
