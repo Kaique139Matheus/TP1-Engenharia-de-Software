@@ -79,7 +79,7 @@ O sistema de avaliação também desempenha um papel fundamental, onde os client
 
 Diagramas UML de Classes:https://drive.google.com/file/d/1qCczxYyI7_LGj0Oj9voJxgbX34Drwe5I/view?usp=sharing
 
-Diagramas UML Casos de Uso:https://drive.google.com/file/d/1hoJK05XFOSER8ocgQrQBOK03gbqVgAc7/view?usp=sharing
+Diagramas UML Casos de Uso:https://drive.google.com/file/d/1N6SFaeW9tnHApo43aa7Onx1NZmQ9-kub/view?usp=sharing
 
 # Getting Started with Create React App
 
