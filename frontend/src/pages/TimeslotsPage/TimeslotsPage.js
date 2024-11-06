@@ -9,7 +9,7 @@ import TimeSlot from "./TimeSlot";
 import { ThreeDots } from "react-loader-spinner";
 import { postService } from "../../requests/serviceRequests";
 import { getLoggedProvider } from "../../requests/authRequests";
-import { getTimeslotsFromServiceAndDate } from "../../requests/timeslotRequests";
+import { getTimeslotsFromService } from "../../requests/timeslotRequests";
 
 //"./pages/TimeslotsPage/TimeslotsPage"
 
@@ -17,7 +17,9 @@ export default function TimeslotsPage (){
     const [carregado, setCarregado] = React.useState(false);
     const [form, setForm] = React.useState({name: "", description: "", price: "", senha: "", duration: ""})
     const [timeslots, setTimeslots] = React.useState({});
-    let duration = 0;
+    const selectedServiceID = localStorage.getItem('selectedServiceID');
+    const duration = localStorage.getItem('duration');
+    const navigate = useNavigate();
 
     
 
@@ -25,10 +27,6 @@ export default function TimeslotsPage (){
     React.useEffect(() => {
         async function fetchTimeslots() {
             try {
-                const selectedServiceID = localStorage.getItem('selectedServiceID');
-                 duration = localStorage.getItem('duration');
-                 console.log(`DURACAO ${duration}`)
-
                 const response = await getTimeslotsFromService(selectedServiceID);
 
                 console.log(response);
@@ -46,7 +44,6 @@ export default function TimeslotsPage (){
 
 
 
-    const navigate = useNavigate();
 
   
 

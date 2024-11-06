@@ -15,7 +15,6 @@ export default function Servico({nome, id, descricao, preco, deleteFunction, tim
                 <h1 className="NomeServico">{nome}</h1>
                 <h2 className="Descricao">{descricao}</h2>
                 <h2 className="Preco">R$ {preco},00</h2>
-                <button className="VerServico">Visualizar Serviço</button>
             </div>
             <div>
                 <div>
